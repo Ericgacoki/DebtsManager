@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1052494063133",
+    "firebase_url": "https://debts-manager-e329a.firebaseio.com",
+    "project_id": "debts-manager-e329a",
+    "storage_bucket": "debts-manager-e329a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052494063133:android:a0aa9ea7a290f3801c88f4",
+        "android_client_info": {
+          "package_name": "com.ericg.debtsmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052494063133-oi68ikpv5lt5rjsjgkct0mdq52r2gakt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn01ad9z6seDx76OtaYGb1Qtiuqln52Lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052494063133-oi68ikpv5lt5rjsjgkct0mdq52r2gakt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

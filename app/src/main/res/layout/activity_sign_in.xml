@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLightBgBlack"
+    tools:context=".SignInActivity">
+
+    <TextView
+        android:id="@+id/textViewSignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/exo_bold"
+        android:text="Nice to see you!"
+        android:textAlignment="center"
+        android:textColor="@color/colorYellow"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sBtnReset"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBgBlack"
+        android:text="Reset "
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/sBaseView"
+        app:layout_constraintEnd_toStartOf="@+id/sBtnLogIn"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.991" />
+
+    <Button
+        android:id="@+id/sBtnLogIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_log_in_selector"
+        android:text="Log In"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/sBaseView"
+        app:layout_constraintEnd_toStartOf="@+id/sBtnIssue"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sBtnReset"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.991" />
+
+    <Button
+        android:id="@+id/sBtnIssue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorLightBgBlack"
+        android:text="Report Issue"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/sBaseView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sBtnLogIn"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="0.991" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayoutPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignIn">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sEmail"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorWhite"
+            android:hint="Email" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/sBtnSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutEmail"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutEmail"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/sPassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:hint="Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/sBtnSignIn"
+        android:layout_width="0dp"
+        android:layout_height="36dp"
+        android:background="@drawable/btn_sign_in"
+        android:fontFamily="@font/exo_bold"
+        android:text="Sign In"
+        app:layout_constraintBottom_toTopOf="@+id/tryView"
+        app:layout_constraintEnd_toEndOf="@+id/tryView"
+        app:layout_constraintStart_toStartOf="@+id/tryView"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
+
+    <View
+        android:id="@+id/tryView"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/colorLightBgBlack"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sBtnSignIn" />
+
+    <TextView
+        android:id="@+id/tryAgainIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Try again in:"
+        android:textColor="@color/colorOrange"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tryView"
+        app:layout_constraintEnd_toStartOf="@+id/sChronometer"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/tryView"
+        app:layout_constraintTop_toTopOf="@+id/tryView" />
+
+    <Chronometer
+        android:id="@+id/sChronometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#96EDFA"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tryView"
+        app:layout_constraintEnd_toStartOf="@+id/sTime"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tryAgainIn"
+        app:layout_constraintTop_toTopOf="@+id/tryView" />
+
+    <TextView
+        android:id="@+id/sTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(min:sec)     "
+        android:textColor="@color/colorOrange"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tryView"
+        app:layout_constraintEnd_toEndOf="@+id/tryView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/sChronometer"
+        app:layout_constraintTop_toTopOf="@+id/tryView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.88"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/sTopView"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:background="@color/colorGreen"
+        app:layout_constraintBottom_toTopOf="@+id/sBtnLogIn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <View
+        android:id="@+id/sBaseView"
+        android:layout_width="0dp"
+        android:layout_height="0.8dp"
+        android:background="@color/colorGreen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline2"
+        app:layout_constraintVertical_bias="1"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
