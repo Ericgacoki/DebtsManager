@@ -12,16 +12,25 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/exo_bold"
-        android:text="Nice to see you!"
+        android:text="Sign In to your account"
         android:textAlignment="center"
         android:textColor="@color/colorYellow"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.ldoublem.loadingviewlib.LVCircular
+        android:id="@+id/sLoadingView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/tryView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sBtnSignIn"
+        app:layout_constraintVertical_bias="0.8" />
     <Button
         android:id="@+id/sBtnReset"
         android:layout_width="0dp"
@@ -86,6 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/colorWhite"
+            android:maxLines="1"
             android:hint="Email" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,6 +114,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorWhite"
+            android:maxLines="1"
+            android:maxLength="12"
             android:hint="Password" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,6 +142,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sBtnSignIn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/exo_bold"
+        android:text="OR"
+        android:textColor="#96EDFA"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tryView"
+        app:layout_constraintVertical_bias="0.9" />
 
     <TextView
         android:id="@+id/tryAgainIn"

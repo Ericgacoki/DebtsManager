@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -25,17 +26,31 @@ class SplashActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_splash)
 
-        btmText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.frombottom))
+        tvSlogan.startAnimation(AnimationUtils.loadAnimation(this, R.anim.frombottom))
         logo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fadeout))
 
         Handler().postDelayed({
             kotlin.run { splashOut() }
         }, 2000)
+
+        val pIndices = 0..3
+        val pSlogans = arrayOf(
+            "Your all time financial assistant",
+            "Help at hand",
+            "Easily manage your debts...",
+            "The most trusted care taker"
+        )
+        showRandomSlogan(pIndices, pSlogans)
+    }
+
+    private fun showRandomSlogan(indices: IntRange, slogans: Array<String>) {
+        val randomIndex = indices.shuffled().first()
+        tvSlogan.text = slogans[randomIndex]
     }
 
     private fun splashOut() {
-        val intent = Intent(this, SignInActivity::class.java)
-        if(intent.resolveActivity(packageManager) != null){
+        val intent = Intent(this, CreateAccountActivity::class.java)
+        if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
         }
         finish()

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFF"
+    android:background="#000"
     tools:context=".SplashActivity">
 
     <ImageView
@@ -12,12 +12,12 @@
         android:layout_width="0dp"
         android:layout_height="320dp"
         android:layout_margin="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/btmText"
+        app:layout_constraintBottom_toTopOf="@+id/tvSlogan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/debtmanagerlogo" />
+        app:srcCompat="@drawable/applogo" />
 
     <TextView
         android:id="@+id/title"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Debts Manager"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="@color/colorYellow"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/logo"
@@ -36,12 +36,12 @@
         app:layout_constraintVertical_bias="0.76" />
 
     <TextView
-        android:id="@+id/btmText"
+        android:id="@+id/tvSlogan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your all time assistant"
-        android:textColor="#021479"
-        android:textSize="25sp"
+        tools:text="A random slogan will be displayed"
+        android:textColor="@color/colorYellow"
+        android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

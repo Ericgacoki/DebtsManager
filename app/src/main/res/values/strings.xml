@@ -1,6 +1,21 @@
 <resources>
     <string name="app_name">Debts Manager</string>
-<!--
+    <string name="reset_password">Reset Password   </string>
+    <string name="account_email">Account Email</string>
+    <string name="get_link_via_email">Get link via Email</string>
+    <string name="new_password">New password</string>
+    <string name="verify">Verify</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="user_name">User name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="log_in">Log In</string>
+    <string name="help">Help</string>
+    <string name="sign_in">Sign In</string>
+    <string name="report_issue">Report Issue</string>
+    <!--
     Todo create strings here to avoid hard corded ones
 -->
 </resources>

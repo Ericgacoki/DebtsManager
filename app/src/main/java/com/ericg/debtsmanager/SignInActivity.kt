@@ -11,7 +11,5 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_sign_in)
-
-        tryView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_view_from_top))
     }
 }

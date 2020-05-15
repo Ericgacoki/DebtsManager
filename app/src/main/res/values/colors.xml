@@ -10,5 +10,6 @@
     <color name="colorGreen">#34FF00</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorLightBlack">#D7000000</color>
-    <color name="colorLightBgBlack">#C6000000</color>
+    <color name="colorLightBgBlack">#C4000000</color>
+    <color name="colorDarkPurple">#090115</color>
 </resources>

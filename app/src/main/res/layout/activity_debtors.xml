@@ -4,6 +4,152 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorLightBlack"
     tools:context=".Debtors">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/debtorsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debtorsHrScrollView"
+        app:layout_constraintVertical_bias="1"
+        tools:listitem="@layout/row_debtor_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddDebtor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:theme="@style/ThemeFab"
+        app:layout_constraintBottom_toBottomOf="@+id/debtorsRecyclerView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/fabAnalysis"
+        app:layout_constraintTop_toTopOf="@+id/debtorsRecyclerView"
+        app:layout_constraintVertical_bias="0.995"
+        app:maxImageSize="30dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAnalysis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/analysis"
+        android:theme="@style/ThemeFab"
+        app:layout_constraintBottom_toBottomOf="@+id/fabAddDebtor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline7"
+        app:layout_constraintTop_toTopOf="@+id/fabAddDebtor"
+        app:layout_constraintVertical_bias="0.995"
+        app:maxImageSize="30dp" />
+
+    <HorizontalScrollView
+        android:id="@+id/debtorsHrScrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:scrollbarSize="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:rowCount="1"
+                android:columnCount="6"
+                >
+            <Button
+                android:text="1"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2.5dp"
+                 />
+
+            <Button
+                android:text="2"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                />
+
+            <Button
+                android:text="3"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                />
+
+            <Button
+                android:text="4"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                />
+
+            <Button
+                android:text="5"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                />
+
+            <Button
+                android:text="6"
+                android:layout_width="210dp"
+                android:layout_height="38dp"
+                android:background="@color/colorWhite"
+                android:layout_marginStart="2.5dp"
+                android:layout_marginEnd="2.5dp"
+                />
+        </GridLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.84"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
