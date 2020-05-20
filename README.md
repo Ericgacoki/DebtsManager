@@ -1,5 +1,5 @@
 # <u>DebtsManager</u>
-Debts manager is an android app that mainly focuses on financial debts management. It does so  by bringing together who you owe and what you owe them as well as who owes you what. It also analyzes how well you pay your debts and how well people pay you back. Among a bunch of other services is installments and lease management.  
+<b> Debts manager is an android app that mainly focuses on financial debts management. It does so  by bringing together who you owe and what you owe them as well as who owes you what. It also analyzes how well you pay your debts and how well people pay you back. Among a bunch of other services is installments and lease management. </b>
 
 ## Here are some screenshots 
 
@@ -7,17 +7,29 @@ Debts manager is an android app that mainly focuses on financial debts managemen
 
 ![dm2](https://user-images.githubusercontent.com/54077752/82501456-fbcad980-9afd-11ea-9952-8081e3220fb1.png)
 
-
 ![dm3](https://user-images.githubusercontent.com/54077752/82501472-01282400-9afe-11ea-99c5-a1e395f86fe5.png)
-
 
 ![dm4](https://user-images.githubusercontent.com/54077752/82501492-05ecd800-9afe-11ea-84ae-c7fa660e270b.png)
 
-
 ![dm5](https://user-images.githubusercontent.com/54077752/82501500-0a18f580-9afe-11ea-9a02-dd5ea14379da.png)
 
-
 ![dm6](https://user-images.githubusercontent.com/54077752/82501541-1ac96b80-9afe-11ea-9b54-e9861e670abd.png)
+
+![dm7](https://user-images.githubusercontent.com/54077752/82501544-1c932f00-9afe-11ea-995b-c02dea84c424.png)
+
+![dm8](https://user-images.githubusercontent.com/54077752/82501552-1dc45c00-9afe-11ea-8eb2-4a195e2493e1.png)
+
+![dm9](https://user-images.githubusercontent.com/54077752/82501555-1ef58900-9afe-11ea-9b34-77515f2e91f3.png)
+
+![dm10](https://user-images.githubusercontent.com/54077752/82501558-2026b600-9afe-11ea-8d70-43deb1a18d73.png)
+
+![dm11](https://user-images.githubusercontent.com/54077752/82501565-2157e300-9afe-11ea-859e-359eee78b8fe.png)
+
+![dm12](https://user-images.githubusercontent.com/54077752/82501569-22891000-9afe-11ea-9a2e-66ae5b82325b.png)
+
+![dm13](https://user-images.githubusercontent.com/54077752/82501573-2321a680-9afe-11ea-8d8b-08648a9241c4.png)
+
+![dm14](https://user-images.githubusercontent.com/54077752/82501574-2452d380-9afe-11ea-9e70-511f9e16a2a2.png)
 
 
 ## [Work in progress] 
