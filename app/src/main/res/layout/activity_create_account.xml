@@ -62,10 +62,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:textAlignment="center"
             android:inputType="textEmailAddress"
-            android:textColor="#FFFFFF"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -83,11 +83,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/phone"
-            android:textAlignment="center"
             android:inputType="phone"
             android:maxLength="18"
-            android:textColor="#FFFFFF"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -106,10 +106,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:textAlignment="textStart"
             android:inputType="textPassword"
-            android:textColor="#FFFFFF"
-            android:maxLength="12" />
+            android:maxLength="12"
+            android:textAlignment="textStart"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -129,11 +129,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/confirm_password"
-            android:textAlignment="center"
             android:inputType="textPassword"
             android:maxLength="12"
-            android:textColor="#FFFFFF"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -155,11 +155,11 @@
         app:layout_constraintBottom_toTopOf="@+id/aBtnSignIn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/btnLogIn"
+        android:id="@+id/aBtnLogIn"
         android:layout_width="0dp"
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
@@ -177,61 +177,72 @@
 
     <com.ldoublem.loadingviewlib.LVCircular
         android:id="@+id/aLoadingView"
-        android:layout_width= "35dp"
+        android:layout_width="35dp"
         android:layout_height="35dp"
         app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn" />
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn" />
+
+    <ProgressBar
+        android:id="@+id/aLoading"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:indeterminate="true"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn" />
 
     <Button
-        android:id="@+id/aBtnHelp"
+        android:id="@+id/aBtnContacts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/help"
+        android:background="@color/colorLightBgBlack"
+        android:text="@string/contacts"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textStyle="bold"
         android:textColor="#fff"
-        android:background="@color/colorLightBgBlack"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/aBtnSignIn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/aBtnSignIn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_sign_in_selector"
         android:text="@string/sign_in"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textStyle="bold"
         android:textColor="#000000"
-        android:background="@drawable/btn_sign_in_selector"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/aBtnIssue"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/aBtnHelp"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        app:layout_constraintStart_toEndOf="@+id/aBtnContacts"
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/aBtnIssue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/colorLightBgBlack"
         android:text="@string/report_issue"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textStyle="bold"
         android:textColor="#fff"
-        android:background="@color/colorLightBgBlack"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/aBtnSignIn"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogIn"
+        app:layout_constraintTop_toBottomOf="@+id/aBtnLogIn"
         app:layout_constraintVertical_bias="1.0" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

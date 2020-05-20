@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(
@@ -31,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             kotlin.run { splashOut() }
-        }, 2000)
+        }, 3000)
 
         val pIndices = 0..3
         val pSlogans = arrayOf(
@@ -44,11 +43,14 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun showRandomSlogan(indices: IntRange, slogans: Array<String>) {
-        val randomIndex = indices.shuffled().first()
+        val randomIndex = indices.shuffled().last()
         tvSlogan.text = slogans[randomIndex]
     }
 
     private fun splashOut() {
+
+        //todo  check if user is signed in or has account , their name .. using shared preferences then decide the next activity
+
         val intent = Intent(this, CreateAccountActivity::class.java)
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)

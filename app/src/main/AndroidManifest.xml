@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -39,9 +40,9 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/ThemeNoActionBar">
-        <activity android:name=".ReportIssue"/>
-        <activity android:name=".ResetPassword"/>
-        <activity android:name=".Analysis"/>
+        <activity android:name=".Loans"/>
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".AnalysisAndSettings" />
         <activity android:name=".Installments" />
         <activity android:name=".Debtors" />
         <activity android:name=".CreateAccountActivity" />

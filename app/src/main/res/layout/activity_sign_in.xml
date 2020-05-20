@@ -31,6 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sBtnSignIn"
         app:layout_constraintVertical_bias="0.8" />
+
     <Button
         android:id="@+id/sBtnReset"
         android:layout_width="0dp"
@@ -144,6 +145,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sBtnSignIn" />
 
     <TextView
+        android:id="@+id/sOr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/exo_bold"
@@ -225,4 +227,16 @@
         app:layout_constraintTop_toBottomOf="@id/guideline2"
         app:layout_constraintVertical_bias="1"
         />
+
+    <CheckBox
+        android:id="@+id/autoSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Auto sign in ?"
+        android:textColor="@color/colorYellow"
+        android:fontFamily="@font/exo_bold"
+        app:layout_constraintBottom_toTopOf="@+id/sBtnSignIn"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutPassword"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutPassword"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBlack"
+    android:background="@color/colorLightBgBlack"
     tools:context=".Debtors">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/debtorsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -49,9 +48,10 @@
         app:maxImageSize="30dp" />
 
     <HorizontalScrollView
+        android:background="@color/colorLightBgBlack"
         android:id="@+id/debtorsHrScrollView"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="54dp"
         android:scrollbarSize="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,9 +60,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
+            android:background="@color/colorLightBgBlack"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <GridLayout
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="7dp"
+                android:background="@color/colorLightBgBlack"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,58 +74,51 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:rowCount="1"
-                android:columnCount="6"
+                android:columnCount="4"
                 >
             <Button
-                android:text="1"
+                android:id="@+id/dDebtors"
+                android:text="Debtors"
+                android:fontFamily="@font/exo_bold"
                 android:layout_width="210dp"
                 android:layout_height="38dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/heading_selected"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="2.5dp"
                  />
 
             <Button
-                android:text="2"
+                android:text="My debts"
+                android:id="@+id/dMyDebts"
+                android:fontFamily="@font/exo_bold"
                 android:layout_width="210dp"
+                android:textColor="@color/colorWhite"
                 android:layout_height="38dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/heading_not_selected"
                 android:layout_marginStart="2.5dp"
                 android:layout_marginEnd="2.5dp"
                 />
 
             <Button
-                android:text="3"
+                android:text="Loans"
+                android:fontFamily="@font/exo_bold"
+                android:id="@+id/dLoans"
+                android:textColor="@color/colorWhite"
                 android:layout_width="210dp"
                 android:layout_height="38dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/heading_not_selected"
                 android:layout_marginStart="2.5dp"
                 android:layout_marginEnd="2.5dp"
                 />
 
             <Button
-                android:text="4"
+                android:text="installments (hp)"
+                android:fontFamily="@font/exo_bold"
+                android:id="@+id/dInstallments"
+                android:textColor="@color/colorWhite"
                 android:layout_width="210dp"
                 android:layout_height="38dp"
-                android:background="@color/colorWhite"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                />
-
-            <Button
-                android:text="5"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:background="@color/colorWhite"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                />
-
-            <Button
-                android:text="6"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:background="@color/colorWhite"
+                android:background="@drawable/heading_not_selected"
                 android:layout_marginStart="2.5dp"
                 android:layout_marginEnd="2.5dp"
                 />
