@@ -12,6 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
@@ -20,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -152,7 +155,7 @@ class CreateAccountActivity : AppCompatActivity() {
         aBtnContacts.setOnClickListener {
             requestPermissions()
 
-            val helpDialog = AlertDialog.Builder(this)
+            val helpDialog = BottomSheetDialog(this)
             val helpDlgLayout = layoutInflater.inflate(R.layout.dialog_contacts, null)
 
             helpDlgLayout.callUs.setOnClickListener {
@@ -217,8 +220,8 @@ class CreateAccountActivity : AppCompatActivity() {
             }
 
             helpDialog.apply {
-                setView(helpDlgLayout)
-                create().show()
+                setContentView(helpDlgLayout)
+                show()
             }
         }
 

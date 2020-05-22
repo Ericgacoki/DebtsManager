@@ -27,8 +27,8 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ThemeFab" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/colorLightBgBlack</item>
+    <style name="ThemeFab" >
+        <item name="colorAccent">@color/colorFabTint</item>
 <!--
         <item name="android:background">@color/colorBlack</item>
 -->

@@ -1,6 +1,7 @@
 package com.ericg.debtsmanager
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -14,8 +15,10 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import java.lang.Exception
@@ -25,6 +28,7 @@ private var trials = 0
 
 private var mAuth: FirebaseAuth? = null
 private var mUser: FirebaseUser? = null
+private var fDatabase: FirebaseFirestore? = null
 
 class SignInActivity : AppCompatActivity() {
 
@@ -44,6 +48,7 @@ class SignInActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         mUser = mAuth!!.currentUser
+        fDatabase = FirebaseFirestore.getInstance()
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -62,6 +67,8 @@ class SignInActivity : AppCompatActivity() {
                     }, elapseTime.toLong())
                 }
                 else -> {
+                    // testing todo remove the next line
+                    //startActivity(Intent(this, Debtors::class.java))
 
                     signInUser()
                 }
@@ -70,14 +77,16 @@ class SignInActivity : AppCompatActivity() {
 
         sBtnReset.setOnClickListener {
             startActivity(Intent(this, ResetPassword::class.java))
+            finish()
         }
 
         sBtnLogIn.setOnClickListener {
             startActivity(Intent(this, CreateAccountActivity::class.java))
+            finish()
         }
 
         sBtnIssue.setOnClickListener {
-            val issueDialog = AlertDialog.Builder(this)
+            val issueDialog = BottomSheetDialog(this)
             val issueDialogLayout: View =
                 layoutInflater.inflate(R.layout.dialog_report_issue, null)
 
@@ -108,9 +117,9 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
             issueDialog.apply {
-                setView(issueDialogLayout)
-
-                create().show()
+                setContentView(issueDialogLayout)
+                create()
+                show()
             }
         }
     }
