@@ -48,7 +48,6 @@
         <activity android:name=".firebaseAuth.CreateAccountActivity" />
         <activity android:name=".firebaseAuth.SignInActivity" />
         <activity android:name=".MyDebts" />
-        <activity android:name=".communication.Contacts"/>
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">

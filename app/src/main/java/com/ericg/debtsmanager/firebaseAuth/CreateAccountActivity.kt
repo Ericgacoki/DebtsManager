@@ -8,6 +8,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -23,12 +24,13 @@ import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.AnalysisAndSettings
 import com.ericg.debtsmanager.Debtors
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.communication.Contacts
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_create_account.*
+import kotlinx.android.synthetic.main.dialog_contacts.view.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 
 private var mAuth: FirebaseAuth? = null
@@ -58,6 +60,8 @@ val permissions = arrayOf(
 
 class CreateAccountActivity : AppCompatActivity() {
 
+    val context = this
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -80,9 +84,11 @@ class CreateAccountActivity : AppCompatActivity() {
         fDataBase = FirebaseFirestore.getInstance()
     }
 
-    fun requestPermissions() {
-        ActivityCompat.requestPermissions(this@CreateAccountActivity,
-            permissions, 5)
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this@CreateAccountActivity,
+            permissions, 5
+        )
     }
 
     private fun createNotificationChannel() {
@@ -110,7 +116,8 @@ class CreateAccountActivity : AppCompatActivity() {
         nContentText: String,
         nPendingIntent: PendingIntent? = null
     ) {
-        val accountManager = NotificationCompat.Builder(this,
+        val accountManager = NotificationCompat.Builder(
+            this,
             CHANNEL_ID
         )
         accountManager.apply {
@@ -156,7 +163,78 @@ class CreateAccountActivity : AppCompatActivity() {
         }
 
         aBtnContacts.setOnClickListener {
-            Contacts(this@CreateAccountActivity).contacts()
+            requestPermissions()
+
+            val helpDialog = BottomSheetDialog(context)
+            val helpDlgLayout = layoutInflater.inflate(R.layout.dialog_contacts, null)
+
+            helpDlgLayout.callUs.setOnClickListener {
+                if (ContextCompat.checkSelfPermission(
+                        context,
+                        android.Manifest.permission.CALL_PHONE
+                    )
+                    == PackageManager.PERMISSION_GRANTED
+                ) {
+
+                    val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:+254745623611"))
+                    try {
+                        startActivity(
+                            Intent.createChooser(
+                                callIntent,
+                                "Select calling App [courtesy of Debts manager]"
+                            )
+                        )
+                    } catch (e: Exception) {
+                        CreateAccountActivity()
+                            .toast(context, e.message.toString())
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(
+                        context,
+                        arrayOf(android.Manifest.permission.CALL_PHONE), 5
+                    )
+                }
+            }
+            helpDlgLayout.emailUs.setOnClickListener {
+                val subject = "Debts manager help"
+                val sendTo = arrayOf("gacokieric@gmail.com")   // debtsmanagerhelp@gmail.com
+                emailUs(subject, sendTo)
+            }
+
+            helpDlgLayout.whatsAppUs.setOnClickListener {
+                val body = "<Describe what help you need here>"
+                val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254745623611"))
+
+                whatsAppIntent.apply {
+                    putExtra(Intent.EXTRA_TEXT, body)
+                }
+                try {
+                    startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
+                } catch (e: Exception) {
+                    CreateAccountActivity()
+                        .toast(context, e.message.toString())
+                }
+            }
+
+            helpDlgLayout.facebookUs.setOnClickListener {
+                val fbUrl = "https://www.facebook.com"
+                browse(fbUrl)
+            }
+
+            helpDlgLayout.igUs.setOnClickListener {
+                val igUrl = "https://www.instagram.com"
+                browse(igUrl)
+            }
+
+            helpDlgLayout.tweetUs.setOnClickListener {
+                val twitterUrl = "https://www.twitter.com"
+                browse(twitterUrl)
+            }
+
+            helpDialog.apply {
+                setContentView(helpDlgLayout)
+                show()
+            }
         }
 
         aBtnSignIn.setOnClickListener {
@@ -192,7 +270,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     if (issueDescription.trim().isNotEmpty()) {
 
-                        Contacts(this).emailUs(mailSubject, mailToAddress, issueDescription)
+                        emailUs(mailSubject, mailToAddress, issueDescription)
                     } else {
                         toast(this, "can't send empty description")
                     }
@@ -379,6 +457,34 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
+    private fun browse(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        try {
+            startActivity(Intent.createChooser(intent, "Select browser"))
+
+        } catch (e: Exception) {
+            CreateAccountActivity()
+                .toast(context, e.message.toString())
+        }
+    }
+
+    private fun emailUs(subject: String, toAddress: Array<String>, body: String = "") {
+        val sendEmailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
+        sendEmailIntent.apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_EMAIL, toAddress)
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+
+        try {
+            startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
+        } catch (e: Exception) {
+            CreateAccountActivity()
+                .toast(context, e.message.toString())
+        }
+    }
+
     private fun sendVerificationEmail() {
         if (mUser != null) {
             Handler().postDelayed({
@@ -397,10 +503,6 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-    private val backIsEnabled = false
-    override fun onBackPressed() = if (backIsEnabled) {
-        super.onBackPressed()
-    } else {
-        toast(this, "Use other buttons instead")
-    }
+    // disable back press
+    override fun onBackPressed() = toast(this, "Use other buttons instead")
 }
