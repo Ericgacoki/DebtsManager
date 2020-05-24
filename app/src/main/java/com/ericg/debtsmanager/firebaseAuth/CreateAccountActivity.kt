@@ -1,13 +1,13 @@
-package com.ericg.debtsmanager
+package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -20,12 +20,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.ericg.debtsmanager.AnalysisAndSettings
+import com.ericg.debtsmanager.Debtors
+import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.communication.Contacts
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_create_account.*
-import kotlinx.android.synthetic.main.dialog_contacts.view.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 
 private var mAuth: FirebaseAuth? = null
@@ -77,8 +80,9 @@ class CreateAccountActivity : AppCompatActivity() {
         fDataBase = FirebaseFirestore.getInstance()
     }
 
-    private fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, permissions, 5)
+    fun requestPermissions() {
+        ActivityCompat.requestPermissions(this@CreateAccountActivity,
+            permissions, 5)
     }
 
     private fun createNotificationChannel() {
@@ -106,7 +110,9 @@ class CreateAccountActivity : AppCompatActivity() {
         nContentText: String,
         nPendingIntent: PendingIntent? = null
     ) {
-        val accountManager = NotificationCompat.Builder(this, CHANNEL_ID)
+        val accountManager = NotificationCompat.Builder(this,
+            CHANNEL_ID
+        )
         accountManager.apply {
             setSmallIcon(R.drawable.ic_dollar)
             title = nTitle
@@ -143,83 +149,14 @@ class CreateAccountActivity : AppCompatActivity() {
                     notifyAccountManagement(
                         "Too many trials",
                         "Hey, contact us for help"
-                        )
+                    )
                 }
 
             }
         }
 
         aBtnContacts.setOnClickListener {
-            requestPermissions()
-
-            val helpDialog = AlertDialog.Builder(this)
-            val helpDlgLayout = layoutInflater.inflate(R.layout.dialog_contacts, null)
-
-            helpDlgLayout.callUs.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(
-                        this@CreateAccountActivity,
-                        android.Manifest.permission.CALL_PHONE
-                    )
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
-
-                    val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:+254745623611"))
-                    try {
-                        startActivity(
-                            Intent.createChooser(
-                                callIntent,
-                                "Select calling App [courtesy of Debts manager]"
-                            )
-                        )
-                    } catch (e: Exception) {
-                        toast(e.message.toString())
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(
-                        this@CreateAccountActivity,
-                        arrayOf(android.Manifest.permission.CALL_PHONE), 5
-                    )
-                }
-            }
-            helpDlgLayout.emailUs.setOnClickListener {
-                val subject = "Debts manager help"
-                val sendTo = arrayOf("gacokieric@gmail.com")   // debtsmanagerhelp@gmail.com
-                emailUs(subject, sendTo)
-            }
-
-            helpDlgLayout.whatsAppUs.setOnClickListener {
-                val body = "<Describe what help you need here>"
-                val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254745623611"))
-
-                whatsAppIntent.apply {
-                    putExtra(Intent.EXTRA_TEXT, body)
-                }
-                try {
-                    startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
-                } catch (e: Exception) {
-                    toast(e.message.toString())
-                }
-            }
-
-            helpDlgLayout.facebookUs.setOnClickListener {
-                val fbUrl = "https://www.facebook.com"
-                browse(fbUrl)
-            }
-
-            helpDlgLayout.igUs.setOnClickListener {
-                val igUrl = "https://www.instagram.com"
-                browse(igUrl)
-            }
-
-            helpDlgLayout.tweetUs.setOnClickListener {
-                val twitterUrl = "https://www.twitter.com"
-                browse(twitterUrl)
-            }
-
-            helpDialog.apply {
-                setView(helpDlgLayout)
-                create().show()
-            }
+            Contacts(this@CreateAccountActivity).contacts()
         }
 
         aBtnSignIn.setOnClickListener {
@@ -228,7 +165,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 startActivity(signInIntent)
                 finish()
             } else {
-                toast("null intent")
+                toast(this, "null intent")
             }
         }
 
@@ -255,9 +192,9 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     if (issueDescription.trim().isNotEmpty()) {
 
-                        emailUs(mailSubject, mailToAddress, issueDescription)
+                        Contacts(this).emailUs(mailSubject, mailToAddress, issueDescription)
                     } else {
-                        toast("can't send empty description")
+                        toast(this, "can't send empty description")
                     }
                 }
                 issueDialog.apply {
@@ -268,32 +205,6 @@ class CreateAccountActivity : AppCompatActivity() {
             } else {
                 requestPermissions()
             }
-        }
-    }
-
-    private fun browse(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        try {
-            startActivity(Intent.createChooser(intent, "Select browser"))
-
-        } catch (e: Exception) {
-            toast(e.message.toString())
-        }
-    }
-
-    private fun emailUs(subject: String, toAddress: Array<String>, body: String = "") {
-        val sendEmailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
-        sendEmailIntent.apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_EMAIL, toAddress)
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
-
-        try {
-            startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
-        } catch (e: Exception) {
-            toast(e.message.toString())
         }
     }
 
@@ -401,7 +312,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
                         // todo save user has account to shared preferences
 
-                        toast("Welcome to Debts manager")
+                        toast(this, "Welcome to Debts manager")
                         notifyAccountManagement(
                             "Congratulations $userName!",
                             "To manage your account, click analysis >> " +
@@ -410,7 +321,7 @@ class CreateAccountActivity : AppCompatActivity() {
                         )
                         finish()
                     } else if (task.isCanceled || !task.isSuccessful) {
-                        toast("Oops! an error occurred")
+                        toast(this, "Oops! an error occurred")
                         loadingStatus(false, btnEnabled = true)
                     }
                 }
@@ -423,7 +334,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 setTitle(getString(R.string.warning))
                 setIcon(getDrawable(R.drawable.ic_warning))
                 setMessage("Use a more secure password")
-                setPositiveButton("Got it"){_,_-> }
+                setPositiveButton("Got it") { _, _ -> }
                 setCancelable(false)
 
                 create().show()
@@ -431,8 +342,8 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-    private fun toast(msg: String) {
-        Toast.makeText(this@CreateAccountActivity, msg, LENGTH_LONG).show()
+    fun toast(context: Activity, msg: String) {
+        Toast.makeText(context, msg, LENGTH_LONG).show()
     }
 
     private fun loadingStatus(showLoading: Boolean, btnEnabled: Boolean) {
@@ -475,14 +386,14 @@ class CreateAccountActivity : AppCompatActivity() {
                     .sendEmailVerification()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            toast("Link sent to ${mUser!!.email}")
+                            toast(this, "Link sent to ${mUser!!.email}")
                         } else {
-                            toast("Sending failed!")
+                            toast(this, "Sending failed!")
                         }
                     }
             }, 3000)
         } else {
-            toast("No user to send Email to!")
+            toast(this, "No user to send Email to!")
         }
     }
 
@@ -490,6 +401,6 @@ class CreateAccountActivity : AppCompatActivity() {
     override fun onBackPressed() = if (backIsEnabled) {
         super.onBackPressed()
     } else {
-        toast("Use other buttons instead")
+        toast(this, "Use other buttons instead")
     }
 }

@@ -12,9 +12,10 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.ericg.debtsmanager.firebaseAuth.SignInActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : AppCompatActivity() {
+class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,11 +33,12 @@ class SplashActivity : AppCompatActivity() {
             kotlin.run { splashOut() }
         }, 3000)
 
-        val pIndices = 0..3
+        val pIndices = 0..4
         val pSlogans = arrayOf(
             "Your all time financial assistant",
             "Help at hand",
             "Easily manage your debts...",
+            "Just for you",
             "The most trusted care taker"
         )
         showRandomSlogan(pIndices, pSlogans)
@@ -51,7 +53,7 @@ class SplashActivity : AppCompatActivity() {
 
         //todo  check if user is signed in or has account , their name .. using shared preferences then decide the next activity
 
-        val intent = Intent(this, CreateAccountActivity::class.java)
+        val intent = Intent(this, SignInActivity::class.java)
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
         }

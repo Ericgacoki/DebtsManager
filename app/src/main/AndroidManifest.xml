@@ -41,15 +41,16 @@
         android:supportsRtl="true"
         android:theme="@style/ThemeNoActionBar">
         <activity android:name=".Loans"/>
-        <activity android:name=".ResetPassword" />
+        <activity android:name=".firebaseAuth.ResetPassword" />
         <activity android:name=".AnalysisAndSettings" />
         <activity android:name=".Installments" />
         <activity android:name=".Debtors" />
-        <activity android:name=".CreateAccountActivity" />
-        <activity android:name=".SignInActivity" />
+        <activity android:name=".firebaseAuth.CreateAccountActivity" />
+        <activity android:name=".firebaseAuth.SignInActivity" />
         <activity android:name=".MyDebts" />
+        <activity android:name=".communication.Contacts"/>
         <activity
-            android:name=".SplashActivity"
+            android:name=".SplashScreen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

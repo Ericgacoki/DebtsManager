@@ -9,8 +9,9 @@
     <color name="colorRed">#FF0000</color>
     <color name="colorYellow">#FDB829</color>
     <color name="colorGreen">#34FF00</color>
-    <color name="colorWhite">#FFF</color>
+    <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#FC000000</color>
     <color name="colorLightBgBlack">#C4000000</color>
     <color name="colorDarkPurple">#090115</color>
+    <color name="colorFabTint">#DC000102</color>
 </resources>

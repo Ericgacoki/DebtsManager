@@ -16,6 +16,26 @@
     <string name="contacts"><b>Contacts</b></string>
     <string name="sign_in"><b>Sign In</b></string>
     <string name="report_issue"><b>Report Issue</b></string>
+    <string name="debtors">Debtors</string>
+    <string name="my_debts">My debts</string>
+    <string name="loans">Loans</string>
+    <string name="installments_hp">installments (hp)</string>
+    <string name="step_one_description"> Enter the Email you used to create the
+                                        account in the \'Account Email\' field. Ensure that
+                                        you have strong internet connection and do not exit the
+                                        App completely during the whole process.
+                                         Click \'Get link via Email\' button and you\'ll
+                                         receive an email containing a special link. </string>
+    <string name="step_two_description">Open Gmail (preferably by clicking the notification or by
+        first pressing the home button) then click the link you
+        just received and follow onscreen instructions to create
+        a new password. Upon come back to Debts Manager , enter
+        your new password and then click \'verify\' to proceed</string>
+    <string name="step_2">Step 2.</string>
+    <string name="step_1">Step 1.</string>
+    <string name="x">X</string>
+    <string name="nothing">Nothing</string>
+    <string name="how_to_reset_password">How to reset password</string>
     <!--
     Todo create strings here to avoid hard corded ones
 -->
