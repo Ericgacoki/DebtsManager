@@ -1,7 +1,6 @@
-package com.ericg.debtsmanager
+package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -13,8 +12,9 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.ericg.debtsmanager.Debtors
+import com.ericg.debtsmanager.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -198,7 +198,9 @@ class SignInActivity : AppCompatActivity() {
 
         for (view in tryAgain) {
             view.visibility = View.VISIBLE
-            view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.anim_view_from_top))
+            view.startAnimation(AnimationUtils.loadAnimation(this,
+                R.anim.anim_view_from_top
+            ))
         }
         sChronometer.apply {
             isCountDown = true

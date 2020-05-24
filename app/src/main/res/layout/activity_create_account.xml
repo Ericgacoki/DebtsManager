@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLightBgBlack"
-    tools:context=".CreateAccountActivity">
+    tools:context=".firebaseAuth.CreateAccountActivity">
 
     <TextView
         android:id="@+id/tvCreateAccount"
