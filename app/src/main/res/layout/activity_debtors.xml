@@ -11,25 +11,26 @@
         android:id="@+id/debtorsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingBottom="78dp"
         android:clipToPadding="false"
+        android:paddingBottom="78dp"
         android:scrollbarStyle="outsideOverlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/debtorsHrScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/dBtnMenu"
         app:layout_constraintVertical_bias="1"
         tools:listitem="@layout/row_debtor_item" />
+
     <View
         android:layout_width="0dp"
         android:layout_height="78dp"
         android:background="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"/>
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddDebtor"
@@ -37,128 +38,102 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
         android:theme="@style/ThemeFab"
-        app:layout_constraintBottom_toBottomOf="@+id/debtorsRecyclerView"
-        app:layout_constraintEnd_toStartOf="@+id/guideline8"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/fabAnalysisAndSetting"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/debtorsRecyclerView"
-        app:layout_constraintVertical_bias="0.98"
+        app:layout_constraintVertical_bias="0.922"
         app:maxImageSize="30dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAnalysisAndSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/analysis"
-        android:theme="@style/ThemeFab"
-        app:layout_constraintBottom_toBottomOf="@+id/fabAddDebtor"
+    <ImageView
+        android:id="@+id/dBtnMenu"
+        android:layout_width="50dp"
+        android:layout_height="54dp"
+        android:background="@color/colorBlack"
+        android:padding="10dp"
+        android:src="@drawable/ic_menu"
+        app:layout_constraintBottom_toTopOf="@id/debtorsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline7"
-        app:layout_constraintTop_toTopOf="@+id/fabAddDebtor"
-        app:layout_constraintVertical_bias="0.995"
-        app:maxImageSize="30dp" />
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <HorizontalScrollView
-        android:background="@color/colorLightBgBlack"
         android:id="@+id/debtorsHrScrollView"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="54dp"
-        android:scrollbarSize="0dp"
+        android:background="@color/colorLightBgBlack"
         android:orientation="horizontal"
+        android:scrollbarSize="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dBtnMenu"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:background="@color/colorLightBgBlack"
             android:layout_height="match_parent"
+            android:background="@color/colorLightBgBlack"
             android:orientation="horizontal">
+
             <GridLayout
-                android:layout_marginBottom="7dp"
-                android:layout_marginTop="7dp"
-                android:background="@color/colorLightBgBlack"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:rowCount="1"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:background="@color/colorLightBgBlack"
                 android:columnCount="4"
-                >
-            <Button
-                android:id="@+id/dDebtors"
-                android:text="@string/debtors"
-                android:fontFamily="@font/exo_bold"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:background="@drawable/heading_selected"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="2.5dp"
-                 />
+                android:rowCount="1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:text="@string/my_debts"
-                android:id="@+id/dMyDebts"
-                android:fontFamily="@font/exo_bold"
-                android:layout_width="210dp"
-                android:textColor="@color/colorWhite"
-                android:layout_height="38dp"
-                android:background="@drawable/heading_not_selected"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                />
+                <Button
+                    android:id="@+id/dDebtors"
+                    android:layout_width="210dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/heading_selected"
+                    android:fontFamily="@font/exo_bold"
+                    android:text="@string/debtors" />
 
-            <Button
-                android:text="@string/loans"
-                android:fontFamily="@font/exo_bold"
-                android:id="@+id/dLoans"
-                android:textColor="@color/colorWhite"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:background="@drawable/heading_not_selected"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                />
+                <Button
+                    android:id="@+id/dMyDebts"
+                    android:layout_width="210dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/heading_not_selected"
+                    android:fontFamily="@font/exo_bold"
+                    android:text="@string/my_debts"
+                    android:textColor="@color/colorWhite" />
 
-            <Button
-                android:text="@string/installments_hp"
-                android:fontFamily="@font/exo_bold"
-                android:id="@+id/dInstallments"
-                android:textColor="@color/colorWhite"
-                android:layout_width="210dp"
-                android:layout_height="38dp"
-                android:background="@drawable/heading_not_selected"
-                android:layout_marginStart="2.5dp"
-                android:layout_marginEnd="2.5dp"
-                />
-        </GridLayout>
+                <Button
+                    android:id="@+id/dLoans"
+                    android:layout_width="210dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/heading_not_selected"
+                    android:fontFamily="@font/exo_bold"
+                    android:text="@string/loans"
+                    android:textColor="@color/colorWhite" />
+
+                <Button
+                    android:id="@+id/dInstallments"
+                    android:layout_width="210dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="2.5dp"
+                    android:layout_marginEnd="2.5dp"
+                    android:background="@drawable/heading_not_selected"
+                    android:fontFamily="@font/exo_bold"
+                    android:text="@string/installments_hp"
+                    android:textColor="@color/colorWhite" />
+            </GridLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </HorizontalScrollView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_percent="0.9"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
