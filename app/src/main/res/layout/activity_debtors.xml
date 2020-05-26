@@ -16,7 +16,7 @@
         android:scrollbarStyle="outsideOverlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias=".0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dBtnMenu"
         app:layout_constraintVertical_bias="1"
@@ -30,10 +30,10 @@
         android:theme="@style/ThemeFab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias=".498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/debtorsRecyclerView"
-        app:layout_constraintVertical_bias="0.974"
+        app:layout_constraintVertical_bias=".974"
         app:maxImageSize="30dp" />
 
     <ImageView
@@ -45,7 +45,7 @@
         android:src="@drawable/ic_menu"
         app:layout_constraintBottom_toTopOf="@id/debtorsRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_bias=".0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
