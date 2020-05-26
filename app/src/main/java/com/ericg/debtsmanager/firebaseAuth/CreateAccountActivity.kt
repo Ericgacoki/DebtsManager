@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -60,6 +61,7 @@ val permissions = arrayOf(
 
 class CreateAccountActivity : AppCompatActivity() {
 
+    var userName = ""
     val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -350,9 +352,31 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("LocalVariableName")
+    private fun setSharedPrefs(){ // todo crate a class for this fun
+        val PRIVATE_MODE = 0
+        val HAS_ACCOUNT = "hasAccount"
+        val USER_NAME = "userName"
+
+        val sharedPrefAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE)
+        val accountEditor = sharedPrefAccount.edit()
+        val sharedPrefName:SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
+        val nameEditor = sharedPrefName.edit()
+
+        accountEditor.apply {
+            putBoolean(HAS_ACCOUNT, true)
+        }
+        accountEditor.apply()
+
+        nameEditor.apply {
+            putString(USER_NAME, userName)
+        }
+        nameEditor.apply()
+    }
+
     private fun verifyInputs() {
 
-        val userName = aUserName.text.toString().trim()
+            userName = aUserName.text.toString().trim()
         val userEmail = aEmail.text.toString().trim()
         val userPhone = aPhone.text.toString().trim()
         val userPassword = aPassword.text.toString().trim()
@@ -380,15 +404,15 @@ class CreateAccountActivity : AppCompatActivity() {
         if (notEmpty && passwordIsStrong()) {
             loadingStatus(true, btnEnabled = false)
             mAuth!!
-                .createUserWithEmailAndPassword(userEmail, userPassword)
+                .createUserWithEmailAndPassword(userEmail, userPassword) // todo() save this to fireStore
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         loadingStatus(false, btnEnabled = false)
                         sendVerificationEmail()
                         startActivity(Intent(this@CreateAccountActivity, Debtors::class.java))
-                        saveUserData()
 
-                        // todo save user has account to shared preferences
+                        saveUserData()
+                        setSharedPrefs()
 
                         toast(this, "Welcome to Debts manager")
                         notifyAccountManagement(

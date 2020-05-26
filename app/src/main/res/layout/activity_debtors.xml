@@ -22,16 +22,6 @@
         app:layout_constraintVertical_bias="1"
         tools:listitem="@layout/row_debtor_item" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="78dp"
-        android:background="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddDebtor"
         android:layout_width="wrap_content"
@@ -43,7 +33,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/debtorsRecyclerView"
-        app:layout_constraintVertical_bias="0.922"
+        app:layout_constraintVertical_bias="0.974"
         app:maxImageSize="30dp" />
 
     <ImageView
@@ -64,7 +54,7 @@
         android:id="@+id/debtorsHrScrollView"
         android:layout_width="0dp"
         android:layout_height="54dp"
-        android:background="@color/colorLightBgBlack"
+        android:background="@color/colorBlack"
         android:orientation="horizontal"
         android:scrollbarSize="0dp"
         app:layout_constraintEnd_toEndOf="parent"

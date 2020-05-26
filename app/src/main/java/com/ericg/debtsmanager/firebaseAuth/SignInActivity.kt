@@ -2,6 +2,7 @@ package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -67,10 +68,11 @@ class SignInActivity : AppCompatActivity() {
                     }, elapseTime.toLong())
                 }
                 else -> {
-                    // testing todo remove the next line
-                    //startActivity(Intent(this, Debtors::class.java))
+                    // testing todo remove the next 2 lines
+                    startActivity(Intent(this, Debtors::class.java))
+                    setSharedPrefs()
 
-                    signInUser()
+                   // signInUser()
                 }
             }
         }
@@ -152,6 +154,15 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("LocalVariableName")
+    private fun setSharedPrefs(){
+        val AUTO_SIGN_IN = "autoSignIn"
+        val autoSignIn = autoSignIn.isChecked
+        val signInPrefs: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
+        val signInEditor = signInPrefs.edit()
+        signInEditor.putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
+    }
+
     private fun signInUser() {
         val sUserEmail = sEmail.text.toString().trim()
         val sUserPassword = sPassword.text.toString().trim()
@@ -169,6 +180,7 @@ class SignInActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
 
                         // todo check auto sign in and save it using shared preferences
+                        setSharedPrefs()
 
                         uIState(btnsEnabled = true, showLoading = false)
                         if (next.resolveActivity(packageManager) != null) {

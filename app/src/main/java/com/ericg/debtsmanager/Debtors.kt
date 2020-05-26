@@ -1,7 +1,8 @@
 package com.ericg.debtsmanager
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
@@ -15,10 +16,22 @@ class Debtors : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_debtors)
 
+        dMyDebts.setOnClickListener {
+            startActivity(Intent(this, MyDebts::class.java))
+        }
+
+        dLoans.setOnClickListener {
+            startActivity(Intent(this, Loans::class.java))
+        }
+
+        dInstallments.setOnClickListener {
+            startActivity(Intent(this, Installments::class.java))
+        }
+
         debtorsRecyclerView.apply {
             adapter = DebtorsAdapter()
             layoutManager = LinearLayoutManager(this@Debtors, LinearLayoutManager.VERTICAL, false)
         }
-        LinearSnapHelper().attachToRecyclerView(debtorsRecyclerView)
+      //  LinearSnapHelper().attachToRecyclerView(debtorsRecyclerView)
     }
 }
