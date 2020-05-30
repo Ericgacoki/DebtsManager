@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.ericg.debtsmanager">
 
     <dist:module dist:instant="true" />
@@ -21,15 +20,9 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission
-        android:name="android.permission.BIND_DEVICE_ADMIN"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission
-        android:name="android.permission.WRITE_SETTINGS"
-        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.READ_SMS" />
 
     <application
@@ -40,14 +33,17 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/ThemeNoActionBar">
-        <activity android:name=".Loans"/>
+        <activity android:name=".ParentActivity">
+
+        </activity>
+        <activity android:name=".fragments.Loans" />
         <activity android:name=".firebaseAuth.ResetPassword" />
-        <activity android:name=".AnalysisAndSettings" />
-        <activity android:name=".Installments" />
-        <activity android:name=".Debtors" />
+        <activity android:name=".fragments.AnalysisAndSettings" />
+        <activity android:name=".fragments.Installments" />
+        <activity android:name=".fragments.Debtors" />
         <activity android:name=".firebaseAuth.CreateAccountActivity" />
         <activity android:name=".firebaseAuth.SignInActivity" />
-        <activity android:name=".MyDebts" />
+        <activity android:name=".fragments.MyDebts" />
         <activity
             android:name=".SplashScreen"
             android:screenOrientation="portrait">

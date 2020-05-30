@@ -14,7 +14,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.ericg.debtsmanager.Debtors
+import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -69,10 +69,10 @@ class SignInActivity : AppCompatActivity() {
                 }
                 else -> {
                     // testing todo remove the next 2 lines
-                    startActivity(Intent(this, Debtors::class.java))
+                    startActivity(Intent(this, ParentActivity::class.java))
                     setSharedPrefs()
 
-                   // signInUser()
+                   signInUser()
                 }
             }
         }
@@ -173,7 +173,7 @@ class SignInActivity : AppCompatActivity() {
 
         if (notEmpty) {
             uIState(btnsEnabled = false, showLoading = true)
-            val next = Intent(this@SignInActivity, Debtors::class.java)
+            val next = Intent(this@SignInActivity, ParentActivity::class.java)
             mAuth!!
                 .signInWithEmailAndPassword(sUserEmail, sUserPassword)
                 .addOnCompleteListener { task ->

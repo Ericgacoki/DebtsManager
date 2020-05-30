@@ -19,7 +19,7 @@
     <string name="debtors">Debtors</string>
     <string name="my_debts">My debts</string>
     <string name="loans">Loans</string>
-    <string name="installments_hp">installments (hp)</string>
+    <string name="installments_hp">Installments</string>
     <string name="step_one_description"> Enter the Email you used to create the
                                         account in the \'Account Email\' field. Ensure that
                                         you have strong internet connection and do not exit the
@@ -34,8 +34,9 @@
     <string name="step_2">Step 2.</string>
     <string name="step_1">Step 1.</string>
     <string name="x">X</string>
-    <string name="nothing">Nothing</string>
     <string name="how_to_reset_password">How to reset password</string>
+    <string name="data_analysis"><u>Data Analysis</u></string>
+    <string name="analysis">Analysis</string>
     <!--
     Todo create strings here to avoid hard corded ones
 -->

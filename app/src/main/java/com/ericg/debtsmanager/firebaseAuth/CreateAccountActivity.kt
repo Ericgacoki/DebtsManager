@@ -22,8 +22,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.ericg.debtsmanager.AnalysisAndSettings
-import com.ericg.debtsmanager.Debtors
+import com.ericg.debtsmanager.fragments.AnalysisAndSettings
+import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
@@ -409,7 +409,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         loadingStatus(false, btnEnabled = false)
                         sendVerificationEmail()
-                        startActivity(Intent(this@CreateAccountActivity, Debtors::class.java))
+                        startActivity(Intent(this@CreateAccountActivity, ParentActivity::class.java))
 
                         saveUserData()
                         setSharedPrefs()

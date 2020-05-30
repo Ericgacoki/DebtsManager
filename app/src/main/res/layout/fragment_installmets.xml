@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#E2E1DA"
     android:layout_height="match_parent"
-    tools:context=".Installments">
-
+    tools:context=".fragments.Installments">
+<!--
     <ImageView
         android:id="@+id/iBtnMenu"
         android:layout_width="50dp"
@@ -95,6 +96,34 @@
             </GridLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </HorizontalScrollView>
+    </HorizontalScrollView>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/iRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        android:scrollbarStyle="outsideOverlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/row_installment_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddInstallment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:theme="@style/ThemeFab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.98"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.831"
+        app:maxImageSize="30dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
