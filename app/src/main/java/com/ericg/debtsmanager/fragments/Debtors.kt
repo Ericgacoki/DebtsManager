@@ -40,7 +40,7 @@ class Debtors : Fragment() {
         val addDebtor = AlertDialog.Builder(this.context)
         val addDebtorView = layoutInflater.inflate(R.layout.dialog_add_debtor, null)
         /**
-         *       set today as the max starting date and the min deadline
+         *       set today as the max starting date and the min deadline (avoid some logical )
          */
         val today = Calendar.getInstance().timeInMillis
 
