@@ -31,8 +31,4 @@ class Installments : Fragment() {
             Toast.makeText(this.context, "Ready to go!", Toast.LENGTH_LONG).show()
         }
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
 }

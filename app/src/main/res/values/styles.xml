@@ -10,9 +10,9 @@
     </style>
 
     <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-       <item name="windowActionBar">false</item>
+        <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorBlack</item>
-        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorPrimaryDark">@color/colorLightBgBlack</item>
         <item name="colorAccent">@color/colorOrange</item>
         <item name="android:textColorHint">@color/colorYellow</item>
         <item name="android:fontFamily">@font/exo</item>
@@ -27,10 +27,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="ThemeFab" >
+    <style name="ThemeFab">
         <item name="colorAccent">@color/colorFabTint</item>
-<!--
-        <item name="android:background">@color/colorBlack</item>
--->
+    </style>
+
+    <style name="ThemeGreenCalendar">
+        <item name="android:colorAccent">#3FD501</item>
+        <item name="android:colorPrimary">#3FD501</item>
+
     </style>
 </resources>
