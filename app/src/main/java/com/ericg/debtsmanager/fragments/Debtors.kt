@@ -2,7 +2,6 @@ package com.ericg.debtsmanager.fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,17 +36,17 @@ class Debtors : Fragment() {
     }
 
     @SuppressLint("InflateParams")
-    private fun showAddDebtorDialog(){
+    private fun showAddDebtorDialog() {
         val addDebtor = AlertDialog.Builder(this.context)
         val addDebtorView = layoutInflater.inflate(R.layout.dialog_add_debtor, null)
-/**
- *       set today as the max starting date and the min deadline
- */
+        /**
+         *       set today as the max starting date and the min deadline
+         */
         val today = Calendar.getInstance().timeInMillis
 
         addDebtorView.apply {
             addDebtorStartDate.maxDate = today
-            addDebtorDeadline.minDate  = today
+            addDebtorDeadline.minDate = today
         }
         addDebtor.apply {
             setView(addDebtorView)
