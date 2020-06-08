@@ -353,13 +353,14 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     @Suppress("LocalVariableName")
-    private fun setSharedPrefs(){ // todo crate a class for this fun
+    private fun setSharedPrefs(){
         val PRIVATE_MODE = 0
         val HAS_ACCOUNT = "hasAccount"
         val USER_NAME = "userName"
 
         val sharedPrefAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE)
         val accountEditor = sharedPrefAccount.edit()
+
         val sharedPrefName:SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
         val nameEditor = sharedPrefName.edit()
 
