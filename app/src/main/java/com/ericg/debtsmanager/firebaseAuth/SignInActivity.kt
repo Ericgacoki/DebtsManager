@@ -20,9 +20,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 import kotlinx.android.synthetic.main.activity_sign_in.*
-import java.lang.Exception
+import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 
 private var elapseTime = 0
 private var trials = 0
@@ -72,7 +71,7 @@ class SignInActivity : AppCompatActivity() {
                     startActivity(Intent(this, ParentActivity::class.java))
                     setSharedPrefs()
 
-                   signInUser()
+                    signInUser()
                 }
             }
         }
@@ -108,9 +107,13 @@ class SignInActivity : AppCompatActivity() {
                     mailIntent.putExtra(Intent.EXTRA_TEXT, issueDescription)
 
                     try {
-                        startActivity(Intent.createChooser(mailIntent,"Choose Email client [courtesy of Debts Manager]"))
-                    }
-                    catch (e: Exception){
+                        startActivity(
+                            Intent.createChooser(
+                                mailIntent,
+                                "Choose Email client [courtesy of Debts Manager]"
+                            )
+                        )
+                    } catch (e: Exception) {
                         toast(e.message.toString())
                     }
 
@@ -154,8 +157,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    @Suppress("LocalVariableName")
-    private fun setSharedPrefs(){
+    private fun setSharedPrefs() {
         val AUTO_SIGN_IN = "autoSignIn"
         val autoSignIn = autoSignIn.isChecked
         val signInPrefs: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
@@ -210,9 +212,12 @@ class SignInActivity : AppCompatActivity() {
 
         for (view in tryAgain) {
             view.visibility = View.VISIBLE
-            view.startAnimation(AnimationUtils.loadAnimation(this,
-                R.anim.anim_view_from_top
-            ))
+            view.startAnimation(
+                AnimationUtils.loadAnimation(
+                    this,
+                    R.anim.anim_view_from_top
+                )
+            )
         }
         sChronometer.apply {
             isCountDown = true
@@ -223,10 +228,10 @@ class SignInActivity : AppCompatActivity() {
         uIState(btnsEnabled = false, showLoading = false)
     }
 
-    private fun hideTryAgain(){
+    private fun hideTryAgain() {
         val tryAgain = arrayOf(tryView, tryAgainIn, sChronometer, sTime)
 
-        for (view in tryAgain){
+        for (view in tryAgain) {
             view.visibility = View.INVISIBLE
         }
         sChronometer.apply {
