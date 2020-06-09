@@ -17,13 +17,14 @@
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/applogo" />
+        tools:srcCompat="@drawable/profile8"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Debts Manager"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/colorYellow"
         android:textSize="32sp"
@@ -46,4 +47,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

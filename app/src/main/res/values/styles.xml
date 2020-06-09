@@ -36,4 +36,16 @@
         <item name="android:colorPrimary">#3FD501</item>
 
     </style>
+    <!--<style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="enforceTextAppearance">true</item>
+        <item name="enforceMaterialTheme">true</item>
+        <item name="android:background">@color/colorWhite</item>
+        <item name="itemBackground">@color/colorOrange</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+        <item name="itemIconTint">@color/colorBlack</item>
+        <item name="itemTextAppearanceInactive">?attr/textAppearanceCaption</item>
+        <item name="itemTextAppearanceActive">?attr/textAppearanceCaption</item>
+        <item name="itemTextColor">@color/colorBlack</item>
+        <item name="itemRippleColor">@color/colorBlue</item>
+    </style>-->
 </resources>

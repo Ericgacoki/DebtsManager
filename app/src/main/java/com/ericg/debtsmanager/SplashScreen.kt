@@ -8,6 +8,7 @@ package com.ericg.debtsmanager
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
@@ -36,6 +37,14 @@ class SplashScreen : AppCompatActivity() {
         }, 3000)
 
         val pIndices = 0..4
+        val pIcons =
+            arrayOf(
+                getDrawable(R.drawable.applogo),
+                getDrawable(R.drawable.profile8),
+                getDrawable(R.drawable.user1),
+                getDrawable(R.drawable.profile5),
+                getDrawable(R.drawable.ic_dollar)
+            )
         val pSlogans = arrayOf(
             "Your all time financial assistant",
             "Help at hand",
@@ -43,6 +52,7 @@ class SplashScreen : AppCompatActivity() {
             "Just for you",
             "The most trusted care taker"
         )
+        showRandomIcon(pIndices, pIcons)
         showRandomSlogan(pIndices, pSlogans)
     }
 
@@ -51,10 +61,13 @@ class SplashScreen : AppCompatActivity() {
         tvSlogan.text = slogans[randomIndex]
     }
 
+    private fun showRandomIcon(indices: IntRange, icons: Array<Drawable?>) {
+        val randomIndex = indices.indexOf(element = indices.random())
+        logo.setImageDrawable(icons[randomIndex])
+    }
+
     @Suppress("LocalVariableName")
     private fun splashOut() {
-
-        //todo  check if user is signed in or has account , their name .. using shared preferences then decide the next activity
 
         val AUTO_SIGN_IN = "autoSignIn"
         val HAS_ACCOUNT = "hasAccount"
@@ -72,15 +85,13 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(intent)
             }
             finish()
-        }
-        else if(!autoSignIn && hasAccount){
+        } else if (!autoSignIn && hasAccount) {
             val intent = Intent(this, SignInActivity::class.java)
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
             }
             finish()
-        }
-        else{
+        } else {
             val intent = Intent(this, CreateAccountActivity::class.java)
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)

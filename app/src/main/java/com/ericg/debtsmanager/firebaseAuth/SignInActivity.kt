@@ -67,9 +67,6 @@ class SignInActivity : AppCompatActivity() {
                     }, elapseTime.toLong())
                 }
                 else -> {
-                    // testing todo remove the next 2 lines
-                    startActivity(Intent(this, ParentActivity::class.java))
-                    setSharedPrefs()
 
                     signInUser()
                 }
@@ -157,12 +154,19 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("LocalVariableName")
     private fun setSharedPrefs() {
         val AUTO_SIGN_IN = "autoSignIn"
         val autoSignIn = autoSignIn.isChecked
         val signInPrefs: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
-        val signInEditor = signInPrefs.edit()
-        signInEditor.putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
+        signInPrefs.edit().putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
+
+        /**
+              in case the user had cleared app data, we need to set has account to true still
+         */
+
+        val HAS_ACCOUNT = "hasAccount"
+        getSharedPreferences(HAS_ACCOUNT, 0).edit().putBoolean(HAS_ACCOUNT, true).apply()
     }
 
     private fun signInUser() {
@@ -181,7 +185,6 @@ class SignInActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
-                        // todo check auto sign in and save it using shared preferences
                         setSharedPrefs()
 
                         uIState(btnsEnabled = true, showLoading = false)

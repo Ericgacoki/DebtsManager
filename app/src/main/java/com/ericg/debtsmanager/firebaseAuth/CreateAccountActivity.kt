@@ -391,10 +391,10 @@ class CreateAccountActivity : AppCompatActivity() {
         val inputsIds = arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
 
         fun saveUserData() {
-            // todo -> save data to firestore which has offline support
+            // todo -> save data to fireStore which has offline support
         }
 
-        val onTap = Intent(this, AnalysisAndSettings::class.java).apply {
+        val onTap = Intent(this, ParentActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pendingIntent = PendingIntent.getActivity(
@@ -511,6 +511,8 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun sendVerificationEmail() {
+        // update user
+        mUser = mAuth!!.currentUser
         if (mUser != null) {
             Handler().postDelayed({
                 mUser!!
