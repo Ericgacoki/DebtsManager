@@ -36,7 +36,9 @@
         <item name="android:colorPrimary">#3FD501</item>
 
     </style>
-    <!--<style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+
+    <!--
+    <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="enforceTextAppearance">true</item>
         <item name="enforceMaterialTheme">true</item>
         <item name="android:background">@color/colorWhite</item>
