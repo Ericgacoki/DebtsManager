@@ -33,7 +33,7 @@
 
     <style name="ThemeGreenCalendar">
         <item name="android:colorAccent">#3FD500</item>
-        <item name="android:colorPrimary">#3FD50</item>
+        <item name="android:colorPrimary">#3FD500</item>
 
     </style>
 
