@@ -33,21 +33,21 @@
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
         android:theme="@style/ThemeNoActionBar">
-        <activity android:name=".ParentActivity">
 
-        </activity>
-        <activity android:name=".fragments.Loans" />
-        <activity android:name=".firebaseAuth.ResetPassword" />
-        <activity android:name=".fragments.AnalysisAndSettings" />
-        <activity android:name=".fragments.Installments" />
-        <activity android:name=".fragments.Debtors" />
-        <activity android:name=".firebaseAuth.CreateAccountActivity" />
-        <activity android:name=".firebaseAuth.SignInActivity" />
-        <activity android:name=".fragments.MyDebts" />
-        <activity android:name=".fragments.Prefs" />
+        <activity android:name=".ParentActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".firebaseAuth.ResetPassword"
+            />
+        <activity
+            android:name=".firebaseAuth.CreateAccountActivity"
+             />
+        <activity
+            android:name=".firebaseAuth.SignInActivity"
+            />
         <activity
             android:name=".SplashScreen"
-            android:screenOrientation="portrait">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

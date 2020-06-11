@@ -22,7 +22,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.ericg.debtsmanager.fragments.AnalysisAndSettings
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
 import com.google.android.material.bottomsheet.BottomSheetDialog

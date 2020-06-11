@@ -10,6 +10,7 @@
     <color name="colorYellow">#FDB829</color>
     <color name="colorGreen">#34FF00</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorFadedWhite">#E2FFFFFF</color>
     <color name="colorBlack">#FC000000</color>
     <color name="colorLightBgBlack">#C4000000</color>
     <color name="colorDarkPurple">#090115</color>

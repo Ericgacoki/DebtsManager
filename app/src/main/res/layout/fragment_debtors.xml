@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EBE4E4"
     tools:context=".fragments.Debtors">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingBottom="100dp"
+        android:paddingBottom="180dp"
         android:scrollbarStyle="outsideOverlay"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,101 +29,9 @@
         android:theme="@style/ThemeFab"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.866"
+        app:layout_constraintVertical_bias="0.865"
         app:maxImageSize="30dp" />
-
-    <!--
-        <ImageView
-            android:id="@+id/dBtnMenu"
-            android:layout_width="50dp"
-            android:layout_height="54dp"
-            android:background="@color/colorBlack"
-            android:padding="10dp"
-            android:src="@drawable/ic_menu"
-            app:layout_constraintBottom_toTopOf="@id/debtorsRecyclerView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias=".0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="ContentDescription" />
-
-        <HorizontalScrollView
-            android:id="@+id/debtorsHrScrollView"
-            android:layout_width="0dp"
-            android:layout_height="54dp"
-            android:background="@color/colorBlack"
-            android:orientation="horizontal"
-            android:scrollbarSize="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/dBtnMenu"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorLightBgBlack"
-                android:orientation="horizontal">
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginBottom="7dp"
-                    android:background="@color/colorLightBgBlack"
-                    android:columnCount="4"
-                    android:rowCount="1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <Button
-                        android:id="@+id/dDebtors"
-                        android:layout_width="210dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="2.5dp"
-                        android:background="@drawable/heading_selected"
-                        android:fontFamily="@font/exo_bold"
-                        android:text="@string/debtors" />
-
-                    <Button
-                        android:id="@+id/dMyDebts"
-                        android:layout_width="210dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="2.5dp"
-                        android:layout_marginEnd="2.5dp"
-                        android:background="@drawable/heading_not_selected"
-                        android:fontFamily="@font/exo_bold"
-                        android:text="@string/my_debts"
-                        android:textColor="@color/colorWhite" />
-
-                    <Button
-                        android:id="@+id/dLoans"
-                        android:layout_width="210dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="2.5dp"
-                        android:layout_marginEnd="2.5dp"
-                        android:background="@drawable/heading_not_selected"
-                        android:fontFamily="@font/exo_bold"
-                        android:text="@string/loans"
-                        android:textColor="@color/colorWhite" />
-
-                    <Button
-                        android:id="@+id/dInstallments"
-                        android:layout_width="210dp"
-                        android:layout_height="38dp"
-                        android:layout_marginStart="2.5dp"
-                        android:layout_marginEnd="2.5dp"
-                        android:background="@drawable/heading_not_selected"
-                        android:fontFamily="@font/exo_bold"
-                        android:text="@string/installments_hp"
-                        android:textColor="@color/colorWhite" />
-                </GridLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </HorizontalScrollView>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

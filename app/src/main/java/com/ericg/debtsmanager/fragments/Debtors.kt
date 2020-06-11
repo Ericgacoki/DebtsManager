@@ -16,15 +16,15 @@ import java.util.*
 
 class Debtors : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_debtors, container, false)
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         debtorsRecyclerView.apply {
             adapter = DebtorsAdapter()
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)

@@ -6,24 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.adapters.AnalysisAdapter
+import com.ericg.debtsmanager.adapters.*
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragment_analysis_and_settings.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
-class AnalysisAndSettings : Fragment() {
+class Profile : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_analysis_and_settings, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_profile, container, false)
 
-    @Suppress("LocalVariableName")
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         dataAnalysisRecyclerView.apply {
             adapter = AnalysisAdapter()
         }
+
+        updateProfile()
+    }
+    @Suppress("LocalVariableName")
+    private fun updateProfile() {
 
         val mUserEmail = FirebaseAuth.getInstance().currentUser!!.email
         profileUserEmail.text = mUserEmail
@@ -31,6 +35,11 @@ class AnalysisAndSettings : Fragment() {
         val USER_NAME = "userName"
         val userName = this.activity!!.getSharedPreferences(USER_NAME, 0).getString(USER_NAME, "")
         profileUserName.text = userName
+
+        pDebtors.text = DebtorsAdapter().itemCount.toString()
+        pMyDebts.text = MyDebtsAdapter().itemCount.toString()
+        pLoans.text   = LoansAdapter().itemCount.toString()
+        pInstallments.text = InstallmentsAdapter().itemCount.toString()
 
     }
 }
