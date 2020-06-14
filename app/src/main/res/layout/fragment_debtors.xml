@@ -24,6 +24,25 @@
         app:layout_constraintVertical_bias="1"
         tools:listitem="@layout/row_debtor_item" />
 
+
+    <TextView
+        android:id="@+id/noDebtors"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/exo_bold"
+        android:text="Tap '+' button to add a debtor"
+        android:textColor="@color/colorBlack"
+        android:textSize="19sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/fabAddDebtor"
+        app:layout_constraintCircleRadius="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632"
+        tools:ignore="HardcodedText" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddDebtor"
         android:layout_width="wrap_content"
