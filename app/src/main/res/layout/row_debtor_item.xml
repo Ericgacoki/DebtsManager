@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  -->
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    app:cardBackgroundColor="#FFDDB8"
+    app:cardCornerRadius="20dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/stroke" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+
+            app:layout_constraintGuide_percent="0.01" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/debtorProfilePic"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:src="@drawable/ic_profile7"
+            app:civ_border_color="#000"
+            app:civ_border_width="0.0dp"
+            app:layout_constraintBottom_toTopOf="@+id/debtorName"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/debtorName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fontFamily="@font/exo_bold"
+            android:maxLength="19"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="17sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tvDebtStatus"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintHorizontal_bias="0.384"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            tools:text="Eric gacoki droider" />
+
+        <TextView
+            android:id="@+id/tvDebtorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/exo_bold"
+            android:text="Phone :"
+            android:textColor="#000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tvDebtStatus" />
+
+        <TextView
+            android:id="@+id/debtorPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="13"
+            android:text="+254745623611"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/debtStatus" />
+
+        <TextView
+            android:id="@+id/tvDebtAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/exo_bold"
+            android:text="Amount :"
+            android:textColor="#000"
+            app:layout_constraintBottom_toTopOf="@+id/tvDate"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/debtorAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:text="35000"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBottom_toTopOf="@+id/debtorDate"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/exo_bold"
+            android:text="Date :"
+            android:textColor="#000"
+            app:layout_constraintBottom_toTopOf="@+id/tvDue"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tvDebtAmount" />
+
+        <TextView
+            android:id="@+id/debtorDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:text="7-5-2020"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBottom_toTopOf="@+id/debtDueDate"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/debtorAmount" />
+
+        <TextView
+            android:id="@+id/tvDue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/exo_bold"
+            android:text="Due :"
+            android:textColor="#000"
+            app:layout_constraintBottom_toTopOf="@+id/tvDebtStatus"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/debtorProfilePic"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+
+        <TextView
+            android:id="@+id/debtDueDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="10"
+            android:text="7-6-2020"
+            android:textColor="@color/colorBlack"
+            app:layout_constraintBottom_toTopOf="@+id/debtStatus"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/debtorDate" />
+
+        <!--TODO use an external lib progress bar -->
+
+        <TextView
+            android:id="@+id/tvDebtStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/exo_bold"
+            android:text="Status:"
+            android:textColor="#000"
+            app:layout_constraintBottom_toTopOf="@+id/tvDebtorPhone"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/tvDue"
+            app:layout_constraintVertical_bias="0.518" />
+
+        <ImageView
+            android:id="@+id/debtStatus"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_late"
+            app:layout_constraintBottom_toTopOf="@+id/debtorPhone"
+            app:layout_constraintEnd_toStartOf="@+id/guideline5"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/debtDueDate" />
+
+        <ImageView
+            android:id="@+id/callDebtor"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/editDebtor"
+            app:srcCompat="@drawable/ic_phone" />
+
+        <ImageView
+            android:id="@+id/deleteDebtor"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            app:layout_constraintBottom_toTopOf="@+id/editDebtor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_delete_forever" />
+
+        <ImageView
+            android:id="@+id/editDebtor"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            app:layout_constraintBottom_toTopOf="@+id/callDebtor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toBottomOf="@+id/deleteDebtor"
+            app:srcCompat="@drawable/ic_edit" />
+
+        <View
+            android:layout_width="0.9dp"
+            android:layout_height="match_parent"
+            android:background="#000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/editDebtor"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.53" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.86" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <RatingBar
+            android:id="@+id/reputationRating"
+            style="@android:style/Widget.Material.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:isIndicator="true"
+            android:max="5"
+            android:numStars="5"
+            android:progressBackgroundTint="#FFF"
+            android:progressTint="#012ABD"
+            android:rating="2"
+            android:stepSize="1"
+            android:transformPivotX="0dp"
+            android:transformPivotY="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvDebtorPhone"
+            app:layout_constraintEnd_toEndOf="@+id/debtorProfilePic"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="@+id/debtorProfilePic"
+            app:layout_constraintTop_toBottomOf="@+id/debtorName"
+            app:layout_constraintVertical_bias="0.733" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

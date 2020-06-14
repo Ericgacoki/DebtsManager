@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/debtors"
+        android:icon="@drawable/profile5"
+        android:title="@string/debtors" />
+    <item
+        android:id="@+id/myDebts"
+        android:icon="@drawable/ic_mydebts2"
+        android:title="@string/my_debts" />
+
+    <item
+        android:id="@+id/loans"
+        android:icon="@drawable/ic_loan"
+        android:title="@string/loans" />
+    <item
+        android:id="@+id/installments"
+        android:icon="@drawable/installment"
+        android:title="@string/installments_hp" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_money_transfer"
+        android:title="@string/profile" />
+
+</menu>

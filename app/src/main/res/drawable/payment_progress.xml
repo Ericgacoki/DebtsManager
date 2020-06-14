@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:centerColor="#A05300"
+        android:endColor="#2BFD00"
+        android:startColor="#C52900" />
+
+</shape>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.Loans">
+    <!--
+
+        <ImageView
+            android:id="@+id/lBtnMenu"
+            android:layout_width="50dp"
+            android:layout_height="54dp"
+            android:background="@color/colorBlack"
+            android:padding="10dp"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <HorizontalScrollView
+            android:id="@+id/loansHrScrollView"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:background="@color/colorBlack"
+            android:orientation="horizontal"
+            android:scrollbarSize="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lBtnMenu"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorLightBgBlack"
+                android:orientation="horizontal">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:background="@color/colorLightBgBlack"
+                    android:columnCount="4"
+                    android:rowCount="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <Button
+                        android:id="@+id/lDebtors"
+                        android:layout_width="210dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="2.5dp"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/heading_not_selected"
+                        android:fontFamily="@font/exo_bold"
+                        android:text="@string/debtors" />
+
+                    <Button
+                        android:id="@+id/lMyDebts"
+                        android:layout_width="210dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="2.5dp"
+                        android:layout_marginEnd="2.5dp"
+                        android:background="@drawable/heading_not_selected"
+                        android:fontFamily="@font/exo_bold"
+                        android:text="@string/my_debts"
+                        android:textColor="@color/colorWhite" />
+
+                    <Button
+                        android:id="@+id/lLoans"
+                        android:layout_width="210dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="2.5dp"
+                        android:layout_marginEnd="2.5dp"
+                        android:background="@drawable/heading_selected"
+                        android:fontFamily="@font/exo_bold"
+                        android:text="@string/loans"
+                        android:textColor="@color/colorBlack" />
+
+                    <Button
+                        android:id="@+id/lInstallments"
+                        android:layout_width="210dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="2.5dp"
+                        android:layout_marginEnd="2.5dp"
+                        android:background="@drawable/heading_not_selected"
+                        android:fontFamily="@font/exo_bold"
+                        android:text="@string/installments_hp"
+                        android:textColor="@color/colorWhite" />
+                </GridLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </HorizontalScrollView>
+    -->
+
+
+    <TextView
+        android:id="@+id/noLoans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/exo_bold"
+        android:text="No loans yet, tap  '+'  button to add"
+        android:textColor="@color/colorBlack"
+        android:textSize="19sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"
+        app:layout_constraintCircleRadius="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.632"
+        tools:ignore="HardcodedText" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lRecyclerView"
+        android:layout_width="0dp"
+
+        android:layout_height="0dp"
+        android:paddingBottom="180dp"
+        tools:listitem="@layout/row_loan_item"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:theme="@style/ThemeFab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865"
+        app:maxImageSize="30dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
