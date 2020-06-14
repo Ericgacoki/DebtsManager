@@ -7,6 +7,7 @@ package com.ericg.debtsmanager.fragments
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -21,18 +22,27 @@ class Installments : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_installmets, container, false)
 
-    override fun onStart() {
-        super.onStart()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        updateUI()
+
+        fabAddInstallment.setOnClickListener {
+            Toast.makeText(this.context, "Coming soon!", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun updateUI() {
 
         iRecyclerView.apply {
             adapter = InstallmentsAdapter()
             layoutManager =
                 LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-
-
         }
-        fabAddInstallment.setOnClickListener {
-            Toast.makeText(this.context, "Ready to go!", Toast.LENGTH_LONG).show()
+        noInstallments.visibility = if (InstallmentsAdapter().itemCount == 0) {
+            View.VISIBLE
+        } else {
+            INVISIBLE
         }
     }
 }

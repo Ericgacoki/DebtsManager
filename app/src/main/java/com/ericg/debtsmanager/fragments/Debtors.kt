@@ -9,6 +9,8 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,13 +31,23 @@ class Debtors : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateUI()
+
+        fabAddDebtor.setOnClickListener {
+            showAddDebtorDialog()
+        }
+    }
+
+    private fun updateUI() {
         debtorsRecyclerView.apply {
             adapter = DebtorsAdapter()
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         }
 
-        fabAddDebtor.setOnClickListener {
-            showAddDebtorDialog()
+        noDebtors.visibility = if (DebtorsAdapter().itemCount == 0) {
+            VISIBLE
+        } else {
+            INVISIBLE
         }
     }
 

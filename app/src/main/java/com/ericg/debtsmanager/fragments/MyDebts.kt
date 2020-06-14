@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_my_debts.*
 class MyDebts : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? =  inflater.inflate(R.layout.fragment_my_debts, container, false)
+    ): View? = inflater.inflate(R.layout.fragment_my_debts, container, false)
 
 
     override fun onStart() {
@@ -31,6 +31,10 @@ class MyDebts : Fragment() {
         }
 
         val numMyDebts = MyDebtsAdapter().itemCount
-        noDebts.visibility = if (numMyDebts == 0) { VISIBLE } else { INVISIBLE }
+        noDebts.visibility = if (numMyDebts == 0) {
+            VISIBLE
+        } else {
+            INVISIBLE
+        }
     }
 }
