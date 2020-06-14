@@ -254,7 +254,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         aBtnIssue.setOnClickListener {
 
-            // todo() research onEditorActionListener --
+            // todo() research onEditorActionListener -->
             //  issueDialogLayout.tvIssueDescriptionLength.text = rIssue.text.toString().length.toString()
 
             if (ContextCompat.checkSelfPermission(
