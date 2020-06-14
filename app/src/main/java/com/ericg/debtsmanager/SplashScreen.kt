@@ -40,23 +40,30 @@ class SplashScreen : AppCompatActivity() {
             kotlin.run { splashOut() }
         }, 3000)
 
-        val pIndices = 0..4
+        val pIndices = 0..5
+        val imagesIndices = 0..6
+
         val pIcons =
             arrayOf(
-                getDrawable(R.drawable.applogo),
-                getDrawable(R.drawable.profile8),
-                getDrawable(R.drawable.user1),
-                getDrawable(R.drawable.profile5),
-                getDrawable(R.drawable.ic_dollar)
+                getDrawable(R.drawable.money_couple),
+                getDrawable(R.drawable.money_hand),
+                getDrawable(R.drawable.money_in_hand),
+                getDrawable(R.drawable.money_loan),
+                getDrawable(R.drawable.money_plant),
+                getDrawable(R.drawable.money_savings),
+                getDrawable(R.drawable.money_wheelbarrow)
             )
+
         val pSlogans = arrayOf(
             "Your all time financial assistant",
             "Help at hand",
-            "Easily manage your debts...",
+            "Easily manage your debts",
             "Just for you",
-            "The most trusted care taker"
+            "The most trusted care taker",
+            "Give out to the qualified"
         )
-        showRandomIcon(pIndices, pIcons)
+
+        showRandomImage(imagesIndices, pIcons)
         showRandomSlogan(pIndices, pSlogans)
     }
 
@@ -65,7 +72,7 @@ class SplashScreen : AppCompatActivity() {
         tvSlogan.text = slogans[randomIndex]
     }
 
-    private fun showRandomIcon(indices: IntRange, icons: Array<Drawable?>) {
+    private fun showRandomImage(indices: IntRange, icons: Array<Drawable?>) {
         val randomIndex = indices.indexOf(element = indices.random())
         logo.setImageDrawable(icons[randomIndex])
     }
