@@ -43,7 +43,7 @@ class SplashScreen : AppCompatActivity() {
         val pIndices = 0..5
         val imagesIndices = 0..6
 
-        val pIcons =
+        val pImages =
             arrayOf(
                 getDrawable(R.drawable.money_couple),
                 getDrawable(R.drawable.money_hand),
@@ -63,7 +63,7 @@ class SplashScreen : AppCompatActivity() {
             "Give out to the qualified"
         )
 
-        showRandomImage(imagesIndices, pIcons)
+        showRandomImage(imagesIndices, pImages)
         showRandomSlogan(pIndices, pSlogans)
     }
 
@@ -72,9 +72,9 @@ class SplashScreen : AppCompatActivity() {
         tvSlogan.text = slogans[randomIndex]
     }
 
-    private fun showRandomImage(indices: IntRange, icons: Array<Drawable?>) {
+    private fun showRandomImage(indices: IntRange, images: Array<Drawable?>) {
         val randomIndex = indices.indexOf(element = indices.random())
-        logo.setImageDrawable(icons[randomIndex])
+        logo.setImageDrawable(images[randomIndex])
     }
 
     @Suppress("LocalVariableName")
