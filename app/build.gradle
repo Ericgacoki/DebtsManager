@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ */
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
@@ -13,8 +17,8 @@ android {
         applicationId "com.ericg.debtsmanager"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0 #30DaysOfKotlin"
+        versionCode 2
+        versionName "1.8.6 #30DaysOfKotlin"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)  Updated by eric on  6/14/20 2:13 PM 
+ */
+
 package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
@@ -162,7 +166,7 @@ class SignInActivity : AppCompatActivity() {
         signInPrefs.edit().putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
 
         /**
-              in case the user had cleared app data, we need to set has account to true still
+        in case the user had cleared app data, we need to set has account to true still
          */
 
         val HAS_ACCOUNT = "hasAccount"

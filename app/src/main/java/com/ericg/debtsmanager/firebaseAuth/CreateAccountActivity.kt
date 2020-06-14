@@ -1,3 +1,7 @@
+/*
+ * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ */
+
 package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
@@ -376,7 +380,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun verifyInputs() {
 
-            userName = aUserName.text.toString().trim()
+        userName = aUserName.text.toString().trim()
         val userEmail = aEmail.text.toString().trim()
         val userPhone = aPhone.text.toString().trim()
         val userPassword = aPassword.text.toString().trim()

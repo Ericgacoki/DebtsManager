@@ -1,3 +1,7 @@
+<!--
+  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  -->
+
 <resources>
 
     <!-- Base application theme. -->
@@ -13,7 +17,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorBlack</item>
-        <item name="colorPrimaryDark">@color/colorLightBgBlack</item>
+        <item name="colorPrimaryDark">@color/colorBlack</item>
         <item name="colorAccent">@color/colorOrange</item>
         <item name="android:textColorHint">@color/colorYellow</item>
         <item name="android:fontFamily">@font/exo</item>
