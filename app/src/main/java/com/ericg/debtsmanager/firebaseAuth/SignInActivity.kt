@@ -60,6 +60,10 @@ class SignInActivity : AppCompatActivity() {
     private fun handleClicks() {
         sBtnSignIn.setOnClickListener {
 
+            /*// todo remove these lines
+            startActivity(Intent(this, ParentActivity::class.java))
+            finish()*/
+
             trials += 1
             elapseTime = trials * 6000
             when {
@@ -166,7 +170,7 @@ class SignInActivity : AppCompatActivity() {
         signInPrefs.edit().putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
 
         /**
-        in case the user had cleared app data, we need to set has account to true still
+        in case the user had cleared app data, we need to set has account to true again
          */
 
         val HAS_ACCOUNT = "hasAccount"

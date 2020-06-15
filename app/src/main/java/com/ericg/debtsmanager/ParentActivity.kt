@@ -6,6 +6,9 @@ package com.ericg.debtsmanager
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -55,7 +58,20 @@ class ParentActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.frameLayout, display)
             .attach(display)
+            //.addToBackStack(display.toString())
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
+    }
+
+    private var backPressEnabled: Boolean = false
+    override fun onBackPressed() {
+        Handler().postDelayed({ backPressEnabled = false }, 2000)
+        if (backPressEnabled) {
+            super.onBackPressed()
+            //finish()
+        } else {
+            Toast.makeText(this, "press again to exit", LENGTH_SHORT).show()
+            backPressEnabled = true
+        }
     }
 }

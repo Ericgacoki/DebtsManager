@@ -91,7 +91,7 @@ class ResetPassword : AppCompatActivity() {
                     if (image != null) {
                         getLinkStateImage.visibility = View.VISIBLE // this image does not disappear
                     }
-                } //com.ericg.debtsmanager.adapters
+                }
             }
         }, 2000)
     }
@@ -254,6 +254,7 @@ class ResetPassword : AppCompatActivity() {
             // todo update password in the database
             loadingStatus(2)
             try {
+                mUser!!.reload()
                 mUser!!
                     .updatePassword(newPassword)
                     .addOnCompleteListener { task ->
@@ -271,7 +272,7 @@ class ResetPassword : AppCompatActivity() {
                 toast(e.message.toString())
             }
         } else if (newPassword.isEmpty()) {
-            rNewPassword.error = "${rNewPassword.hint} is required"
+            rNewPassword.error = "NewPassword is required"
         }
     }
 

@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="180dp"
     app:cardBackgroundColor="#FFDDB8"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="15dp"
     android:layout_marginTop="15dp"
     android:layout_marginBottom="8dp"
     android:layout_marginStart="10dp"
@@ -168,8 +168,6 @@
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/debtorDate" />
 
-        <!--TODO use an external lib progress bar -->
-
         <TextView
             android:id="@+id/tvDebtStatus"
             android:layout_width="wrap_content"
@@ -201,7 +199,7 @@
             android:layout_height="59dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/editDebtor"
             app:srcCompat="@drawable/ic_phone" />

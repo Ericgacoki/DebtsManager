@@ -23,12 +23,12 @@ class MyDebtsAdapter : RecyclerView.Adapter<MyDebtsAdapter.MViewHolder>() {
         return MViewHolder(myDebtItem)
     }
 
-    override fun getItemCount() = 22
+    override fun getItemCount() = conv.size
 
     override fun onBindViewHolder(holder: MViewHolder, position: Int) {
 
-        val text = conv[position]
-        holder.view.myDebtText.text = text.toString()
+        val text = conv[position].toString()
+        holder.view.myDebtText.text = text
     }
 
     class MViewHolder(val view: View) : RecyclerView.ViewHolder(view)
