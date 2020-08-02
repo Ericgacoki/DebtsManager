@@ -4,7 +4,6 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <item
         android:id="@+id/debtors"
         android:icon="@drawable/profile5"
@@ -13,7 +12,6 @@
         android:id="@+id/myDebts"
         android:icon="@drawable/ic_mydebts2"
         android:title="@string/my_debts" />
-
     <item
         android:id="@+id/loans"
         android:icon="@drawable/ic_loan"

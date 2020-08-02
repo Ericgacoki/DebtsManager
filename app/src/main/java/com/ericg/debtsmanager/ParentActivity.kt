@@ -7,6 +7,7 @@ package com.ericg.debtsmanager
 
 import android.os.Bundle
 import android.os.Handler
+import android.widget.AbsListView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.appcompat.app.AppCompatActivity
@@ -15,23 +16,25 @@ import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.fragments.*
 import kotlinx.android.synthetic.main.activity_parent.*
 
-class ParentActivity : AppCompatActivity() {
+class ParentActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_parent)
+
+        // use the icon color as it is.
         bottomNav.itemIconTintList = null
 
         // set debtors as the default fragment
-        manageFragment(Debtors())
+        manageFragment(fragment = Debtors())
         navigateTo()
     }
 
     private fun navigateTo() {
-        bottomNav.setOnNavigationItemSelectedListener { item ->
+        bottomNav.setOnNavigationItemSelectedListener {
 
-            when (item.itemId) {
+            when (it.itemId) {
 
                 R.id.profile -> {
                     manageFragment(Profile())
@@ -53,17 +56,19 @@ class ParentActivity : AppCompatActivity() {
         }
     }
 
-    private fun manageFragment(display: Fragment) {
+    private fun manageFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.frameLayout, display)
-            .attach(display)
-            //.addToBackStack(display.toString())
+            .replace(R.id.frameLayout, fragment)
+            .attach(fragment)
+            //.addToBackStack(fragment.toString())
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
 
     private var backPressEnabled: Boolean = false
+
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         Handler().postDelayed({ backPressEnabled = false }, 2000)
         if (backPressEnabled) {

@@ -11,7 +11,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils.replace
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,9 +23,9 @@ import com.ericg.debtsmanager.firebaseAuth.CreateAccountActivity
 import com.ericg.debtsmanager.firebaseAuth.SignInActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import androidx.fragment.app.FragmentTransaction
+import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 
 private var mAuth: FirebaseAuth? = null
 private var mUser: FirebaseUser? = null
@@ -79,6 +78,7 @@ class Profile : Fragment() {
 
     }
 
+    @Suppress("DEPRECATION")
     private fun handleClicks() {
 
         deleteAccount.setOnClickListener {
@@ -87,7 +87,6 @@ class Profile : Fragment() {
 
         editAccount.setOnClickListener {
             // todo edit account
-               toast("coming soon")
             editUserAccount()
         }
 
@@ -124,10 +123,13 @@ class Profile : Fragment() {
             setTitle("Sure to Edit account ?")
             setMessage("You can edit personal data. Do you wish to proceed ?")
             setPositiveButton("Yes"){_,_->
+
+/*
+                create an activity instead of a fragment or find a way to hide the bottomNav when editAccount fragment is displayed
+*/
                 parentFragmentManager
                     .beginTransaction()
                     .replace(R.id.frameLayout, EditUserAccount())
-                    .addToBackStack(this@Profile.toString())
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .commit()
             }
@@ -135,6 +137,7 @@ class Profile : Fragment() {
             setNegativeButton("No"){_,_ ->
                 // exit dialog
             }
+            create().show()
         }
 
     }
@@ -148,7 +151,7 @@ class Profile : Fragment() {
     private fun deleteOrLogOut() {
 
         val delog = AlertDialog.Builder(this.context)
-        val delogView = layoutInflater.inflate(R.layout.dialog_delete_or_log_out, null)
+        val delogView: View = layoutInflater.inflate(R.layout.dialog_delete_or_log_out, null)
 
         delogView.btnDelete.setOnClickListener {
             deleteAccount()
