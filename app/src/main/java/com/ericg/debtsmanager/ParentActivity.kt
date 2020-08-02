@@ -23,7 +23,9 @@ class ParentActivity : AppCompatActivity(){
 
         setContentView(R.layout.activity_parent)
 
-        //// use the icon color as it is.
+/*
+         use the icon color as it is.
+*/
         bottomNav.itemIconTintList = null
 
         // set debtors as the default fragment
