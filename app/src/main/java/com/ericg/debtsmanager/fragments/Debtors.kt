@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
+import com.ericg.debtsmanager.utils.toast
 import kotlinx.android.synthetic.main.dialog_add_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
 import java.util.*
@@ -28,6 +29,7 @@ class Debtors : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_debtors, container, false)
 
+    @Suppress("DEPRECATION")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,15 +38,23 @@ class Debtors : Fragment() {
         fabAddDebtor.setOnClickListener {
             showAddDebtorDialog()
         }
+
+        swipeToRefreshDebtors.setOnRefreshListener {
+
+          //  swipeToRefreshDebtors.isRefreshing = false
+          //  toast("refreshed successfully")
+        }
     }
 
     private fun updateUI() {
         debtorsRecyclerView.apply {
-            adapter = DebtorsAdapter()
+            adapter = DebtorsAdapter(context)
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            // scroll to bottom automatically
+            scrollToPosition(DebtorsAdapter(this.context).itemCount - 1)
         }
 
-        noDebtors.visibility = if (DebtorsAdapter().itemCount == 0) {
+        noDebtors.visibility = if (DebtorsAdapter(context!!).itemCount == 0) {
             VISIBLE
         } else {
             INVISIBLE
@@ -55,6 +65,7 @@ class Debtors : Fragment() {
     private fun showAddDebtorDialog() {
         val addDebtor = AlertDialog.Builder(this.context)
         val addDebtorView = layoutInflater.inflate(R.layout.dialog_add_debtor, null)
+
         /**
          *       set today as the max starting date and the min deadline
          */

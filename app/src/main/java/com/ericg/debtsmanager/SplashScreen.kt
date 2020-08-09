@@ -21,7 +21,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.firebaseAuth.CreateAccountActivity
 import com.ericg.debtsmanager.firebaseAuth.SignInActivity
 import kotlinx.android.synthetic.main.activity_splash.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +44,11 @@ class SplashScreen : AppCompatActivity() {
         Handler().postDelayed({
             kotlin.run { splashOut() }
         }, 3000)
+
+        /*GlobalScope.launch(Dispatchers.Default) {
+            delay(3000L)
+            kotlin.run { splashOut() }
+        }*/
 
         val pIndices = 0..5
         val imagesIndices = 0..6
@@ -102,7 +112,7 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(intent)
             }
             finish()
-        } else {
+        } else { // this might be a new user
             val intent = Intent(this, CreateAccountActivity::class.java)
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)

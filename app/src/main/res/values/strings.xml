@@ -41,6 +41,9 @@
     <string name="how_to_reset_password">How to reset password</string>
     <string name="data_analysis"><u>Data Analysis</u></string>
     <string name="profile">Profile</string>
+    <string name="plus">+</string>
+    <string name="download_link"><u> https://playstore.google.com/debtsmanagerv186 </u></string>
+    <string name="developer"><b>Eric gacoki</b></string>
     <!--
     Todo create strings here to avoid hard corded ones
 -->

@@ -7,16 +7,19 @@ package com.ericg.debtsmanager
 
 import android.os.Bundle
 import android.os.Handler
-import android.widget.AbsListView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
+import android.os.PersistableBundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.fragments.*
+import com.ericg.debtsmanager.utils.toast
 import kotlinx.android.synthetic.main.activity_parent.*
+import kotlinx.coroutines.CoroutineScope
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
-class ParentActivity : AppCompatActivity(){
+class ParentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +33,14 @@ class ParentActivity : AppCompatActivity(){
 
         // set debtors as the default fragment
         manageFragment(fragment = Debtors())
+        disableCurrent(R.id.debtors)
         navigateTo()
     }
 
     private fun navigateTo() {
         bottomNav.setOnNavigationItemSelectedListener {
-
+            disableCurrent(it.itemId)
             when (it.itemId) {
-
                 R.id.profile -> {
                     manageFragment(Profile())
                 }
@@ -58,14 +61,22 @@ class ParentActivity : AppCompatActivity(){
         }
     }
 
+
     private fun manageFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.frameLayout, fragment)
             .attach(fragment)
-            //.addToBackStack(fragment.toString())
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
+    }
+
+    private fun disableCurrent(current: Int) {
+        val views: List<Int> =
+            listOf(R.id.profile, R.id.debtors, R.id.myDebts, R.id.loans, R.id.installments)
+        views.forEach { view ->
+            findViewById<View>(view).isClickable = view != current
+        }
     }
 
     private var backPressEnabled: Boolean = false
@@ -77,7 +88,7 @@ class ParentActivity : AppCompatActivity(){
             super.onBackPressed()
             //finish()
         } else {
-            Toast.makeText(this, "press again to exit", LENGTH_SHORT).show()
+            toast("press again to exit")
             backPressEnabled = true
         }
     }

@@ -7,9 +7,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/addDebtorScrollView"
     android:layout_width="match_parent"
+    android:focusable="false"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFF5D9">
@@ -142,33 +145,35 @@
             tools:ignore="HardcodedText" />
 
         <DatePicker
+            android:theme="@style/ThemeOrangeCalendar"
             android:id="@+id/addDebtorDeadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="@+id/addDebtorStartDate"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/addDebtorStartDate"
             app:layout_constraintTop_toBottomOf="@id/addDebtorStartDateHeader" />
 
-        <Button
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
             android:id="@+id/btnSaveDebtor"
-            android:layout_width="214dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/btn_sign_in"
-            android:fontFamily="@font/exo_bold"
-            android:text="save"
+            android:backgroundTint="@color/colorOrange"
+            android:text=" save changes "
+            app:fabSize="mini"
+            android:textSize="17sp"
+            android:textAlignment="center"
             android:textColor="@color/colorWhite"
-            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/addDebtorDeadline"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/addDebtorDeadline"
             app:layout_constraintTop_toBottomOf="@id/addDebtorDeadline"
             app:layout_constraintVertical_bias="0.0"
-            tools:ignore="HardcodedText" />
+             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -9,11 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.InstallmentsAdapter
+import com.ericg.debtsmanager.utils.toast
 import kotlinx.android.synthetic.main.fragment_installmets.*
 
 class Installments : Fragment() {
@@ -28,7 +28,7 @@ class Installments : Fragment() {
         updateUI()
 
         fabAddInstallment.setOnClickListener {
-            Toast.makeText(this.context, "Coming soon!", Toast.LENGTH_LONG).show()
+            toast("Coming soon!", 1)
         }
     }
 

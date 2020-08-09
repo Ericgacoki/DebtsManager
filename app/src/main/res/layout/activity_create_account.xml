@@ -8,17 +8,20 @@
     android:id="@+id/ConstraintLayoutAccount"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLightBgBlack"
+    android:background="#B9FFC8B7"
     tools:context=".firebaseAuth.CreateAccountActivity">
 
     <TextView
         android:id="@+id/tvCreateAccount"
+        android:drawableStart="@drawable/ic_about"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/exo_bold"
+        android:fontFamily="cursive"
         android:text="@string/create_new_account"
         android:textAlignment="center"
-        android:textColor="@color/colorYellow"
+        android:textColor="#FF3300"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayoutUsername"
@@ -47,7 +50,7 @@
             android:maxLength="20"
             android:maxLines="1"
             android:textAlignment="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/colorBlack" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -68,7 +71,7 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:textAlignment="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/colorBlack" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +93,7 @@
             android:maxLength="18"
             android:maxLines="1"
             android:textAlignment="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/colorBlack" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -112,7 +115,7 @@
             android:inputType="textPassword"
             android:maxLength="12"
             android:textAlignment="textStart"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/colorBlack" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -136,7 +139,7 @@
             android:maxLength="12"
             android:maxLines="1"
             android:textAlignment="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/colorBlack" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.Guideline
@@ -167,11 +170,11 @@
         android:layout_height="36dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/btn_log_in"
+        android:background="@drawable/btn_sign_in"
         android:text="@string/log_in"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#000000"
+        android:textColor="@color/colorBlack"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -201,11 +204,11 @@
         android:id="@+id/aBtnContacts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorLightBgBlack"
+        android:background="#00FF0C"
         android:text="@string/contacts"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#fff"
+        android:textColor="@color/colorBlack"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/aBtnSignIn"
@@ -235,11 +238,11 @@
         android:id="@+id/aBtnIssue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorLightBgBlack"
+        android:background="#00FF0C"
         android:text="@string/report_issue"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#fff"
+        android:textColor="@color/colorBlack"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

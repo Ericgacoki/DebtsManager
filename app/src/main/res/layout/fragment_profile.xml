@@ -7,11 +7,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="2dp"
     android:background="@color/colorWhite"
+    android:layout_margin="2dp"
+    tools:ignore="HardcodedText"
     android:padding="2dp"
-    tools:context=".fragments.Profile"
-    >
+    tools:context=".fragments.Profile">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileDp"
@@ -20,9 +20,9 @@
         android:elevation="10dp"
         android:padding="0dp"
         android:src="@drawable/personl"
-        app:civ_circle_background_color="#7A4837"
         app:civ_border_color="@color/colorWhite"
         app:civ_border_width="0.9dp"
+        app:civ_circle_background_color="#7A4837"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -30,13 +30,13 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/editAccount"
+        android:id="@+id/showMenu"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="3dp"
-        android:elevation="100dp"
+        android:elevation="90dp"
+        android:src="@drawable/ic_menu"
         app:civ_border_color="@color/colorWhite"
-        android:src="@drawable/set"
         app:civ_border_width="2dp"
         app:civ_circle_background_color="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
@@ -50,8 +50,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        app:cardBackgroundColor="#FF9100"
-        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="#FF9800"
+        app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toTopOf="@+id/textView6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,7 +71,7 @@
                 android:layout_marginBottom="3dp"
                 android:fontFamily="@font/exo_bold"
                 android:text="User Name"
-                android:textColor="#291701"
+                android:textColor="#4A1200"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@+id/profileUserEmail"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -88,13 +88,13 @@
                 android:fontFamily="sans-serif"
                 android:text="username@gmail.com"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp"
                 android:textIsSelectable="true"
-                tools:ignore="HardcodedText"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profileUserName" />
+                app:layout_constraintTop_toBottomOf="@+id/profileUserName"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -114,14 +114,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6.66dp"
                 android:text="My debts :"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.047"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imageView"
-                app:layout_constraintVertical_bias="0.25" />
+                app:layout_constraintVertical_bias="0.25"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -130,14 +130,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="16dp"
                 android:text="Debtors :"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textView4"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
-                app:layout_constraintVertical_bias="0.461" />
+                app:layout_constraintVertical_bias="0.461"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/pMyDebts"
@@ -146,14 +146,14 @@
                 android:layout_marginStart="5dp"
                 android:maxLength="3"
                 android:text="00"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="@+id/imageView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toTopOf="@+id/textView4"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/pDebtors"
@@ -161,7 +161,6 @@
                 android:layout_height="wrap_content"
                 android:maxLength="3"
                 android:text="00"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,35 +168,36 @@
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="@+id/pMyDebts"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Installments :"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.75"
                 app:layout_constraintStart_toEndOf="@+id/textView4"
                 app:layout_constraintTop_toTopOf="@+id/textView4"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Loans :"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="@+id/textView7"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/textView7"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/pInstallments"
@@ -206,21 +206,20 @@
                 android:layout_marginStart="5dp"
                 android:maxLength="3"
                 android:text="00"
-                tools:ignore="HardcodedText"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toTopOf="@+id/textView7"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/pLoans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="3"
-                tools:ignore="HardcodedText"
                 android:text="00"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView8"
@@ -228,7 +227,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/pInstallments"
                 app:layout_constraintTop_toTopOf="@+id/textView8"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="HardcodedText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
@@ -238,9 +238,9 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="3dp"
-        android:elevation="100dp"
-        app:civ_border_color="@color/colorWhite"
+        android:elevation="90dp"
         android:src="@drawable/ic_delete"
+        app:civ_border_color="@color/colorWhite"
         app:civ_border_width="2dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toStartOf="@+id/profileDp"
@@ -258,23 +258,172 @@
         android:text="@string/data_analysis"
         android:textColor="#3C2404"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/dataAnalysisRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dataAnalysisRecyclerView"
+    <!--
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshGraphs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="3dp"
-        android:clipToPadding="false"
-        android:paddingBottom="80dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
-        tools:listitem="@layout/row_analysis_item" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dataAnalysisRecyclerView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/row_analysis_item" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pie chart coming soon..."
+        android:textSize="18sp"
+        android:textColor="#815C5D5E"
+        app:layout_constraintTop_toBottomOf="@id/textView6"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <!-- Area under test 1-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layMenuParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#5EFF5722"
+        android:elevation="100dp"
+        android:visibility="invisible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="30dp"
+                app:cardPreventCornerOverlap="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/exitMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"
+                        android:layout_marginBottom="1dp"
+                        android:src="@drawable/ic_arrow_hide"
+                        tools:ignore="ContentDescription" />
+
+                    <Button
+                        android:id="@+id/pBtnEditAccount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:background="@drawable/menu_buttons_bg"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_marginBottom="15dp" android:drawableStart="@drawable/ic__edit_attributes"
+                        android:text="    Edit  account  "
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+
+                    <Button
+                        android:id="@+id/pBtnAppSettings"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="5dp"
+                        android:background="@drawable/menu_buttons_bg"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:drawableEnd="@drawable/ic_settings"
+                        android:text=" App    settings  "
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/pBtnAboutDev"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:background="@drawable/menu_buttons_bg"
+                        android:drawableStart="@drawable/ic_about"
+                        android:text="    About  dev      "
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/pBtnShareToOthers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginBottom="15dp"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="5dp"
+                        android:background="@drawable/menu_buttons_bg"
+                        android:drawableEnd="@drawable/ic_share"
+                        android:text="Share to others "
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/pBtnRate5Star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="10dp"
+                        android:background="@drawable/menu_buttons_bg"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:drawableStart="@drawable/ic_rate"
+                        android:text="     Rate 5 stars  "
+                        android:textAlignment="gravity"
+                        android:textAllCaps="false"
+                        android:textStyle="bold"
+                         />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

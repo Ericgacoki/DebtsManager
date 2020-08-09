@@ -12,13 +12,12 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -65,10 +64,7 @@ class ResetPassword : AppCompatActivity() {
 
     }
 
-    private fun toast(msg: String) {
-        Toast.makeText(this@ResetPassword, msg, LENGTH_LONG).show()
-    }
-
+    @Suppress("DEPRECATION")
     private fun Boolean.toggle(image: Int? = R.drawable.sad_face) {
         for (item in getLink) {
             item.visibility = View.INVISIBLE
@@ -136,8 +132,7 @@ class ResetPassword : AppCompatActivity() {
                             )
                         )
                     } catch (e: Exception) {
-                        CreateAccountActivity()
-                            .toast(context, e.message.toString())
+                        toast( e.message.toString())
                     }
                 } else {
                     ActivityCompat.requestPermissions(
@@ -162,8 +157,7 @@ class ResetPassword : AppCompatActivity() {
                 try {
                     startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
                 } catch (e: Exception) {
-                    CreateAccountActivity()
-                        .toast(context, e.message.toString())
+                    toast( e.message.toString())
                 }
             }
 
@@ -367,8 +361,7 @@ class ResetPassword : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Select browser"))
 
         } catch (e: Exception) {
-            CreateAccountActivity()
-                .toast(context, e.message.toString())
+            toast( e.message.toString())
         }
     }
 
@@ -384,8 +377,7 @@ class ResetPassword : AppCompatActivity() {
         try {
             startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
         } catch (e: Exception) {
-            CreateAccountActivity()
-                .toast(context, e.message.toString())
+            toast( e.message.toString())
         }
     }
 

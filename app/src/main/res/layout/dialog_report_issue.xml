@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#011442">
+    android:background="#FFFFFF">
 
     <TextView
         android:id="@+id/textView"
@@ -15,9 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         android:drawableStart="@drawable/ic_bug"
+        android:drawableTint="@color/colorBlack"
         android:text="  What's the matter ?"
         android:textAlignment="center"
-        android:textColor="@color/colorYellow"
+        android:textColor="@color/colorBlack"
         android:textSize="23sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
+        android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/rSendIssue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,25 +40,34 @@
             android:id="@+id/rIssue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Issue description"
             android:inputType="textMultiLine"
             android:maxLength="200"
+            android:textAlignment="center"
+            android:background="@color/colorOrange"
             android:maxLines="9"
-            android:textColor="@color/colorWhite"
+            android:padding="5dp"
+            android:textColorHint="@color/colorBlack"
+            android:textColor="@color/colorBlack"
             android:textSize="19sp"
-            tools:text="dfghjklkjhgffghjfcghjkjhgfghjknjhgfxghjknbvgfghjnjbhgfxghjkjbvgfghjkjhgfgjklmkjhgjnkjbvgfxghjertyuiouytrertyuioiuytrertyuiiuytrertyuiiuytrertyuiiuytrertyuioiuytrertyuiuytreweuioiutyuytytrtyyyytre" />
+            tools:text="I was unable to create an account. please help me out. thank you" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <ImageView
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
         android:id="@+id/rSendIssue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        android:src="@drawable/ic_send"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/colorBlack"
+        android:text=" send issue "
+        android:textColor="@color/colorYellow"
+        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
         app:layout_constraintVertical_bias="0.085" />
@@ -66,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="..."
-        android:textColor="@color/colorYellow"
+        android:textColor="@color/colorOrange"
         app:layout_constraintBottom_toBottomOf="@+id/tvMaxIssueDescriptionLength"
         app:layout_constraintEnd_toStartOf="@+id/tvMaxIssueDescriptionLength"
         app:layout_constraintHorizontal_bias="0.9"
@@ -79,13 +90,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/200"
-        android:textColor="@color/colorYellow"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@+id/rSendIssue"
         app:layout_constraintEnd_toStartOf="@+id/rSendIssue"
-        app:layout_constraintHorizontal_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.171"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toTopOf="@+id/rSendIssue"
+        app:layout_constraintVertical_bias="0.5" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

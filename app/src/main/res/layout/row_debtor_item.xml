@@ -256,27 +256,20 @@
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.3" />
 
-        <RatingBar
-            android:id="@+id/reputationRating"
-            style="@android:style/Widget.Material.RatingBar.Small"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/expandDebtorCard"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:isIndicator="true"
-            android:max="5"
-            android:numStars="5"
-            android:progressBackgroundTint="#FFF"
-            android:progressTint="#012ABD"
-            android:rating="2"
-            android:stepSize="1"
+            android:src="@drawable/ic_arrow_expand"
             android:transformPivotX="0dp"
             android:transformPivotY="0dp"
             app:layout_constraintBottom_toBottomOf="@+id/tvDebtorPhone"
             app:layout_constraintEnd_toEndOf="@+id/debtorProfilePic"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/debtorProfilePic"
-            app:layout_constraintTop_toBottomOf="@+id/debtorName"
-            app:layout_constraintVertical_bias="0.733" />
+            app:layout_constraintTop_toTopOf="@+id/tvDebtorPhone"
+            app:layout_constraintVertical_bias="0.5"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

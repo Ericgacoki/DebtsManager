@@ -4,6 +4,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ericg.debtsmanager">
 
     <dist:module dist:instant="true" />
@@ -35,16 +36,33 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/applogo"
         android:supportsRtl="true"
-        android:theme="@style/ThemeNoActionBar">
+        android:theme="@style/ThemeNoActionBar"
+        tools:replace="android:theme">
 
         <activity
             android:name=".ParentActivity"
-            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".firebaseAuth.ResetPassword" />
-        <activity android:name=".firebaseAuth.CreateAccountActivity" />
-        <activity android:name=".firebaseAuth.SignInActivity" />
-        <activity android:name=".SplashScreen">
+        <activity
+            android:name=".firebaseAuth.ResetPassword"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".admin.AboutDeveloper"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditUserAccount"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AppSettings"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".firebaseAuth.CreateAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".firebaseAuth.SignInActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

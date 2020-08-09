@@ -13,13 +13,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -55,12 +53,13 @@ class SignInActivity : AppCompatActivity() {
         fDatabase = FirebaseFirestore.getInstance()
     }
 
+    @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.N)
     @SuppressLint("InflateParams")
     private fun handleClicks() {
         sBtnSignIn.setOnClickListener {
 
-            /*// todo remove these lines
+            /*// todo remove these lines!
             startActivity(Intent(this, ParentActivity::class.java))
             finish()*/
 
@@ -107,9 +106,11 @@ class SignInActivity : AppCompatActivity() {
 
                 if (issueDescription.trim().isNotEmpty()) {
 
-                    mailIntent.putExtra(Intent.EXTRA_EMAIL, mailToAddress)
-                    mailIntent.putExtra(Intent.EXTRA_SUBJECT, mailSubject)
-                    mailIntent.putExtra(Intent.EXTRA_TEXT, issueDescription)
+                    mailIntent.apply {
+                        putExtra(Intent.EXTRA_EMAIL, mailToAddress)
+                        putExtra(Intent.EXTRA_SUBJECT, mailSubject)
+                        putExtra(Intent.EXTRA_TEXT, issueDescription)
+                    }
 
                     try {
                         startActivity(
@@ -149,8 +150,8 @@ class SignInActivity : AppCompatActivity() {
 
         if (showLoading) {
             sLoadingView.apply {
-                setRoundColor(getColor(R.color.colorOrange))
-                setViewColor(getColor(R.color.colorGreen))
+                setRoundColor(getColor(R.color.colorBlack))
+                setViewColor(getColor(R.color.colorBlue))
                 startAnim()
                 visibility = View.VISIBLE
             }
@@ -190,8 +191,8 @@ class SignInActivity : AppCompatActivity() {
             val next = Intent(this@SignInActivity, ParentActivity::class.java)
             mAuth!!
                 .signInWithEmailAndPassword(sUserEmail, sUserPassword)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
 
                         setSharedPrefs()
 
@@ -202,7 +203,7 @@ class SignInActivity : AppCompatActivity() {
                         } else {
                             toast("Error: null activity!")
                         }
-                    } else if (task.isCanceled || !task.isSuccessful) {
+                    } else if (it.isCanceled || !it.isSuccessful) {
                         toast("sign in failed")
                         uIState(btnsEnabled = true, showLoading = false)
                     }
@@ -220,22 +221,15 @@ class SignInActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     private fun tryAgain() {
         val tryAgain = arrayOf(tryView, tryAgainIn, sChronometer, sTime)
-
-        for (view in tryAgain) {
-            view.visibility = View.VISIBLE
-            view.startAnimation(
-                AnimationUtils.loadAnimation(
-                    this,
-                    R.anim.anim_view_from_top
-                )
-            )
-        }
         sChronometer.apply {
             isCountDown = true
             base = SystemClock.elapsedRealtime() + elapseTime
             start()
         }
         sOr.visibility = View.INVISIBLE
+        for (view in tryAgain) {
+            view.visibility = View.VISIBLE
+        }
         uIState(btnsEnabled = false, showLoading = false)
     }
 
@@ -248,24 +242,15 @@ class SignInActivity : AppCompatActivity() {
         sChronometer.apply {
             stop()
         }
-
         sOr.visibility = View.VISIBLE
         uIState(btnsEnabled = true, showLoading = false)
     }
 
-    private fun toast(msg: String) {
-        Toast.makeText(this@SignInActivity, msg, LENGTH_LONG).show()
-    }
-
     /** disable backPress */
 
-    private val canGoBack = false
-
     override fun onBackPressed() {
-        toast("use other buttons")
-
-        if (canGoBack) {
-            super.onBackPressed()
-        }
+        toast("can't go back at this stage")
     }
+
 }
+//  @_ericgacoki -> (Twitter),  gacokieric@gmail.com, tel: +254716965216

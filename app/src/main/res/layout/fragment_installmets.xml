@@ -41,17 +41,20 @@
         app:layout_constraintVertical_bias="0.632"
         tools:ignore="HardcodedText" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddInstallment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
-        android:theme="@style/ThemeFab"
+        android:text="+"
+        app:fabSize="auto"
+        android:textSize="35sp"
+        android:textColor="@color/colorOrange"
+        android:backgroundTint="@color/colorLightBgBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.97"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.865"
-        app:maxImageSize="30dp" />
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,6 @@
 package com.ericg.debtsmanager.firebaseAuth
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -18,8 +17,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -28,6 +25,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
@@ -62,10 +60,11 @@ val permissions = arrayOf(
     android.Manifest.permission.CALL_PHONE
 )
 
+@Suppress("DEPRECATION")
 class CreateAccountActivity : AppCompatActivity() {
 
-    var userName = ""
-    val context = this
+    private var userName = ""
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -190,8 +189,7 @@ class CreateAccountActivity : AppCompatActivity() {
                             )
                         )
                     } catch (e: Exception) {
-                        CreateAccountActivity()
-                            .toast(context, e.message.toString())
+                        toast(e.message.toString())
                     }
                 } else {
                     ActivityCompat.requestPermissions(
@@ -216,8 +214,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 try {
                     startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
                 } catch (e: Exception) {
-                    CreateAccountActivity()
-                        .toast(context, e.message.toString())
+                    toast(e.message.toString())
                 }
             }
 
@@ -248,7 +245,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 startActivity(signInIntent)
                 finish()
             } else {
-                toast(this, "null intent")
+                toast("null intent")
             }
         }
 
@@ -271,13 +268,13 @@ class CreateAccountActivity : AppCompatActivity() {
 
                     val issueDescription = issueDialogLayout.rIssue.text.toString()
                     val mailSubject = "Debts manager create account issue"
-                    val mailToAddress: Array<String> = arrayOf("debtsmanagercare@gmail.com")
+                    val mailToAddress: Array<String> = arrayOf("debtsmanagerhelp@gmail.com")
 
                     if (issueDescription.trim().isNotEmpty()) {
 
                         emailUs(mailSubject, mailToAddress, issueDescription)
                     } else {
-                        toast(this, "can't send empty description")
+                        toast("can't send empty description")
                     }
                 }
                 issueDialog.apply {
@@ -356,7 +353,7 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     @Suppress("LocalVariableName")
-    private fun setSharedPrefs(){
+    private fun setSharedPrefs() {
         val PRIVATE_MODE = 0
         val HAS_ACCOUNT = "hasAccount"
         val USER_NAME = "userName"
@@ -364,7 +361,7 @@ class CreateAccountActivity : AppCompatActivity() {
         val sharedPrefAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE)
         val accountEditor = sharedPrefAccount.edit()
 
-        val sharedPrefName:SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
+        val sharedPrefName: SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
         val nameEditor = sharedPrefName.edit()
 
         accountEditor.apply {
@@ -394,7 +391,7 @@ class CreateAccountActivity : AppCompatActivity() {
         val inputsIds = arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
 
         fun saveUserData() {
-            // todo -> save data to fireStore which has offline support
+            // todo -> async (with coroutines) save data to fireStore which has offline support
         }
 
         val onTap = Intent(this, ParentActivity::class.java).apply {
@@ -408,26 +405,34 @@ class CreateAccountActivity : AppCompatActivity() {
         if (notEmpty && passwordIsStrong()) {
             loadingStatus(true, btnEnabled = false)
             mAuth!!
-                .createUserWithEmailAndPassword(userEmail, userPassword) // todo() save this to fireStore
+                .createUserWithEmailAndPassword(
+                    userEmail,
+                    userPassword
+                ) // todo() save this to fireStore
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         loadingStatus(false, btnEnabled = false)
                         sendVerificationEmail()
-                        startActivity(Intent(this@CreateAccountActivity, ParentActivity::class.java))
+                        startActivity(
+                            Intent(
+                                this@CreateAccountActivity,
+                                ParentActivity::class.java
+                            )
+                        )
 
                         saveUserData()
                         setSharedPrefs()
 
-                        toast(this, "Welcome to Debts manager")
+                        toast("Welcome to Debts manager")
                         notifyAccountManagement(
                             "Congratulations $userName!",
-                            "To manage your account, click analysis >> " +
+                            "To manage your account, click profile >> " +
                                     "settings then perform any changes you wish",
                             pendingIntent
                         )
                         finish()
                     } else if (task.isCanceled || !task.isSuccessful) {
-                        toast(this, "Oops! an error occurred")
+                        toast("Oops! an error occurred")
                         loadingStatus(false, btnEnabled = true)
                     }
                 }
@@ -448,16 +453,12 @@ class CreateAccountActivity : AppCompatActivity() {
         }
     }
 
-    fun toast(context: Activity, msg: String) {
-        Toast.makeText(context, msg, LENGTH_LONG).show()
-    }
-
     private fun loadingStatus(showLoading: Boolean, btnEnabled: Boolean) {
 
         if (showLoading) {
             aLoadingView.apply {
                 setViewColor(getColor(R.color.colorGreen))
-                setRoundColor(getColor(R.color.colorOrange))
+                setRoundColor(getColor(R.color.colorBlack))
                 startAnim()
                 visibility = View.VISIBLE
             }
@@ -491,48 +492,46 @@ class CreateAccountActivity : AppCompatActivity() {
             startActivity(Intent.createChooser(intent, "Select browser"))
 
         } catch (e: Exception) {
-            CreateAccountActivity()
-                .toast(context, e.message.toString())
+            toast(e.message.toString())
         }
     }
 
     private fun emailUs(subject: String, toAddress: Array<String>, body: String = "") {
         val sendEmailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
-        sendEmailIntent.apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_EMAIL, toAddress)
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
+            .apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_EMAIL, toAddress)
+                putExtra(Intent.EXTRA_SUBJECT, subject)
+                putExtra(Intent.EXTRA_TEXT, body)
+            }
 
         try {
             startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
         } catch (e: Exception) {
-            CreateAccountActivity()
-                .toast(context, e.message.toString())
+            toast(e.message.toString())
         }
     }
 
     private fun sendVerificationEmail() {
         // update user
         mUser = mAuth!!.currentUser
-        if (mUser != null) {
+        if (mUser != null) { // Todo -> use a coroutine here and remove handler
             Handler().postDelayed({
                 mUser!!
                     .sendEmailVerification()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            toast(this, "Link sent to ${mUser!!.email}")
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            toast("Link sent to ${mUser!!.email}")
                         } else {
-                            toast(this, "Sending failed!")
+                            toast("Sending failed!")
                         }
                     }
             }, 3000)
         } else {
-            toast(this, "No user to send Email to!")
+            toast("no user to send email to")
         }
     }
 
     // disable back press
-    override fun onBackPressed() = toast(this, "Use other buttons instead")
+    override fun onBackPressed() = toast("can't go back at this stage")
 }
