@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  8/8/20 3:14 PM
+  -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="1dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorFadedGrey"
+        android:layout_height="match_parent">
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Widget.AppCompat.RatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="30dp"
+            android:max="5"
+            android:numStars="5"
+            android:stepSize="1"
+            android:rating="3"
+            android:progressTint="#F63100"
+            android:progressBackgroundTint="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="UnusedAttribute" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etRatingComment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:hint="Comment/feedback (optional)"
+            android:maxLength="100"
+            android:maxLines="6"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textColorHint="#7A000000"
+            app:layout_constraintBottom_toTopOf="@+id/btnRate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+            tools:ignore="HardcodedText"
+            tools:text="The best financial app on the planet" />
+
+        <ImageView
+            android:id="@+id/collapseRatingView"
+            android:layout_width= "60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_arrow_expand"
+            app:layout_constraintEnd_toStartOf="@id/btnRate"
+            app:layout_constraintStart_toStartOf="@id/etRatingComment"
+            app:layout_constraintBottom_toBottomOf="@id/btnRate"
+            app:layout_constraintTop_toTopOf="@id/btnRate"
+            app:layout_constraintHorizontal_bias="0"
+            tools:ignore="ContentDescription" />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/btnRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="30dp"
+            android:layout_marginBottom="28dp"
+            android:backgroundTint="@color/colorWhite"
+            android:text="       Send      "
+            android:textColor="#F63100"
+            android:textStyle="bold"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/etRatingComment"
+
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

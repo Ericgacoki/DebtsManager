@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  8/6/20 3:49 PM
+  -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="90">
+    <translate
+        android:fromYDelta="-20"
+        android:toYDelta="10" />
+</set>
