@@ -407,8 +407,8 @@ class Profile : Fragment() {
         val autoSign: SharedPreferences? = activity!!.userSharedPrefs(AUTO_SIGN_IN, 0)
         val autoSignEditor = autoSign?.edit()
 
-        val hasAccount: SharedPreferences = activity!!.getSharedPreferences(HAS_ACCOUNT, 0)
-        val hasAccountEditor = hasAccount.edit()
+        val hasAccount: SharedPreferences? = activity!!.userSharedPrefs(HAS_ACCOUNT, 0)
+        val hasAccountEditor = hasAccount?.edit()
 
         val userName: SharedPreferences = activity!!.getSharedPreferences(USER_NAME, 0)
         val userNameEditor = userName.edit()
@@ -416,7 +416,7 @@ class Profile : Fragment() {
         if (whichOne == "all") {
             val prefsEditors = arrayOf(autoSignEditor, hasAccountEditor, userNameEditor)
             prefsEditors.forEach { editor: SharedPreferences.Editor? ->
-                editor!!.clear().apply()
+                editor?.clear()?.apply()
             }
             return
         }
