@@ -9,12 +9,13 @@
     <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorDarkOrange</item>
-        <item name="colorPrimaryDark">@color/colorDarkOrange</item>
+        <item name="colorPrimary">@color/colorLightOrange</item>
+        <item name="colorPrimaryDark">@color/colorLightOrange</item>
         <item name="colorAccent">@color/colorLightBgBlack</item>
         <item name="android:textColorHint">@color/colorBlack</item>
         <item name="android:fontFamily">@font/exo</item>
     </style>
+
 
 <style name="ThemeSwitch">
     <item name="colorAccent">#FF5C29</item>
@@ -28,6 +29,11 @@
 
     <style name="ThemeFab">
         <item name="colorAccent">@color/colorFabTint</item>
+        <item name="colorPrimaryDark">@android:color/holo_orange_dark</item>
+    </style>
+
+    <style name="ThemeBottomNav" parent="@style/Widget.Design.BottomNavigationView">
+        <item name="colorAccent">@color/colorLightOrange</item>
     </style>
 
     <style name="ThemeGreenCalendar">
@@ -41,6 +47,7 @@
         <item name="android:colorPrimary">@color/colorOrange</item>
 
     </style>
+
 
     <!--<style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="enforceTextAppearance">true</item>

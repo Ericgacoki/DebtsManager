@@ -7,7 +7,7 @@ package com.ericg.debtsmanager
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.extensions.toast
 import kotlinx.android.synthetic.main.activity_app_settings.*
 
 /**

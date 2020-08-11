@@ -5,9 +5,9 @@
 package com.ericg.debtsmanager.admin
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.extensions.snackBuilder
 import kotlinx.android.synthetic.main.activity_about_dev.*
 
 /**
@@ -15,29 +15,18 @@ import kotlinx.android.synthetic.main.activity_about_dev.*
  * @date 8/9/20
  */
 
-class AboutDeveloper: AppCompatActivity() {
+open class AboutDeveloper : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about_dev)
 
-        toggleLike()
-    }
-
-    private fun toggleLike() {
-        var liked =  false
-        like.setOnClickListener {
-            liked = if (liked){
-                like.setImageDrawable(getDrawable(R.drawable.ic_not_liked))
-                likesText.visibility = View.INVISIBLE
-                false
-            } else {
-                like.setImageDrawable(getDrawable(R.drawable.ic_liked))
-                likesText.visibility = View.VISIBLE
-                true
+        myFacebook.setOnClickListener {
+            myFacebook.snackBuilder("Sorry, I don't use facebook").apply {
+                setAction("I know") {}
+                show()
             }
         }
     }
-
 
     override fun onBackPressed() {
         super.onBackPressed()

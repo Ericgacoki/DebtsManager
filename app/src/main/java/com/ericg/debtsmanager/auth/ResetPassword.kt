@@ -2,7 +2,7 @@
  * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
  */
 
-package com.ericg.debtsmanager.firebaseAuth
+package com.ericg.debtsmanager.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -17,7 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

@@ -2,7 +2,7 @@
  * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
  */
 
-package com.ericg.debtsmanager.firebaseAuth
+package com.ericg.debtsmanager.auth
 
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -17,6 +17,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -25,9 +26,8 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -344,7 +344,7 @@ class CreateAccountActivity : AppCompatActivity() {
         return isStrong
     }
 
-    private fun checkTheEmpty(items: Array<TextInputEditText>) {
+    private fun checkTheEmpty(items: Array<EditText>) {
         for (item in items) {
             if (item.text.toString().trim().isEmpty()) {
                 item.error = "${item.hint} is required"
@@ -388,7 +388,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     && userPassword.isNotEmpty() && userConfirmPassword.isNotEmpty())
 
         //val inputs = arrayOf(userName, userEmail, userPhone, userPassword, userConfirmPassword)
-        val inputsIds = arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
+        val inputsIds: Array<EditText> = arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
 
         fun saveUserData() {
             // todo -> async (with coroutines) save data to fireStore which has offline support

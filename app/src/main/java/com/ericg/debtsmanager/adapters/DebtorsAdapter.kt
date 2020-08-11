@@ -9,18 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.fragments.Debtors
 import kotlinx.android.synthetic.main.row_debtor_item.view.*
+import kotlin.coroutines.coroutineContext
 
-class DebtorsAdapter(context: Context) : RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
+class DebtorsAdapter(context: Context) :
+    RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
 
-    var lastPosition = -1
-     val thisContext = context
+    private var lastPosition = -1
+    private val thisContext = context
 
-    var debtorNames = arrayListOf(
-        "Eric Griezeman",
+    private var debtorNames = arrayListOf(
+        "Kevoh Chiwa",
+        "Kevoh Chiwa 2",
         "Diana mson",
         "Jane briasert",
         "Schuyan moh",
@@ -37,21 +40,7 @@ class DebtorsAdapter(context: Context) : RecyclerView.Adapter<DebtorsAdapter.Cus
         "Mark Android",
         "Shiny Kotlin",
         "Eric Griezeman",
-        "Diana mson",
-        "Jane briasert",
-        "Schuyan moh",
-        "Sergey maureen",
-        "Mohammed mohan",
-        "Shyu Kim",
-        "Mark Android",
-        "Shiny Kotlin",
-        "Good Python",
-        "Very Old Java",
-        "Shyu Kim 2",
-        "Mark Android 2",
-        "Shiny Kotlin 2",
-        "Good Python 2",
-        "Very Old Java 2"
+        "Diana mson"
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomDebtorViewHolder {
@@ -61,7 +50,7 @@ class DebtorsAdapter(context: Context) : RecyclerView.Adapter<DebtorsAdapter.Cus
         return CustomDebtorViewHolder(debtorItem)
     }
 
-    override fun getItemCount() =  debtorNames.size
+    override fun getItemCount() = debtorNames.size
     // TODO() return the number of debtors in current user database. If its null, return 0 instead
     // test the recyclerView for now
 
@@ -71,17 +60,45 @@ class DebtorsAdapter(context: Context) : RecyclerView.Adapter<DebtorsAdapter.Cus
         the debtor data includes: name, debtAmount, date, due, progress, phone
          */
         // testing
-
-        if (holder.adapterPosition > lastPosition){
-            holder.view.startAnimation(AnimationUtils.loadAnimation(thisContext, R.anim.from_right))
         val name = debtorNames[position]
-        holder.view.debtorName.text = name} else{
-            holder.view.startAnimation(AnimationUtils.loadAnimation(thisContext, R.anim.reverse))
+        holder.view.debtorName.text = name
+
+
+        holder.view.editDebtor.setOnClickListener {
+            debtorNames.add(position,"added 1")
+            DebtorsAdapter(thisContext).apply{
+                notifyDataSetChanged()
+                }
+            Toast.makeText(thisContext, "you added debtor ${position +1} -> $name." , Toast.LENGTH_SHORT).show()
         }
-        lastPosition = holder.adapterPosition
+        
+        holder.view.expandDebtorCard.setOnClickListener {
+            Toast.makeText(thisContext, "expand debtor $position for $name ", Toast.LENGTH_SHORT).show()
+        }
+
+        if (holder.adapterPosition > lastPosition) {
+            // when scrolling down
+            holder.view.startAnimation(
+                AnimationUtils.loadAnimation(
+                    thisContext,
+                    R.anim.quick_from_bottom
+                )
+            )
+            lastPosition = holder.adapterPosition
+
+        } else {
+            holder.view.startAnimation(
+                AnimationUtils.loadAnimation(
+                    thisContext,
+                    R.anim.quick_from_top
+                )
+            )
+            lastPosition = holder.adapterPosition
+        }
     }
 
     class CustomDebtorViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+
 
 }
 

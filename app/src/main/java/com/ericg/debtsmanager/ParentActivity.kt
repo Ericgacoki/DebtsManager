@@ -7,17 +7,13 @@ package com.ericg.debtsmanager
 
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.fragments.*
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.extensions.toast
 import kotlinx.android.synthetic.main.activity_parent.*
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.coroutineContext
 
 class ParentActivity : AppCompatActivity() {
 
@@ -34,6 +30,7 @@ class ParentActivity : AppCompatActivity() {
         // set debtors as the default fragment
         manageFragment(fragment = Debtors())
         disableCurrent(R.id.debtors)
+        bottomNav.selectedItemId = R.id.debtors
         navigateTo()
     }
 
@@ -67,6 +64,7 @@ class ParentActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.frameLayout, fragment)
             .attach(fragment)
+            // .addToBackStack("$fragment")
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
@@ -86,7 +84,7 @@ class ParentActivity : AppCompatActivity() {
         Handler().postDelayed({ backPressEnabled = false }, 2000)
         if (backPressEnabled) {
             super.onBackPressed()
-            //finish()
+            // finish()
         } else {
             toast("press again to exit")
             backPressEnabled = true

@@ -4,12 +4,19 @@
 
 package com.ericg.debtsmanager.communication
 
-import android.annotation.SuppressLint
 import android.app.Activity
+import com.ericg.debtsmanager.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class Contacts(val context: Activity) {
-    @SuppressLint("InflateParams")
-    private fun contacts() {
+fun Activity.contacts(): BottomSheetDialog {
+    val contactsBuilder = BottomSheetDialog(this)
+    val customView = layoutInflater.inflate(R.layout.dialog_contacts, null)
+    contactsBuilder.apply {
+        setContentView(customView)
+
+
+
     }
-
+     return contactsBuilder
 }

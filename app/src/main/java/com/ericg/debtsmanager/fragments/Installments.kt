@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.InstallmentsAdapter
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.extensions.toast
 import kotlinx.android.synthetic.main.fragment_installmets.*
 
 class Installments : Fragment() {

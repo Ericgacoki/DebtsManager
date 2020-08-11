@@ -4,25 +4,225 @@
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    app:chainUseRtl="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="UseSwitchCompatOrMaterialXml, HardcodedText"
+    tools:context=".EditUserAccount"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/btnHelpToEditAccount"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:backgroundTint="@color/colorGreen"
+        android:contentDescription="how to edit"
+        android:src="@drawable/ic_info"
+        app:layout_constraintBottom_toBottomOf="@+id/tvP1"
+        app:layout_constraintEnd_toStartOf="@+id/tvP1"
+        app:layout_constraintStart_toStartOf="@+id/btnChangePassword"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintTop_toTopOf="@+id/tvP1"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
+        android:id="@+id/tvP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="Edit m"
+        android:fontFamily="cursive"
+        android:textColor="@color/colorRed"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvP2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="y account"
+        android:fontFamily="cursive"
+        android:textColor="#22E400"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/tvP1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvP1"
+        app:layout_constraintTop_toTopOf="@+id/tvP1" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userProfilePicture"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:src="@drawable/dev"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvP2"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/change_dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:elevation="10dp"
+        android:src="@drawable/ic_add_photo"
+        app:civ_border_color="@color/colorWhite"
+        app:civ_border_overlay="false"
+        app:civ_circle_background_color="#80FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/userProfilePicture"
+        app:layout_constraintEnd_toStartOf="@+id/switchEditMode"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="@+id/userProfilePicture"
+        app:layout_constraintTop_toTopOf="@+id/userProfilePicture"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <EditText
+        android:id="@+id/etNewUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Account editing coming soon"
-        android:textColor="#FFF"
-        android:padding="10dp"
-        android:textStyle="bold"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/edit_text_bg"
+        android:drawableStart="@drawable/ic_person"
+        android:hint="New User name"
+        android:inputType="textPersonName"
+        android:autofillHints="textPersonName"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:padding="13dp"
         android:textAlignment="center"
-        android:textSize="18sp"
-        android:background="@color/colorBlue"/>
+        android:textColorHint="@color/colorLightOrange"
+        app:layout_constraintBottom_toTopOf="@+id/etNewPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline7"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Switch
+        android:id="@+id/switchEditMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:padding="10dp"
+        android:theme="@style/ThemeSwitch"
+        android:trackTint="@color/colorBlue"
+        app:layout_constraintBottom_toBottomOf="@+id/tvP2"
+        app:layout_constraintEnd_toEndOf="@+id/etNewUserName"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toEndOf="@+id/tvP2"
+        app:layout_constraintTop_toTopOf="@+id/tvP2"
+        app:layout_constraintVertical_bias=".5" />
+
+    <EditText
+        android:id="@+id/etNewPhone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/edit_text_bg"
+        android:drawableStart="@drawable/ic_phone_msg"
+        android:gravity="center"
+        android:hint="New phone number"
+        android:inputType="phone"
+        android:autofillHints="phone, number"
+        android:maxLength="13"
+        android:maxLines="1"
+        android:padding="13dp"
+        android:textAlignment="center"
+        android:textColorHint="@color/colorLightOrange"
+        app:layout_constraintBottom_toTopOf="@+id/etNewEmail"
+        app:layout_constraintEnd_toEndOf="@+id/etNewUserName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/etNewUserName"
+        app:layout_constraintTop_toBottomOf="@+id/etNewUserName" />
+
+    <EditText
+        android:id="@+id/etNewEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:drawableStart="@drawable/ic_email_small"
+        android:gravity="center"
+        android:hint="New email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="textEmailAddress"
+        android:maxLength="30"
+        android:maxLines="1"
+        android:padding="13dp"
+        android:textAlignment="center"
+        android:textColorHint="@color/colorLightOrange"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etNewPhone"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etNewPhone"
+        app:layout_constraintTop_toBottomOf="@+id/etNewPhone" />
+
+    <Button
+        android:id="@+id/btnChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:backgroundTint="@color/colorRed"
+        android:drawableStart="@drawable/ic_password"
+        android:padding="10dp"
+        android:text=" Change password ?"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnSaveChanges"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNewEmail"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <Button
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:backgroundTint="@color/colorGreen"
+        android:drawableStart="@drawable/ic_save"
+        android:padding="10dp"
+        android:text="       Save  changes   "
+        android:textAllCaps="false"
+        android:textStyle="bold
+"
+        app:layout_constraintBottom_toBottomOf="@+id/btnChangePassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnChangePassword"
+        app:layout_constraintTop_toTopOf="@+id/btnChangePassword"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:contentDescription="buttons holder"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/stroke"
+        android:padding="50dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnChangePassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnSaveChanges"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.40" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

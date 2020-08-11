@@ -18,13 +18,9 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.ericg.debtsmanager.firebaseAuth.CreateAccountActivity
-import com.ericg.debtsmanager.firebaseAuth.SignInActivity
+import com.ericg.debtsmanager.auth.CreateAccountActivity
+import com.ericg.debtsmanager.auth.SignInActivity
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
 class SplashScreen : AppCompatActivity() {

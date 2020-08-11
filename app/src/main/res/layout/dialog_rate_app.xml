@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="1dp">
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:max="5"
             android:numStars="5"
             android:stepSize="1"
-            android:rating="3"
+            android:rating="5"
             android:progressTint="#F63100"
             android:progressBackgroundTint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,6 +33,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="UnusedAttribute" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/dev"
+            app:layout_constraintBottom_toTopOf="@+id/etRatingComment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.70"
+            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintTop_toTopOf="@+id/ratingBar"
+            app:layout_constraintVertical_bias="0.85" />
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etRatingComment"
             android:layout_width="0dp"
@@ -40,8 +51,10 @@
             android:layout_margin="30dp"
             android:hint="Comment/feedback (optional)"
             android:maxLength="100"
-            android:maxLines="6"
-            android:textAlignment="center"
+            android:background="@drawable/rate_et_field"
+            android:padding="16dp"
+            android:maxLines="10"
+            android:textSize="14sp"
             android:textColor="@color/colorBlack"
             android:textColorHint="#7A000000"
             app:layout_constraintBottom_toTopOf="@+id/btnRate"
@@ -50,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar"
             tools:ignore="HardcodedText"
-            tools:text="The best financial app on the planet" />
+            tools:text="The best financial app on the planet. ive enjoyed  very much and i recommend others to install it. " />
 
         <ImageView
             android:id="@+id/collapseRatingView"
@@ -70,9 +83,9 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
             android:layout_marginBottom="28dp"
-            android:backgroundTint="@color/colorWhite"
+            android:backgroundTint="@color/colorLightBgBlack"
             android:text="       Send      "
-            android:textColor="#F63100"
+            android:textColor="@color/colorYellow"
             android:textStyle="bold"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"

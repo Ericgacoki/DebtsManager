@@ -8,12 +8,15 @@
 package com.ericg.debtsmanager.fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -22,30 +25,25 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import com.ericg.debtsmanager.AppSettings
-import com.ericg.debtsmanager.EditUserAccount
-import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.*
+import com.ericg.debtsmanager.Utils.FirebaseUtils.mUser
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
 import com.ericg.debtsmanager.adapters.InstallmentsAdapter
 import com.ericg.debtsmanager.adapters.LoansAdapter
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.admin.AboutDeveloper
-import com.ericg.debtsmanager.firebaseAuth.CreateAccountActivity
-import com.ericg.debtsmanager.firebaseAuth.SignInActivity
-import com.ericg.debtsmanager.utils.toast
+import com.ericg.debtsmanager.auth.CreateAccountActivity
+import com.ericg.debtsmanager.auth.SignInActivity
+import com.ericg.debtsmanager.extensions.userSharedPrefs
+import com.ericg.debtsmanager.extensions.selectImage
+import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.dialog_rate_app.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.util.*
 
-private var mAuth: FirebaseAuth? = null
-private var mUser: FirebaseUser? = null
-
-class Profile() : Fragment() {
+class Profile : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,12 +52,7 @@ class Profile() : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        // initialize firebase variables
-
-        mAuth = FirebaseAuth.getInstance()
-        mUser = mAuth!!.currentUser
-
+        // TODO load image if its not set otherwise leave a place holder
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,8 +67,8 @@ class Profile() : Fragment() {
     @Suppress("LocalVariableName")
     private fun updateProfile() {
 
-        if (FirebaseAuth.getInstance().currentUser != null) {
-            val mUserEmail: String? = FirebaseAuth.getInstance().currentUser!!.email
+        if (mUser != null) {
+            val mUserEmail: String? = mUser!!.email
             if (mUserEmail != null) {
                 profileUserEmail!!.text = mUserEmail.toString().trim()
             }
@@ -116,7 +109,7 @@ class Profile() : Fragment() {
         }
 
         if (state.toLowerCase(Locale.ROOT).trim() == "exit") {
-            // just making sure that layMenuParent is visible otherwise buttons would be null
+            // just making sure that layMenuParent is visible otherwise views would be null
             layMenuParent.apply {
                 visibility = VISIBLE
             }
@@ -160,23 +153,11 @@ class Profile() : Fragment() {
             // this prevents clicks to all views with lower elevation ie views below it
         }
 
-        var editDp = false
+        var zoom = false
         profileDp.setOnClickListener {
-            if (!editDp) {
-
-                toast("double tap to edit")
-            }
-            editDp = true
-
-            /** capture a double tap*/
-
-            Handler().postDelayed({
-                editDp = false
-            }, 775)
-
-            if (editDp) {
-                editProfileDp()
-            }
+            // zoom dp to full size image
+            // todo remove the following line
+            this.activity!!.selectImage(RC_SELECT_DP_IMAGE)
         }
     }
 
@@ -232,7 +213,7 @@ class Profile() : Fragment() {
 
         pBtnRate5Star.setOnClickListener {
             // show a rating dialog
-            var rating = 3F // the default rating
+            var rating = 5F // the default rating
             var feedBack: String
             val ratingBuilder = BottomSheetDialog(context!!)
             val ratingView = layoutInflater.inflate(R.layout.dialog_rate_app, null)
@@ -241,16 +222,19 @@ class Profile() : Fragment() {
                 ratingBar.setOnRatingBarChangeListener { ratingBar, _, _ ->
                     rating = ratingBar.rating
                 }
-                btnRate.setOnClickListener{
+                btnRate.setOnClickListener {
                     feedBack = etRatingComment.text.toString().trim()
-                    val processedFeedBack = if (feedBack.trim().isEmpty()) "no comment" else feedBack
-                    if(rating < 1){
+                    val processedFeedBack =
+                        if (feedBack.trim().isEmpty()) "no comment" else feedBack
+                    if (rating < 1) {
                         ratingBar.rating = 1F
                         toast("rating can't be zero")
-                    }else {
-                        sendFeedback(rating = rating,
+                    } else {
+                        sendFeedback(
+                            rating = rating,
                             message = processedFeedBack,
-                            receiver = arrayOf("gacokieric@gmail.com"))
+                            receiver = arrayOf("gacokieric@gmail.com")
+                        )
                     }
                 }
 
@@ -269,8 +253,9 @@ class Profile() : Fragment() {
         }
     }
 
-    private fun sendFeedback(rating: Float?, message:  String, receiver: Array<String>?){
-        val displayUserName = activity!!.getSharedPreferences("userName", 0).getString("userName", "?")
+    private fun sendFeedback(rating: Float?, message: String, receiver: Array<String>?) {
+        val displayUserName =
+            activity!!.getSharedPreferences("userName", 0).getString("userName", "?")
         val sendingIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
         sendingIntent.apply {
             type = "text/plain"
@@ -281,41 +266,52 @@ class Profile() : Fragment() {
         }
         try {
             startActivity(Intent.createChooser(sendingIntent, " Please select Email client "))
-        }
-        catch (exception: Exception){
+        } catch (exception: Exception) {
             toast(exception.toString())
         }
 
     }
 
+    @Suppress("RemoveCurlyBracesFromTemplate")
     private fun editUserAccount() {
 
-        val confirmEditUserAccount = AlertDialog.Builder(this.context, 3)
-        confirmEditUserAccount.apply {
-            setIcon(R.drawable.ic_edit)
-            setTitle("Sure to Edit account ?")
-            setMessage("Please note that you will not be able to change your name after 2 months. Do you wish to proceed ?")
-            setPositiveButton("Yes") { _, _ ->
-                parentFragmentManager
-                    .beginTransaction()
-                    .addToBackStack("${this@Profile}")
+        val confirm: Boolean? =
+            this@Profile.activity!!.userSharedPrefs("ShowConfirmDialog")
+                ?.getBoolean("ShowConfirmDialog", true)
 
-                val intent = Intent(context, EditUserAccount::class.java)
-                if (intent.resolveActivity(activity!!.packageManager) != null){
-                    startActivity(intent)
+        if (confirm!!) {
+            val confirmEditUserAccount = AlertDialog.Builder(this.context)
+            confirmEditUserAccount.apply {
+                setIcon(R.drawable.ic_edit)
+                setTitle("Sure to Edit account ?")
+                setMessage("Please note that you will not be able to change your name after 2 months")
+                setHasOptionsMenu(true)
+                setPositiveButton("Proceed") { _, _ ->
+                    // don't show this dialog again
+                    this@Profile.activity!!.userSharedPrefs("ShowConfirmDialog")?.edit()?.apply {
+                        putBoolean("ShowConfirmDialog", false)
+                        apply()
+                    }
+                    openEditAccount()
                 }
-            }
 
-            setNegativeButton("No") { _, _ ->
-                // exit dialog
+                setNegativeButton("Cancel") { _, _ ->
+                    // exit dialog
+                }
+                create().show()
             }
-            create().show()
-        }
-
+        } else openEditAccount()
     }
 
-    private fun editProfileDp() {
-        // todo select to change dp
+    private fun openEditAccount() {
+        parentFragmentManager
+            .beginTransaction()
+            .addToBackStack("$this")
+
+        val intent = Intent(context, EditUserAccount::class.java)
+        if (intent.resolveActivity(activity!!.packageManager) != null) {
+            startActivity(intent)
+        }
     }
 
 
@@ -324,7 +320,7 @@ class Profile() : Fragment() {
     private fun deleteOrLogOut() {
 
 
-        val delog = AlertDialog.Builder(this.context)
+        val delog = BottomSheetDialog(this.activity ?: this.activity!!)
         val delogView: View = layoutInflater.inflate(R.layout.dialog_delete_or_log_out, null)
 
         delogView.btnDelete.setOnClickListener {
@@ -336,8 +332,9 @@ class Profile() : Fragment() {
         }
 
         delog.apply {
-            setView(delogView)
-            create().show()
+            setContentView(delogView)
+            create()
+            show()
         }
     }
 

@@ -4,37 +4,30 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".admin.AboutDeveloper"
+    android:orientation="vertical"
+    android:background="#F1F7FD"
     android:layout_margin="0dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView7"
-        android:layout_width="140dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="10dp"
+        android:id="@+id/developer_image"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
         android:elevation="10dp"
-        android:src="@drawable/dev_eric"
+        android:src="@drawable/dev"
         app:civ_border_color="@color/colorWhite"
-        app:civ_border_width="0.2dp"
+        app:civ_border_width="1.5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:elevation="10dp"
-        android:src="@drawable/ic_liked"
-        app:layout_constraintBottom_toBottomOf="@+id/circleImageView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/circleImageView7"
-        app:layout_constraintTop_toTopOf="@+id/circleImageView7"
-        app:layout_constraintVertical_bias="0.79" />
+<!--
+todo collect number of likes from firestore
 
     <TextView
         android:id="@+id/likesText"
@@ -51,28 +44,34 @@
         app:layout_constraintStart_toEndOf="@+id/circleImageView7"
         app:layout_constraintTop_toTopOf="@+id/circleImageView7"
         app:layout_constraintVertical_bias="0.6" />
+-->
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="85dp"
-        app:cardCornerRadius="30dp">
+        android:layout_marginTop="70dp"
+        app:layout_constraintVertical_bias="0"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/developer_image">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#B4FF3C00">
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginBottom="90dp"
-                app:cardCornerRadius="30dp"
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="100dp"
+                app:cardCornerRadius="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -83,81 +82,71 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/colorWhite">
+                    android:backgroundTint="#FFFFFF"
+                    android:background="@drawable/edit_text_bg">
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/textView13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_margin="15dp"
+                        android:text="Let\'s connect"
                         android:fontFamily="@font/exo_bold"
-                        android:paddingStart="5dp"
-                        android:paddingEnd="5dp"
-                        android:text="@string/developer"
-                        android:textAlignment="center"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:theme="@style/ThemeSwitch"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="serif"
-                        android:text="Android software developer"
-                        android:textAlignment="center"
-                        android:textSize="12sp"
-                        android:textStyle="italic"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/myGithub"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginVertical="10dp"
                         android:src="@drawable/twitterlogo"
-                        app:layout_constraintBottom_toTopOf="@+id/myEmail"
+                        app:layout_constraintBottom_toTopOf="@+id/myFacebook"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toEndOf="@+id/myTwitter"
-                        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/myTwitter"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginVertical="10dp"
                         android:layout_marginEnd="70dp"
                         android:src="@drawable/twitterlogo"
                         app:layout_constraintBottom_toTopOf="@+id/myWhatsApp"
                         app:layout_constraintEnd_toStartOf="@+id/myGithub"
-                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/myWhatsApp"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginVertical="10dp"
                         android:layout_marginEnd="70dp"
                         android:src="@drawable/wtsp"
-                        app:layout_constraintBottom_toTopOf="@+id/myFacebook"
-                        app:layout_constraintEnd_toStartOf="@+id/myEmail"
+
+                        app:layout_constraintBottom_toTopOf="@+id/myEmail"
+                        app:layout_constraintEnd_toStartOf="@+id/myFacebook"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/myTwitter" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/myEmail"
+                        android:id="@+id/myFacebook"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:src="@drawable/ic_email"
+                        android:layout_marginVertical="10dp"
+                        android:src="@drawable/fbvector"
+
                         app:layout_constraintBottom_toTopOf="@+id/myInstagram"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -165,11 +154,13 @@
                         app:layout_constraintTop_toBottomOf="@+id/myGithub" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/myFacebook"
+                        android:id="@+id/myEmail"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="70dp"
-                        android:src="@drawable/fbvector"
+                        android:src="@drawable/ic_email"
+                        android:layout_marginBottom="25dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/myInstagram"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -180,13 +171,14 @@
                         android:id="@+id/myInstagram"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="25dp"
                         android:src="@drawable/iglogo2"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/myFacebook"
-                        app:layout_constraintTop_toBottomOf="@+id/myEmail" />
-
+                        app:layout_constraintStart_toEndOf="@+id/myEmail"
+                        app:layout_constraintTop_toBottomOf="@+id/myFacebook" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -196,15 +188,16 @@
                 android:id="@+id/showSomeLove"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="#SupportMe"
                 android:textAlignment="center"
                 android:textColor="@color/colorBlack"
-                app:layout_constraintVertical_bias="0"
-                android:layout_marginTop="10dp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/cardView5"
                 app:layout_constraintStart_toStartOf="@+id/cardView5"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView5"
+                app:layout_constraintVertical_bias="0" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/payPal"
@@ -229,14 +222,50 @@
                 android:id="@+id/hireMe"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/money_hand"
                 android:layout_marginVertical="10dp"
-                app:layout_constraintHorizontal_bias="1"
+                android:src="@drawable/money_hand"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/showSomeLove"
+                app:layout_constraintHorizontal_bias="1"
                 app:layout_constraintStart_toEndOf="@+id/payPal"
                 app:layout_constraintTop_toBottomOf="@+id/showSomeLove" />
 
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/exo_bold"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/developer"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+               android:textColor="@color/colorBlack"
+                app:layout_constraintBottom_toTopOf="@+id/cardView5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:text="Android software developer"
+                app:layout_constraintVertical_bias="0.5"
+                android:textAlignment="center"
+                android:layout_marginBottom="4dp"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@+id/cardView5"
+                app:layout_constraintEnd_toEndOf="@+id/cardView5"
+                app:layout_constraintStart_toStartOf="@+id/cardView5"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
-import com.ericg.debtsmanager.utils.toast
 import kotlinx.android.synthetic.main.dialog_add_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
 import java.util.*
@@ -52,6 +51,10 @@ class Debtors : Fragment() {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             // scroll to bottom automatically
             scrollToPosition(DebtorsAdapter(this.context).itemCount - 1)
+
+            setOnScrollChangeListener{ view: View, i: Int, i1: Int, i2: Int, i3: Int ->
+
+            }
         }
 
         noDebtors.visibility = if (DebtorsAdapter(context!!).itemCount == 0) {
