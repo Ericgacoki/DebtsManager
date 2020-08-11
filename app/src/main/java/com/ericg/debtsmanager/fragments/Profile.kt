@@ -404,8 +404,8 @@ class Profile : Fragment() {
         val HAS_ACCOUNT = "hasAccount"
         val USER_NAME = "userName"
 
-        val autoSign: SharedPreferences = activity!!.getSharedPreferences(AUTO_SIGN_IN, 0)
-        val autoSignEditor = autoSign.edit()
+        val autoSign: SharedPreferences? = activity!!.userSharedPrefs(AUTO_SIGN_IN, 0)
+        val autoSignEditor = autoSign?.edit()
 
         val hasAccount: SharedPreferences = activity!!.getSharedPreferences(HAS_ACCOUNT, 0)
         val hasAccountEditor = hasAccount.edit()
@@ -421,7 +421,7 @@ class Profile : Fragment() {
             return
         }
         if (whichOne == "autoSignIn") {
-            autoSignEditor.clear().apply()
+            autoSignEditor?.clear()?.apply()
             return
         }
     }
