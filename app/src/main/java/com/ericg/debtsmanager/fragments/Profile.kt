@@ -404,7 +404,7 @@ class Profile : Fragment() {
         val HAS_ACCOUNT = "hasAccount"
         val USER_NAME = "userName"
 
-        val autoSign: SharedPreferences? = activity!!.userSharedPrefs(AUTO_SIGN_IN, 0)
+        val autoSign: SharedPreferences? = activity!!.userSharedPrefs(AUTO_SIGN_IN)
         val autoSignEditor = autoSign?.edit()
 
         val hasAccount: SharedPreferences? = activity!!.userSharedPrefs(HAS_ACCOUNT, 0)
