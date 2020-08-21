@@ -18,6 +18,8 @@ import android.os.Handler
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -51,13 +53,13 @@ class SplashScreen : AppCompatActivity() {
 
         val pImages =
             arrayOf(
-                getDrawable(R.drawable.money_couple),
-                getDrawable(R.drawable.money_hand),
-                getDrawable(R.drawable.money_in_hand),
-                getDrawable(R.drawable.money_loan),
-                getDrawable(R.drawable.money_plant),
-                getDrawable(R.drawable.money_savings),
-                getDrawable(R.drawable.money_wheelbarrow)
+                ContextCompat.getDrawable(this, R.drawable.money_couple),
+                ContextCompat.getDrawable(this, R.drawable.money_hand),
+                ContextCompat.getDrawable(this, R.drawable.money_in_hand),
+                ContextCompat.getDrawable(this, R.drawable.money_loan),
+                ContextCompat.getDrawable(this, R.drawable.money_plant),
+                ContextCompat.getDrawable(this, R.drawable.money_savings),
+                ContextCompat.getDrawable(this, R.drawable.money_wheelbarrow)
             )
 
         val pSlogans = arrayOf(
@@ -68,9 +70,21 @@ class SplashScreen : AppCompatActivity() {
             "The most trusted care taker",
             "Give out to the qualified"
         )
-
+        checkTheme()
         showRandomImage(imagesIndices, pImages)
         showRandomSlogan(pIndices, pSlogans)
+    }
+    @Suppress("LocalVariableName")
+    private fun checkTheme(){
+        val darkTheme = getSharedPreferences(DARK_MODE_ENABLED, 0).getBoolean(DARK_MODE_ENABLED, false)
+        if (darkTheme){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            delegate.applyDayNight()
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            delegate.applyDayNight()
+        }
     }
 
     private fun showRandomSlogan(indices: IntRange, slogans: Array<String>) {
@@ -85,9 +99,6 @@ class SplashScreen : AppCompatActivity() {
 
     @Suppress("LocalVariableName")
     private fun splashOut() {
-
-        val AUTO_SIGN_IN = "autoSignIn"
-        val HAS_ACCOUNT = "hasAccount"
 
         val sharedPrefsAutoSignIn: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
         val autoSignIn = sharedPrefsAutoSignIn.getBoolean(AUTO_SIGN_IN, false)

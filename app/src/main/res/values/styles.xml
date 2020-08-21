@@ -6,46 +6,52 @@
 
     <!-- Base application theme. -->
 
-    <style name="ThemeNoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="windowActionBar">false</item>
+    <style name="ThemeDarkNoDActionBar" parent="Theme.AppCompat.DayNight">
+         <item name="windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorLightOrange</item>
-        <item name="colorPrimaryDark">@color/colorLightOrange</item>
-        <item name="colorAccent">@color/colorLightBgBlack</item>
-        <item name="android:textColorHint">@color/colorBlack</item>
         <item name="android:fontFamily">@font/exo</item>
+        <item name="colorAccent">@color/colorLightBgBlack</item>
+
+        <!-- <item name="colorPrimary">@color/colorLightBgBlack</item>
+        <item name="colorPrimaryDark">@color/colorLightBgBlack</item>
+        <item name="android:textColorHint">@color/colorBlack</item> -->
+    </style>
+
+    <style name="ThemeSwitch" parent="Theme.AppCompat.DayNight">
+        <item name="colorAccent">#FF5C29</item>
+        <item name="switchStyle">@style/TextAppearance.AppCompat.Widget.Switch</item>
+        <item name="android:textColor">@color/colorLightBgBlack</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="trackTintMode">@color/colorFadedGrey</item>
     </style>
 
 
-<style name="ThemeSwitch">
-    <item name="colorAccent">#FF5C29</item>
-    <item name="switchStyle">@style/TextAppearance.AppCompat.Widget.Switch</item>
-    <item name="android:textColor">@color/colorLightBgBlack</item>
-    <item name="android:textSize">18sp</item>
-    <item name="android:layout_marginBottom">20dp</item>
-    <item name="trackTintMode">@color/colorBlue</item>
-</style>
-
-
-    <style name="ThemeFab">
+    <style name="ThemeFab" parent="Theme.AppCompat.DayNight">
         <item name="colorAccent">@color/colorFabTint</item>
         <item name="colorPrimaryDark">@android:color/holo_orange_dark</item>
+        <item name="backgroundTint">@color/colorLightBgBlack</item>
     </style>
 
-    <style name="ThemeBottomNav" parent="@style/Widget.Design.BottomNavigationView">
+    <style name="ThemeBottomNav" parent="Theme.AppCompat.DayNight">
         <item name="colorAccent">@color/colorLightOrange</item>
     </style>
 
-    <style name="ThemeGreenCalendar">
+    <style name="ThemeGreenCalendar" >
         <item name="android:colorAccent">#3FD501</item>
         <item name="android:colorPrimary">#3FD501</item>
-
     </style>
 
-    <style name="ThemeOrangeCalendar">
+    <style name="ThemeOrangeCalendar" >
         <item name="android:colorAccent">@color/colorOrange</item>
         <item name="android:colorPrimary">@color/colorOrange</item>
 
+    </style>
+
+    <style name="CircularProgressBar" >
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/circular_progress_bar</item>
     </style>
 
 

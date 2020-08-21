@@ -14,6 +14,5 @@
     <color name="colorFadedGrey">#B9FFC8B7</color>
     <color name="colorBlack">#FC000000</color>
     <color name="colorLightBgBlack">#C4000000</color>
-    <color name="colorDarkPurple">#090115</color>
     <color name="colorFabTint">#DC000102</color>
 </resources>

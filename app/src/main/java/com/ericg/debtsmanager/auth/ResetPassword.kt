@@ -6,29 +6,20 @@ package com.ericg.debtsmanager.auth
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_reset_password.*
-import kotlinx.android.synthetic.main.dialog_contacts.view.*
 import kotlinx.android.synthetic.main.dialog_reset_password.view.*
-
-private var mAuth: FirebaseAuth? = null
-private var mUser: FirebaseUser? = null
-private var fDataBase: FirebaseFirestore? = null
 
 class ResetPassword : AppCompatActivity() {
 
@@ -54,22 +45,16 @@ class ResetPassword : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        initialise()
-    }
-
-    private fun initialise() {
-        mAuth = FirebaseAuth.getInstance()
-        mUser = mAuth!!.currentUser
-        fDataBase = FirebaseFirestore.getInstance()
-
+       loadingStatus(0)
     }
 
     @Suppress("DEPRECATION")
+    // Extension function for Boolean class
     private fun Boolean.toggle(image: Int? = R.drawable.sad_face) {
-        for (item in getLink) {
+        getLink.forEach { item ->
             item.visibility = View.INVISIBLE
-            getLink[0].hint =
-                "" // set hint to an empty string 'cause it does't respond to visibility
+            getLink[0].hint = ""
+            // set hint to an empty string 'cause it does't respond to visibility
         }
         getLinkStateImage.apply {
             visibility = View.VISIBLE
@@ -78,7 +63,7 @@ class ResetPassword : AppCompatActivity() {
         Handler().postDelayed({
             kotlin.run {
                 if (this) {
-                    for (item in getLink) {
+                    getLink.forEach { item ->
                         item.visibility = View.VISIBLE
                         getLink[0].hint = "Account Email"
                     }
@@ -100,7 +85,6 @@ class ResetPassword : AppCompatActivity() {
         }
 
         rBtnGetLink.setOnClickListener {
-            initialise()
             getLinkEmail()
         }
 
@@ -111,75 +95,7 @@ class ResetPassword : AppCompatActivity() {
             showResetGuide()
         }
         rContacts.setOnClickListener {
-
-            val helpDialog = BottomSheetDialog(context)
-            val helpDlgLayout = layoutInflater.inflate(R.layout.dialog_contacts, null)
-
-            helpDlgLayout.callUs.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(
-                        context,
-                        android.Manifest.permission.CALL_PHONE
-                    )
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
-
-                    val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:+254745623611"))
-                    try {
-                        startActivity(
-                            Intent.createChooser(
-                                callIntent,
-                                "Select calling App [courtesy of Debts manager]"
-                            )
-                        )
-                    } catch (e: Exception) {
-                        toast( e.message.toString())
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(
-                        context,
-                        arrayOf(android.Manifest.permission.CALL_PHONE), 5
-                    )
-                }
-            }
-            helpDlgLayout.emailUs.setOnClickListener {
-                val subject = "Debts manager help"
-                val sendTo = arrayOf("gacokieric@gmail.com")   // debtsmanagerhelp@gmail.com
-                emailUs(subject, sendTo)
-            }
-
-            helpDlgLayout.whatsAppUs.setOnClickListener {
-                val body = "<Describe what help you need here>"
-                val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254745623611"))
-
-                whatsAppIntent.apply {
-                    putExtra(Intent.EXTRA_TEXT, body)
-                }
-                try {
-                    startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
-                } catch (e: Exception) {
-                    toast( e.message.toString())
-                }
-            }
-
-            helpDlgLayout.facebookUs.setOnClickListener {
-                val fbUrl = "https://www.facebook.com"
-                browse(fbUrl)
-            }
-
-            helpDlgLayout.igUs.setOnClickListener {
-                val igUrl = "https://www.instagram.com"
-                browse(igUrl)
-            }
-
-            helpDlgLayout.tweetUs.setOnClickListener {
-                val twitterUrl = "https://www.twitter.com"
-                browse(twitterUrl)
-            }
-
-            helpDialog.apply {
-                setContentView(helpDlgLayout)
-                show()
-            }
+            contacts().show()
         }
     }
 
@@ -354,36 +270,8 @@ class ResetPassword : AppCompatActivity() {
             }
         }
     }
-
-    private fun browse(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        try {
-            startActivity(Intent.createChooser(intent, "Select browser"))
-
-        } catch (e: Exception) {
-            toast( e.message.toString())
-        }
-    }
-
-    private fun emailUs(subject: String, toAddress: Array<String>, body: String = "") {
-        val sendEmailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
-        sendEmailIntent.apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_EMAIL, toAddress)
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-            putExtra(Intent.EXTRA_TEXT, body)
-        }
-
-        try {
-            startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
-        } catch (e: Exception) {
-            toast( e.message.toString())
-        }
-    }
-
     // boiler plate code
     private val enableBack = false
-
     @Suppress("ConstantConditionIf")
     override fun onBackPressed() {
         // do nothing

@@ -7,7 +7,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000"
     tools:context=".SplashScreen">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -20,7 +19,7 @@
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:ignore="ContentDescription"
-        tools:src="@drawable/money_plant" />
+        tools:src="@drawable/money_loan" />
 
     <TextView
         android:id="@+id/title"
@@ -43,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="A random slogan will be displayed"
-        android:textColor="@color/colorYellow"
+        android:textColor="@color/colorOrange"
         android:textSize="23sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

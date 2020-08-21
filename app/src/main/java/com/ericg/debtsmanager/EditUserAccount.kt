@@ -15,7 +15,7 @@ import com.ericg.debtsmanager.auth.ResetPassword
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
-import com.ericg.debtsmanager.Utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_edit_account.*
 import kotlinx.coroutines.runBlocking
@@ -85,8 +85,7 @@ class EditUserAccount : AppCompatActivity() {
         change_dp.setOnClickListener {
             val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
 
-            if (editMode) {
-                selectImage(RC_SELECT_MAIN_IMAGE)
+            if (editMode) { selectImage(RC_SELECT_MAIN_IMAGE)
             } else { change_dp.snackBuilder("First enable edit mode", 4000).apply {
 
                 setBackgroundTint(getColor(R.color.colorLightOrange))
@@ -140,6 +139,7 @@ class EditUserAccount : AppCompatActivity() {
 
         if (requestCode == RC_SELECT_MAIN_IMAGE && resultCode == Activity.RESULT_OK && imageIntent != null && imageIntent.data != null) {
             val selectedImagePath = imageIntent.data
+
             selectedImageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImagePath)
 
             // TODO save this image to firestore -> check if user is null although at this point user can't be null

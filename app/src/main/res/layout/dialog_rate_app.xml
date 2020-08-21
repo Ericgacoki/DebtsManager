@@ -51,7 +51,7 @@
             android:layout_margin="30dp"
             android:hint="Comment/feedback (optional)"
             android:maxLength="100"
-            android:background="@drawable/rate_et_field"
+            android:background="@drawable/message_field"
             android:padding="16dp"
             android:maxLines="10"
             android:textSize="14sp"
@@ -77,22 +77,22 @@
             app:layout_constraintHorizontal_bias="0"
             tools:ignore="ContentDescription" />
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+        <Button
             android:id="@+id/btnRate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
             android:layout_marginBottom="28dp"
-            android:backgroundTint="@color/colorLightBgBlack"
+            android:backgroundTint="@color/colorBlack"
             android:text="       Send      "
             android:textColor="@color/colorYellow"
             android:textStyle="bold"
-            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/etRatingComment"
 
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="HardcodedText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

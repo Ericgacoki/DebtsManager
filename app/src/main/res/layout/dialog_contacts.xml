@@ -6,8 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorFadedGrey">
-
+    android:id="@+id/layContacts"
+    >
 
     <ImageView
         android:id="@+id/emailUs"
@@ -85,7 +85,6 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/exo_bold"
         android:text="Get instant help in just a few clicks"
-        android:textColor="@color/colorDarkPurple"
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/emailUs"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,7 +111,6 @@
         android:text="Guaranteed safety and security DM @ 2020"
         android:textSize="12sp"
         android:textStyle="bold"
-        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@id/contactsView"
         app:layout_constraintEnd_toEndOf="@id/contactsView"
         app:layout_constraintStart_toStartOf="@id/contactsView"

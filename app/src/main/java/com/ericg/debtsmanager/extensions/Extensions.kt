@@ -5,6 +5,7 @@
 package com.ericg.debtsmanager.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
@@ -21,6 +22,10 @@ fun Activity.toast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, msg, duration).show()
 }
 
+fun Activity.thisContext(): Context {
+    return this
+}
+
 fun Fragment.toast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(context, msg, duration).show()
 }
@@ -35,7 +40,7 @@ fun Activity.selectImage(requestCode: Int) {
     val imageIntent = Intent().apply {
         type = "image/*"
         action = Intent.ACTION_GET_CONTENT
-        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png"))
+        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png", "image/jpg", "video"))
     }
     startActivityForResult(
         Intent.createChooser(imageIntent, "Select image"),

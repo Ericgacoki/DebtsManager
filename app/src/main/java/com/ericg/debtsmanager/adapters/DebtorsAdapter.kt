@@ -9,96 +9,150 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ericg.debtsmanager.R
-import kotlinx.android.synthetic.main.row_debtor_item.view.*
-import kotlin.coroutines.coroutineContext
+import com.ericg.debtsmanager.data.DebtData
+import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
 
-class DebtorsAdapter(context: Context) :
-    RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
+
+class DebtorsAdapter(
+    thisContext: Context?,
+    private val debtorsList: ArrayList<DebtData>,
+    private val listener: OnDebtorClickListener
+) : RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
 
     private var lastPosition = -1
-    private val thisContext = context
-
-    private var debtorNames = arrayListOf(
-        "Kevoh Chiwa",
-        "Kevoh Chiwa 2",
-        "Diana mson",
-        "Jane briasert",
-        "Schuyan moh",
-        "Sergey maureen",
-        "Mohammed mohan",
-        "Shyu Kim",
-        "Mark Android",
-        "Shiny Kotlin",
-        "Eric Griezeman",
-        "Schuyan moh",
-        "Sergey maureen",
-        "Mohammed mohan",
-        "Shyu Kim",
-        "Mark Android",
-        "Shiny Kotlin",
-        "Eric Griezeman",
-        "Diana mson"
-    )
+    private var context = thisContext
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomDebtorViewHolder {
 
         val debtorItem: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.row_debtor_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.new_row_debtor_item, parent, false)
         return CustomDebtorViewHolder(debtorItem)
     }
 
-    override fun getItemCount() = debtorNames.size
-    // TODO() return the number of debtors in current user database. If its null, return 0 instead
-    // test the recyclerView for now
+    override fun getItemCount() = debtorsList.size
 
     override fun onBindViewHolder(holder: CustomDebtorViewHolder, position: Int) {
-        /**
-        TODO() populate the recyclerView with data from current user database
-        the debtor data includes: name, debtAmount, date, due, progress, phone
-         */
-        // testing
-        val name = debtorNames[position]
-        holder.view.debtorName.text = name
 
+        holder.bind(
+            name = debtorsList[position].name,
+            startDate = debtorsList[position].startDate,
+            dueDate = debtorsList[position].dueDate,
+            phone = debtorsList[position].phone,
+            initialAmt = debtorsList[position].initialAmt,
+            paymentsDone = debtorsList[position].paymentsDone.toString(),
+            remainingAmt = debtorsList[position].remainingAmt!!.toInt(),
+            progressPercentage = debtorsList[position].progressPercentage!!.toInt()
+        )
 
-        holder.view.editDebtor.setOnClickListener {
-            debtorNames.add(position,"added 1")
-            DebtorsAdapter(thisContext).apply{
-                notifyDataSetChanged()
-                }
-            Toast.makeText(thisContext, "you added debtor ${position +1} -> $name." , Toast.LENGTH_SHORT).show()
-        }
-        
-        holder.view.expandDebtorCard.setOnClickListener {
-            Toast.makeText(thisContext, "expand debtor $position for $name ", Toast.LENGTH_SHORT).show()
-        }
+        /** @testing_Animations */
 
-        if (holder.adapterPosition > lastPosition) {
+        if (holder.adapterPosition > lastPosition && context != null) {
             // when scrolling down
-            holder.view.startAnimation(
+            holder.itemView.startAnimation(
                 AnimationUtils.loadAnimation(
-                    thisContext,
+                    this.context,
                     R.anim.quick_from_bottom
                 )
             )
             lastPosition = holder.adapterPosition
 
         } else {
-            holder.view.startAnimation(
-                AnimationUtils.loadAnimation(
-                    thisContext,
-                    R.anim.quick_from_top
+            if (context != null) {
+                holder.itemView.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        this.context,
+                        R.anim.quick_from_top
+                    )
                 )
-            )
-            lastPosition = holder.adapterPosition
+                lastPosition = holder.adapterPosition
+            }
         }
     }
 
-    class CustomDebtorViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    inner class CustomDebtorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
+        // Upper card info
 
+        private val debtorName: TextView = itemView.debtorName
+        private val debtAmount: TextView = itemView.debtAmount
+        private val debtDate: TextView = itemView.debtDate
+        private val debtDueDate: TextView = itemView.debtDueDate
+        private val debtorPhone: TextView = itemView.debtorPhone
+
+        private val debtorProfilePic: ImageView = itemView.debtorProfilePic
+        private val debtStatus: ImageView = itemView.debtStatus
+
+        // Bottom card info
+
+        private val debtInitialAmt = itemView.debtsInitialAmount
+        private val debtPaymentProgressBar: ProgressBar = itemView.debtPaymentProgress
+        private val debtPaymentPercentage: TextView = itemView.debtPaymentPercentage
+
+        // Card ImageViews (used as  Buttons)
+
+        private val expandDebtorCard: ImageView = itemView.expandDebtorCard
+        private val deleteDebtor: ImageView = itemView.deleteDebtor
+        private val editDebtor: ImageView = itemView.editDebtor
+        private val callDebtor: ImageView = itemView.callDebtor
+
+        // More info
+        private val addPayment: TextView = itemView.addDebtPayment
+        private val numOfPayments: TextView = itemView.debtsNumPaymentsDone
+        private val addReminder:TextView = itemView.AddDebtPaymentReminder
+
+        fun bind(
+            name: String,
+            startDate: String,
+            dueDate: String,
+            phone: String,
+            initialAmt: Int,
+            paymentsDone: String,
+            remainingAmt: Int,
+            progressPercentage: Int
+        ) {
+
+            // todo load profile picture with glide
+
+            debtorName.text = name
+            debtorPhone.text = phone
+            debtDate.text = startDate
+            debtDueDate.text = dueDate
+            debtAmount.text = remainingAmt.toString()
+            debtInitialAmt.text = initialAmt.toString()
+            numOfPayments.text = paymentsDone
+            debtPaymentProgressBar.progress = progressPercentage
+            debtPaymentPercentage.text = "$progressPercentage %"
+        }
+
+        init {
+            // set click listener to specific views
+            itemView.setOnClickListener(this)
+            expandDebtorCard.setOnClickListener(this)
+            debtStatus.setOnClickListener(this)
+            editDebtor.setOnClickListener(this)
+            callDebtor.setOnClickListener(this)
+            deleteDebtor.setOnClickListener(this)
+
+            debtPaymentProgressBar.setOnClickListener(this)
+            addReminder.setOnClickListener(this)
+            addPayment.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION && view != null) {
+                listener.onItemClick(view, view.id, position)
+            }
+        }
+    }
+
+    interface OnDebtorClickListener {
+        fun onItemClick(itemView: View, itemViewId: Int, position: Int)
+    }
 }
-

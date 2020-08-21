@@ -26,18 +26,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.toast
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_create_account.*
-import kotlinx.android.synthetic.main.dialog_contacts.view.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
-
-private var mAuth: FirebaseAuth? = null
-private var mUser: FirebaseUser? = null
-private var fDataBase: FirebaseFirestore? = null
 
 private const val CHANNEL_ID = "Account Management "
 private var NOTIFICATION_ID = 1
@@ -72,21 +66,15 @@ class CreateAccountActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_account)
 
         handleClicks()
-        createNotificationChannel()
         loadingStatus(false, btnEnabled = true)
-        requestPermissions()
     }
 
     override fun onStart() {
         super.onStart()
-        initialise()
+        requestPermissions()
+        createNotificationChannel()
     }
 
-    private fun initialise() {
-        mAuth = FirebaseAuth.getInstance()
-        mUser = mAuth!!.currentUser
-        fDataBase = FirebaseFirestore.getInstance()
-    }
 
     private fun requestPermissions() {
         ActivityCompat.requestPermissions(
@@ -168,75 +156,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         aBtnContacts.setOnClickListener {
             requestPermissions()
-
-            val helpDialog = BottomSheetDialog(context)
-            val helpDlgLayout = layoutInflater.inflate(R.layout.dialog_contacts, null)
-
-            helpDlgLayout.callUs.setOnClickListener {
-                if (ContextCompat.checkSelfPermission(
-                        context,
-                        android.Manifest.permission.CALL_PHONE
-                    )
-                    == PackageManager.PERMISSION_GRANTED
-                ) {
-
-                    val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:+254745623611"))
-                    try {
-                        startActivity(
-                            Intent.createChooser(
-                                callIntent,
-                                "Select calling App [courtesy of Debts manager]"
-                            )
-                        )
-                    } catch (e: Exception) {
-                        toast(e.message.toString())
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(
-                        context,
-                        arrayOf(android.Manifest.permission.CALL_PHONE), 5
-                    )
-                }
-            }
-            helpDlgLayout.emailUs.setOnClickListener {
-                val subject = "Debts manager help"
-                val sendTo = arrayOf("gacokieric@gmail.com")   // debtsmanagerhelp@gmail.com
-                emailUs(subject, sendTo)
-            }
-
-            helpDlgLayout.whatsAppUs.setOnClickListener {
-                val body = "<Describe what help you need here>"
-                val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254745623611"))
-
-                whatsAppIntent.apply {
-                    putExtra(Intent.EXTRA_TEXT, body)
-                }
-                try {
-                    startActivity(Intent.createChooser(whatsAppIntent, "Select WhatsApp"))
-                } catch (e: Exception) {
-                    toast(e.message.toString())
-                }
-            }
-
-            helpDlgLayout.facebookUs.setOnClickListener {
-                val fbUrl = "https://www.facebook.com"
-                browse(fbUrl)
-            }
-
-            helpDlgLayout.igUs.setOnClickListener {
-                val igUrl = "https://www.instagram.com"
-                browse(igUrl)
-            }
-
-            helpDlgLayout.tweetUs.setOnClickListener {
-                val twitterUrl = "https://www.twitter.com"
-                browse(twitterUrl)
-            }
-
-            helpDialog.apply {
-                setContentView(helpDlgLayout)
-                show()
-            }
+            contacts().show()
         }
 
         aBtnSignIn.setOnClickListener {
@@ -514,7 +434,6 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun sendVerificationEmail() {
         // update user
-        mUser = mAuth!!.currentUser
         if (mUser != null) { // Todo -> use a coroutine here and remove handler
             Handler().postDelayed({
                 mUser!!

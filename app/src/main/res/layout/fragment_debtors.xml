@@ -6,18 +6,40 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#10FFFFFF"
     android:layout_height="match_parent"
     tools:context=".fragments.Debtors">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:elevation="10dp"
+        android:background="@drawable/curved_bg"
+        android:backgroundTint="#D500E3EA"
+        android:layout_margin="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <SearchView
+            android:id="@+id/searchDebtor"
+            android:padding="5dp"
+            android:queryHint="search a debtor"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/swipeToRefreshDebtors"
     android:layout_width="match_parent"
+    android:clipToPadding="false"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/debtorsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingTop="40dp"
         android:clipToPadding="false"
         android:paddingBottom="180dp"
         android:scrollbarStyle="outsideOverlay"
@@ -27,40 +49,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1"
-        tools:listitem="@layout/row_debtor_item" />
+        tools:listitem="@layout/new_row_debtor_item" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/noDebtors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/exo_bold"
-        android:text="Tap '+' button to add a debtor"
-        android:textColor="@color/colorBlack"
-        android:textSize="19sp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/fabAddDebtor"
-        app:layout_constraintCircleRadius="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.632"
-        tools:ignore="HardcodedText" />
-    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddDebtor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/plus"
-        app:fabSize="auto"
-        android:textSize="35sp"
-        android:textColor="@color/colorOrange"
-        android:backgroundTint="@color/colorLightBgBlack"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.97"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.865"
-        />
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabAddDebtor"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:maxImageSize="30dp"
+       android:src="@drawable/ic_add"
+       android:theme="@style/ThemeFab"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintHorizontal_bias="0.97"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintVertical_bias="0.865">
+
+   </com.google.android.material.floatingactionbutton.FloatingActionButton>
     </androidx.constraintlayout.widget.ConstraintLayout>

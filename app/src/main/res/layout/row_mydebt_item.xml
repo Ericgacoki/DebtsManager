@@ -2,36 +2,348 @@
   ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
   -->
 
-<androidx.cardview.widget.CardView app:cardCornerRadius="15dp"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:backgroundTint="#FFC6D0"
-    android:layout_height="200dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/stroke" />
+    tools:ignore="HardcodedText,ContentDescription"
+    app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/my_debt_card_bg">
 
         <TextView
-            android:id="@+id/myDebtText"
+            android:id="@+id/myDebtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="my debt "
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
+            android:layout_marginTop="5dp"
+            android:text="My debt name"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/cardView6"
+            app:layout_constraintEnd_toEndOf="@+id/myDebtProfilePic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".5" />
+            app:layout_constraintVertical_bias="0" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/myDebtProfilePic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/girl"
+            app:layout_constraintBottom_toTopOf="@+id/cardView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toEndOf="@+id/cardView4"
+            app:layout_constraintTop_toBottomOf="@+id/myDebtName"
+            app:layout_constraintVertical_bias="0" />
+
+        <ImageView
+            android:id="@+id/btnDeleteMyDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_delete_forever"
+            app:layout_constraintBottom_toTopOf="@+id/btnEditMyDebt"
+            app:layout_constraintEnd_toStartOf="@+id/cardView4"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView4"
+            app:layout_constraintVertical_chainStyle="packed"
+             />
+
+        <ImageView
+            android:id="@+id/btnEditMyDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toTopOf="@+id/btnCallMyDebt"
+            app:layout_constraintEnd_toEndOf="@+id/btnDeleteMyDebt"
+            app:layout_constraintStart_toStartOf="@+id/btnDeleteMyDebt"
+            app:layout_constraintTop_toBottomOf="@+id/btnDeleteMyDebt" />
+
+        <ImageView
+            android:id="@+id/btnCallMyDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:src="@drawable/ic_phone_msg"
+            app:layout_constraintEnd_toEndOf="@+id/btnEditMyDebt"
+            app:layout_constraintStart_toStartOf="@+id/btnEditMyDebt"
+            app:layout_constraintTop_toBottomOf="@+id/btnEditMyDebt" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/myDebtProfilePic"
+            app:layout_constraintVertical_bias="0">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingEnd="20dp"
+                android:paddingStart="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView14"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="Amount" />
+
+                <TextView
+                    android:id="@+id/myDebtAmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/myDebtDate"
+                    app:layout_constraintStart_toStartOf="@+id/guideline3"
+                    app:layout_constraintTop_toTopOf="@+id/textView15"
+                    android:text="00" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView21"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15"
+                    android:text="Date" />
+
+
+                <TextView
+                    android:id="@+id/myDebtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/myDebtDueDate"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtAmt"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtAmt"
+                    app:layout_constraintTop_toBottomOf="@+id/myDebtAmt"
+                    android:text="00/00/0000" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView22"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    android:text="Deadline" />
+
+
+                <TextView
+                    android:id="@+id/myDebtDueDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/myDebtStatus"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtDate"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtDate"
+                    app:layout_constraintTop_toBottomOf="@+id/myDebtDate"
+                    android:text="00/00/0000" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView23"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView21"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21"
+                    android:text="status"
+                     />
+
+                <TextView
+                    android:id="@+id/myDebtStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toTopOf="@+id/myDebtPhone"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtDueDate"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtDueDate"
+                    app:layout_constraintTop_toBottomOf="@+id/myDebtDueDate"
+                    android:text="null" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView22"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    android:text="phone" />
+
+                <TextView
+                    android:id="@+id/myDebtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtStatus"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtStatus"
+                    app:layout_constraintTop_toBottomOf="@+id/myDebtStatus"
+                    tools:text="000..." />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.45" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView6"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/myDebtProfilePic"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/btnEditMyDebt"
+            app:layout_constraintTop_toBottomOf="@+id/btnCallMyDebt">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Progress"
+                    app:layout_constraintBottom_toTopOf="@+id/myDebtProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtProgressBar"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/myDebtProgressBar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="5dp"
+                    android:progress="0"
+                    android:max="100"
+                    android:indeterminateOnly="false"
+                    android:theme="@style/CircularProgressBar"
+                    app:layout_constraintBottom_toTopOf="@+id/textView31"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+                <TextView
+                    android:id="@+id/myDebtProgressPercentage"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/myDebtProgressBar"
+                    app:layout_constraintEnd_toEndOf="@+id/myDebtProgressBar"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtProgressBar"
+                    app:layout_constraintTop_toTopOf="@+id/myDebtProgressBar"
+                    android:text="0 %" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="Initial Amt"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/myDebtProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/myDebtProgressBar" />
+
+                <TextView
+                    android:id="@+id/myDebtInitialAmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView31"
+                    app:layout_constraintStart_toEndOf="@+id/textView31"
+                    app:layout_constraintTop_toTopOf="@+id/textView31"
+                    android:text="00" />
+
+                <TextView
+                    android:id="@+id/btnMyDebtAddReminder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/semi_curved_bg"
+                    android:backgroundTint="@color/colorBlue"
+                    android:padding="5dp"
+                    android:text=" + Reminder "
+                    app:layout_constraintBottom_toTopOf="@+id/btnMyDebtAddPayment"
+                    app:layout_constraintEnd_toEndOf="@+id/btnMyDebtAddPayment"
+                    app:layout_constraintStart_toStartOf="@+id/btnMyDebtAddPayment"
+                    app:layout_constraintTop_toBottomOf="@+id/textView30"
+                    app:layout_constraintVertical_bias="0.2" />
+
+                <TextView
+                    android:id="@+id/btnMyDebtAddPayment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/semi_curved_bg"
+                    android:backgroundTint="@color/colorGreen"
+                    android:padding="5dp"
+                    android:text=" Add payment "
+                    app:layout_constraintBottom_toBottomOf="@+id/myDebtProgressBar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintStart_toEndOf="@+id/myDebtInitialAmt" />
+
+                <TextView
+                    android:id="@+id/myDebtNumPayments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/btnMyDebtAddPayment"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMyDebtAddPayment"
+                    app:layout_constraintHorizontal_bias="0.965"
+                    app:layout_constraintStart_toEndOf="@+id/myDebtProgressBar"
+                    app:layout_constraintTop_toBottomOf="@+id/btnMyDebtAddReminder"
+                    app:layout_constraintVertical_bias="1.0"
+                    android:text="0" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

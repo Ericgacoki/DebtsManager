@@ -7,7 +7,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
+    android:background="#01FFFFFF"
+    tools:ignore="HardcodedText"
     tools:context=".auth.SignInActivity">
 
     <TextView
@@ -18,7 +19,7 @@
         android:fontFamily="cursive"
         android:text="Sign In to your account"
         android:textAlignment="center"
-        android:textColor="#0BA500"
+        android:textColor="@color/colorOrange"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/sEmail"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +32,7 @@
         android:layout_width="35dp"
         android:padding="10dp"
         android:layout_height="0dp"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.98"
         app:layout_constraintBottom_toBottomOf="@+id/sBtnSignIn"
         app:layout_constraintEnd_toEndOf="@+id/sBtnSignIn"
         app:layout_constraintStart_toStartOf="@+id/sBtnSignIn"
@@ -59,6 +60,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_log_in_selector"
         android:text="Log In"
+        android:textColor="@color/colorBlack"
         android:textAllCaps="false"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/sBaseView"
@@ -90,7 +92,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/edit_text_bg"
+        android:background="@drawable/curved_bg"
         android:hint="Email"
         android:autofillHints="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@id/sPassword"
@@ -100,18 +102,18 @@
         android:paddingHorizontal="10dp"
         android:paddingBottom="2dp"
         android:textColor="@color/colorBlack"
-        android:textColorHint="@color/colorOrange"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSignIn" />
 
     <EditText
+        android:autofillHints="email"
         android:id="@+id/sPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:background="@drawable/edit_text_bg"
+        android:background="@drawable/curved_bg"
         android:hint="Password"
         android:inputType="textPassword"
         android:maxLength="12"
@@ -121,26 +123,41 @@
         android:paddingHorizontal="10dp"
         android:paddingBottom="2dp"
         android:textColor="@color/colorBlack"
-        android:textColorHint="@color/colorOrange"
         app:layout_constraintEnd_toEndOf="@+id/sEmail"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/sEmail"
         app:layout_constraintTop_toBottomOf="@+id/sEmail" />
 
     <Button
+        android:id="@+id/btnSignInBig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="27dp"
+        android:background="@drawable/curved_bg"
+        android:backgroundTint="#D1FA86"
+        app:layout_constraintBottom_toTopOf="@+id/tryView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/autoSignIn" />
+
+    <Button
         android:id="@+id/sBtnSignIn"
         android:layout_width="0dp"
+        android:layout_marginHorizontal="5dp"
         android:layout_height="36dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/edit_text_bg"
+        android:background="@drawable/curved_bg"
         android:backgroundTint="@color/colorGreen"
         android:fontFamily="@font/exo"
         android:text="Sign In"
+        app:layout_constraintTop_toTopOf="@id/btnSignInBig"
+        app:layout_constraintBottom_toBottomOf="@id/btnSignInBig"
         android:textColor="@color/colorBlack"
-        app:layout_constraintEnd_toEndOf="@+id/sPassword"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/sPassword"
-        app:layout_constraintTop_toBottomOf="@+id/autoSignIn" />
+        app:layout_constraintEnd_toEndOf="@+id/btnSignInBig"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btnSignInBig"
+       />
 
     <View
         android:id="@+id/tryView"
@@ -245,7 +262,7 @@
         android:checked="true"
         android:fontFamily="@font/exo_bold"
         android:text="Auto sign in ?"
-        android:textColor="@color/colorLightBgBlack"
+        android:textColor="@color/colorOrange"
         app:layout_constraintEnd_toEndOf="@+id/sPassword"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="@+id/sPassword"

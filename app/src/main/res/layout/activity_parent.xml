@@ -6,13 +6,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#05FFFFFF"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ParentActivity">
 
     <!-- fragments will replace  this FrameLayout-->
     <FrameLayout
         android:id="@+id/frameLayout"
-        android:background="@color/colorWhite"
+        android:background="#05FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,10 +25,9 @@
         android:id="@+id/bottomNav"
         app:menu="@menu/bottom_nav"
         android:layout_width="0dp"
-        android:background="#E65A1500"
+        android:background="@color/colorLightBgBlack"
         android:theme="@style/ThemeBottomNav"
         app:itemHorizontalTranslationEnabled="true"
-        app:itemTextColor="@color/colorWhite"
         app:itemRippleColor="@color/colorWhite"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

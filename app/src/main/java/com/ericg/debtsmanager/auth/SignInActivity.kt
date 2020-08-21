@@ -17,20 +17,14 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 
 private var elapseTime = 0
 private var trials = 0
-
-private var mAuth: FirebaseAuth? = null
-private var mUser: FirebaseUser? = null
-private var fDatabase: FirebaseFirestore? = null
 
 class SignInActivity : AppCompatActivity() {
 
@@ -48,9 +42,6 @@ class SignInActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        mAuth = FirebaseAuth.getInstance()
-        mUser = mAuth!!.currentUser
-        fDatabase = FirebaseFirestore.getInstance()
     }
 
     @Suppress("DEPRECATION")

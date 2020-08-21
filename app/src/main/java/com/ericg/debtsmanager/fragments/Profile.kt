@@ -8,15 +8,12 @@
 package com.ericg.debtsmanager.fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.provider.MediaStore.Images.Media.getBitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -26,17 +23,15 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.*
-import com.ericg.debtsmanager.Utils.FirebaseUtils.mUser
-import com.ericg.debtsmanager.adapters.DebtorsAdapter
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.ericg.debtsmanager.adapters.InstallmentsAdapter
 import com.ericg.debtsmanager.adapters.LoansAdapter
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.admin.AboutDeveloper
 import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
-import com.ericg.debtsmanager.extensions.userSharedPrefs
-import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.extensions.userSharedPrefs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.dialog_rate_app.view.*
@@ -79,10 +74,10 @@ class Profile : Fragment() {
             .getString(USER_NAME, "Not registered")
         profileUserName.text = userName!!.trim()
 
-        // todo runBlocking to fetch data from firestore
+        // todo use coroutine to fetch data from firestore
 
-        pDebtors.text = DebtorsAdapter(context!!).itemCount.toString()
-        pMyDebts.text = MyDebtsAdapter().itemCount.toString()
+        pDebtors.text = Debtors().debtorsList.size.toString()
+        pMyDebts.text = "10"
         pLoans.text = LoansAdapter().itemCount.toString()
         pInstallments.text = InstallmentsAdapter().itemCount.toString()
 
@@ -157,7 +152,7 @@ class Profile : Fragment() {
         profileDp.setOnClickListener {
             // zoom dp to full size image
             // todo remove the following line
-            this.activity!!.selectImage(RC_SELECT_DP_IMAGE)
+            // this.activity!!.selectImage(RC_SELECT_DP_IMAGE)
         }
     }
 
@@ -400,9 +395,6 @@ class Profile : Fragment() {
 
     @Suppress("LocalVariableName")
     private fun clearSharedPrefs(whichOne: String) {
-        val AUTO_SIGN_IN = "autoSignIn"
-        val HAS_ACCOUNT = "hasAccount"
-        val USER_NAME = "userName"
 
         val autoSign: SharedPreferences? = activity!!.userSharedPrefs(AUTO_SIGN_IN)
         val autoSignEditor = autoSign?.edit()

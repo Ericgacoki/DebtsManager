@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:ignore="HardcodedText"
-    tools:context=".fragments.Profile">
+    >
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileDp"
@@ -16,7 +16,7 @@
         android:layout_height="100dp"
         android:elevation="10dp"
         android:padding="0dp"
-        android:src="@drawable/dev"
+        android:src="@drawable/dev_eric"
         app:civ_border_color="@color/colorWhite"
         app:civ_border_width="1dp"
         app:civ_circle_background_color="#7A4837"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/gradientorange"
+            android:background="#54FF5900"
             android:id="@+id/profileCardLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -69,7 +69,6 @@
                 android:layout_marginBottom="3dp"
                 android:fontFamily="@font/exo_bold"
                 android:text="User Name"
-                android:textColor="@color/colorLightBgBlack"
                 android:textSize="17sp"
                 app:layout_constraintBottom_toTopOf="@+id/profileUserEmail"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +84,6 @@
                 android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif"
                 android:text="username@gmail.com"
-                android:textColor="@color/colorBlack"
                 android:textIsSelectable="true"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -111,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6.66dp"
-                android:text="My debts :"
+                android:text="Debtors   "
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -127,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="16dp"
-                android:text="Debtors :"
+                android:text="My debts "
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/textView4"
@@ -138,7 +136,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/pMyDebts"
+                android:id="@+id/pDebtors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -154,7 +152,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/pDebtors"
+                android:id="@+id/pMyDebts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:maxLength="3"
@@ -163,8 +161,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textView4"
-                app:layout_constraintStart_toStartOf="@+id/pMyDebts"
+                app:layout_constraintStart_toStartOf="@+id/pDebtors"
                 app:layout_constraintTop_toTopOf="@+id/textView5"
                 app:layout_constraintVertical_bias="0.0"
                 tools:ignore="HardcodedText" />
@@ -173,7 +170,7 @@
                 android:id="@+id/textView7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Installments :"
+                android:text="Installments  "
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -187,7 +184,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loans :"
+                android:text="Loans  "
                 android:textColor="@color/colorWhite"
                 app:layout_constraintBottom_toBottomOf="@+id/textView5"
                 app:layout_constraintEnd_toEndOf="@+id/textView7"
@@ -254,33 +251,11 @@
         android:layout_margin="16dp"
         android:fontFamily="@font/exo_bold"
         android:text="@string/data_analysis"
-        android:textColor="#3C2404"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <!--
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshGraphs"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="3dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dataAnalysisRecyclerView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clipToPadding="false"
-            android:paddingBottom="80dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/row_analysis_item" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -331,7 +306,6 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@color/colorWhite"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -351,6 +325,8 @@
                         android:layout_gravity="end"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="1dp"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/exo"
                         android:layout_marginBottom="15dp"
                         android:background="@drawable/menu_buttons_bg"
                         android:drawableStart="@drawable/ic__edit_attributes"
@@ -359,7 +335,7 @@
                         android:text="    Edit  account  "
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                         />
 
 
                     <Button
@@ -369,6 +345,8 @@
                         android:layout_gravity="start"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="15dp"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/exo"
                         android:background="@drawable/menu_buttons_bg"
                         android:drawableEnd="@drawable/ic_settings"
                         android:paddingStart="10dp"
@@ -376,7 +354,7 @@
                         android:text=" App    settings  "
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        />
 
                     <Button
                         android:id="@+id/pBtnAboutDev"
@@ -385,6 +363,8 @@
                         android:layout_gravity="end"
                         android:layout_marginStart="20dp"
                         android:layout_marginBottom="15dp"
+                        android:textSize="13sp"
+                        android:fontFamily="@font/exo"
                         android:background="@drawable/menu_buttons_bg"
                         android:drawableStart="@drawable/ic_about"
                         android:paddingStart="5dp"
@@ -392,7 +372,7 @@
                         android:text="    About  dev      "
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                       />
 
                     <Button
                         android:id="@+id/pBtnShareToOthers"
@@ -408,7 +388,8 @@
                         android:text="Share to others "
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        android:textSize="13sp"
+                        android:fontFamily="@font/exo" />
 
                     <Button
                         android:id="@+id/pBtnRate5Star"
@@ -424,7 +405,8 @@
                         android:text="     Rate 5 stars  "
                         android:textAlignment="gravity"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        android:textSize="13sp"
+                        android:fontFamily="@font/exo"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </androidx.constraintlayout.widget.ConstraintLayout>

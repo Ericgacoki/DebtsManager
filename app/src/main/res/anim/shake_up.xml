@@ -5,6 +5,6 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="90">
     <translate
-        android:fromYDelta="-20"
-        android:toYDelta="10" />
+        android:fromYDelta="-30"
+        android:toYDelta="0" />
 </set>

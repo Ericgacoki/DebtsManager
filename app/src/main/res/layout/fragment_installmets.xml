@@ -41,12 +41,11 @@
         app:layout_constraintVertical_bias="0.632"
         tools:ignore="HardcodedText" />
 
-    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddInstallment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="+"
-        app:fabSize="auto"
         android:textSize="35sp"
         android:textColor="@color/colorOrange"
         android:backgroundTint="@color/colorLightBgBlack"

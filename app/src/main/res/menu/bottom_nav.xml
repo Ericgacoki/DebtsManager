@@ -6,23 +6,23 @@
 
     <item
         android:id="@+id/debtors"
-        android:icon="@drawable/profile5"
+        android:icon="@drawable/ic_debtors_icon"
         android:title="@string/debtors" />
     <item
         android:id="@+id/myDebts"
-        android:icon="@drawable/ic_mydebts2"
+        android:icon="@drawable/ic_my_debts_icon"
         android:title="@string/my_debts" />
-    <item
+    <!-- <item
         android:id="@+id/loans"
-        android:icon="@drawable/ic_loan"
+        android:icon="@drawable/ic_loans_icon"
         android:title="@string/loans" />
     <item
         android:id="@+id/installments"
         android:icon="@drawable/installment"
-        android:title="@string/installments_hp" />
+        android:title="@string/installments_hp" /> -->
     <item
         android:id="@+id/profile"
-        android:icon="@drawable/ic_money_transfer"
+        android:icon="@drawable/ic_profile_icon"
         android:title="@string/profile" />
 
 </menu>
