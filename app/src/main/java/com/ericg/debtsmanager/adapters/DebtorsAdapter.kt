@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
 
 
 class DebtorsAdapter(
-    thisContext: Context?,
+    thisContext: Context? ,
     private val debtorsList: ArrayList<DebtData>,
     private val listener: OnDebtorClickListener
 ) : RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
@@ -50,6 +50,7 @@ class DebtorsAdapter(
         )
 
         /** @testing_Animations */
+        context = holder.itemView.context
 
         if (holder.adapterPosition > lastPosition && context != null) {
             // when scrolling down
