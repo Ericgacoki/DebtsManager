@@ -8,7 +8,8 @@
     android:id="@+id/addDebtorScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="false">
+    tools:context=".fragments.AddDebt"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addDebtorTitle"
+            app:layout_constraintTop_toBottomOf="@+id/debtProfilePic"
             tools:ignore="HardcodedText"
              />
 
@@ -56,14 +57,25 @@
             android:layout_marginTop="16dp"
             android:focusableInTouchMode="true"
             android:fontFamily="@font/exo_bold"
-            android:text="Choose type "
+            android:text="  Choose debt type  "
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/addDebtName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/debtProfilePic"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_person"
+            app:layout_constraintEnd_toEndOf="@+id/addDebtName"
+            app:layout_constraintStart_toStartOf="@+id/addDebtName"
+            app:layout_constraintTop_toBottomOf="@+id/addDebtorTitle" />
 
         <Spinner
             android:id="@+id/spinnerDebtDataType"
@@ -72,7 +84,7 @@
             android:spinnerMode="dropdown"
             app:layout_constraintBottom_toBottomOf="@+id/addDebtorTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.675"
+            app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintStart_toEndOf="@+id/addDebtorTitle"
             app:layout_constraintTop_toTopOf="@+id/addDebtorTitle"
             app:layout_constraintVertical_bias="1.0" />
@@ -140,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:datePickerMode="calendar"
+            android:calendarTextColor="@color/colorOrange"
             android:theme="@style/ThemeGreenCalendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -171,14 +184,14 @@
             app:layout_constraintTop_toBottomOf="@id/addDebtorStartDateHeader" />
 
         <Button
-            android:id="@+id/btnSaveDebt"
+            android:id="@+id/btnPreviewDebt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorOrange"
+            android:backgroundTint="@color/colorBlue"
             android:padding="10dp"
-            android:text=" save changes "
+            android:text="     Preview    "
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite"

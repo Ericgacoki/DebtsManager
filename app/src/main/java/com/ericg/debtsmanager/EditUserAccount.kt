@@ -8,6 +8,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Handler
 import android.provider.MediaStore
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import com.ericg.debtsmanager.auth.ResetPassword
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
+import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_edit_account.*
@@ -85,19 +87,21 @@ class EditUserAccount : AppCompatActivity() {
         change_dp.setOnClickListener {
             val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
 
-            if (editMode) { selectImage(RC_SELECT_MAIN_IMAGE)
-            } else { change_dp.snackBuilder("First enable edit mode", 4000).apply {
+            if (editMode) {
+                selectImage(RC_SELECT_MAIN_IMAGE)
+            } else {
+                change_dp.snackBuilder("First enable edit mode", 4000).apply {
 
-                setBackgroundTint(getColor(R.color.colorLightOrange))
-                setTextColor(getColor(R.color.colorBlack))
-                setActionTextColor(getColor(R.color.colorWhite))
-                setAction("OK") {
-                    editable.forEach { it.isEnabled = true }
-                    switchEditMode.isChecked = true
-                    editMode = true
+                    setBackgroundTint(getColor(R.color.colorLightOrange))
+                    setTextColor(getColor(R.color.colorBlack))
+                    setActionTextColor(getColor(R.color.colorWhite))
+                    setAction("OK") {
+                        editable.forEach { it.isEnabled = true }
+                        switchEditMode.isChecked = true
+                        editMode = true
+                    }
+                    show()
                 }
-                show()
-            }
             }
         }
 
@@ -140,11 +144,11 @@ class EditUserAccount : AppCompatActivity() {
         if (requestCode == RC_SELECT_MAIN_IMAGE && resultCode == Activity.RESULT_OK && imageIntent != null && imageIntent.data != null) {
             val selectedImagePath = imageIntent.data
 
-            selectedImageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedImagePath)
+            selectedImageBitmap =
+                MediaStore.Images.Media.getBitmap(contentResolver, selectedImagePath)
 
             // TODO save this image to firestore -> check if user is null although at this point user can't be null
             // set saveIsComplete to true on a successful saving
-
         }
         super.onActivityResult(requestCode, resultCode, imageIntent)
     }
@@ -170,8 +174,17 @@ class EditUserAccount : AppCompatActivity() {
         }
     }
 
+   private var exit = false
+
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        if (exit) {
+            super.onBackPressed()
+            finish()
+        } else {
+            toast("press again to exit")
+            exit = true
+            Handler().postDelayed({ exit = false }, 2000)
+        }
     }
 }

@@ -13,8 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.RC_SELECT_MAIN_IMAGE
-import com.ericg.debtsmanager.fragments.FragmentAddDebt
+import com.ericg.debtsmanager.fragments.AddDebt
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -43,7 +42,7 @@ fun Activity.selectImage(requestCode: Int) {
     val imageIntent = Intent().apply {
         type = "image/*"
         action = Intent.ACTION_GET_CONTENT
-        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png", "image/jpg", "video"))
+        putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/jpeg", "image/png", "image/jpg"))
     }
     startActivityForResult(
         Intent.createChooser(imageIntent, "Select image"),
@@ -52,19 +51,18 @@ fun Activity.selectImage(requestCode: Int) {
 }
 
 fun Activity.userSharedPrefs(key: String, privateMode: Int = 0): SharedPreferences? {
-   return getSharedPreferences(key, privateMode)
+    return getSharedPreferences(key, privateMode)
 }
 
 
 fun Fragment.openAddDebtFragment() {
     parentFragmentManager
         .beginTransaction()
-        .replace(R.id.frameLayout, FragmentAddDebt())
-        // .addToBackStack("$this")
+        .replace(R.id.frameLayout, AddDebt())
+        .addToBackStack("$this")
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
         .commit()
 }
-
 
 
 

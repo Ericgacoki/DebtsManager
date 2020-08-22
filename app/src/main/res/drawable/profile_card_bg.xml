@@ -5,11 +5,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
 
-   <solid
-       android:color="#54FF5900"/>
+    <solid android:color="#54FFFFFF" />
     <corners
+        android:bottomLeftRadius="20dp"
         android:bottomRightRadius="20dp"
-        android:topLeftRadius="30dp"
-        android:bottomLeftRadius="20dp" />
-
+        android:topLeftRadius="30dp" />
+    <stroke
+        android:width="0.3dp"
+        android:color="@color/colorLightBgBlack" />
 </shape>

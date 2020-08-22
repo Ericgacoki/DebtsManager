@@ -77,7 +77,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
     private val debtorsAdapter =
         DebtorsAdapter(
-            thisContext = this.context,
+            thisContext = null,
             debtorsList = debtorsList,
             listener = this
         )
@@ -312,7 +312,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                                     debtorsRecyclerView.scrollToPosition(position)
                                     toast("saved successfully")
                                     saved = true
-                                    paymentBuilder.show().dismiss()
+                                   // paymentBuilder.show().dismiss()
 
                                 } else toast("you can only save once at a time")
 

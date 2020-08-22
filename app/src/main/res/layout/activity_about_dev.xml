@@ -10,8 +10,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".admin.AboutDeveloper"
     android:orientation="vertical"
-    android:background="@drawable/net2"
     android:layout_margin="0dp">
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/pinkbubbles"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/developer_image"
@@ -19,7 +29,7 @@
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
         android:elevation="10dp"
-        android:src="@drawable/dev"
+        android:src="@drawable/eric_img"
         app:civ_border_color="@color/colorWhite"
         app:civ_border_width="1.5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -67,6 +77,7 @@ todo collect number of likes from firestore
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="70dp"
         app:cardCornerRadius="30dp"
+        android:backgroundTint="#3EFFC107"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,13 +86,12 @@ todo collect number of likes from firestore
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:background="@drawable/developer_card"
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="120dp"
                 android:layout_marginBottom="100dp"
@@ -95,9 +105,16 @@ todo collect number of likes from firestore
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/money_savings"
-                    >
+                    android:layout_height="match_parent">
+
+                    <pl.droidsonroids.gif.GifImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/pinkbubbles"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/textView13"

@@ -77,10 +77,7 @@ class Profile : Fragment() {
         // todo use coroutine to fetch data from firestore
 
         pDebtors.text = Debtors().debtorsList.size.toString()
-        pMyDebts.text = "10"
-        pLoans.text = LoansAdapter().itemCount.toString()
-        pInstallments.text = InstallmentsAdapter().itemCount.toString()
-
+        pMyDebts.text = "loa..."
     }
 
     @Suppress("LocalVariableName")

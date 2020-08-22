@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.data.DebtData
@@ -49,8 +50,9 @@ class DebtorsAdapter(
             progressPercentage = debtorsList[position].progressPercentage!!.toInt()
         )
 
-        /** @testing_Animations */
-        context = holder.itemView.context
+        @NonNull
+        context = holder.itemView.context // context must not be null
+
 
         if (holder.adapterPosition > lastPosition && context != null) {
             // when scrolling down
@@ -63,6 +65,7 @@ class DebtorsAdapter(
             lastPosition = holder.adapterPosition
 
         } else {
+            // when scrolling up
             if (context != null) {
                 holder.itemView.startAnimation(
                     AnimationUtils.loadAnimation(
