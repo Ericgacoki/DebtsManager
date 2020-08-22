@@ -11,7 +11,10 @@ import android.content.SharedPreferences
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.RC_SELECT_MAIN_IMAGE
+import com.ericg.debtsmanager.fragments.FragmentAddDebt
 import com.google.android.material.snackbar.Snackbar
 
 /**
@@ -51,6 +54,17 @@ fun Activity.selectImage(requestCode: Int) {
 fun Activity.userSharedPrefs(key: String, privateMode: Int = 0): SharedPreferences? {
    return getSharedPreferences(key, privateMode)
 }
+
+
+fun Fragment.openAddDebtFragment() {
+    parentFragmentManager
+        .beginTransaction()
+        .replace(R.id.frameLayout, FragmentAddDebt())
+        // .addToBackStack("$this")
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+        .commit()
+}
+
 
 
 

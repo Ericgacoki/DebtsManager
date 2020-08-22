@@ -15,15 +15,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
 import com.ericg.debtsmanager.data.DebtData
+import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
-import kotlinx.android.synthetic.main.dialog_add_debtor.view.*
+import kotlinx.android.synthetic.main.fragment_add_debt.view.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
 import java.util.*
@@ -91,7 +93,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
         updateUI()
         onSwipeToRefresh()
-        fabAddDebtor.setOnClickListener { showAddDebtorDialog() }
+        fabAddDebtor.setOnClickListener { openAddDebtFragment() }
     }
 
     @Suppress("DEPRECATION")
@@ -310,6 +312,8 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                                     debtorsRecyclerView.scrollToPosition(position)
                                     toast("saved successfully")
                                     saved = true
+                                    paymentBuilder.show().dismiss()
+
                                 } else toast("you can only save once at a time")
 
                             } else if (newPaymentAmt.text.toString().isEmpty()) {
@@ -376,25 +380,6 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     super.onScrolled(recyclerView, dx, dy)
                 }
             }) */
-        }
-    }
-
-    @SuppressLint("InflateParams")
-    private fun showAddDebtorDialog() {
-        val addDebtor = AlertDialog.Builder(this.context)
-        val addDebtorView = layoutInflater.inflate(R.layout.dialog_add_debtor, null)
-        /**
-         *       set today as the max starting date and the min deadline
-         */
-        val today = Calendar.getInstance().timeInMillis
-
-        addDebtorView.apply {
-            addDebtorStartDate.maxDate = today
-            addDebtorDeadline.minDate = today
-        }
-        addDebtor.apply {
-            setView(addDebtorView)
-            create().show()
         }
     }
 }

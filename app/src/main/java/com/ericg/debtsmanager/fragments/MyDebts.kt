@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.data.DebtData
+import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.toast
 import kotlinx.android.synthetic.main.fragment_my_debts.*
 
@@ -38,6 +39,19 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
     ): View? = inflater.inflate(R.layout.fragment_my_debts, container, false)
 
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
+
+        val numMyDebts = myDebtsList.size
+        noDebts.visibility = if (numMyDebts == 0) {
+            VISIBLE
+        } else {
+            INVISIBLE
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
@@ -46,12 +60,6 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         }
 
-        val numMyDebts = myDebtsList.size
-        noDebts.visibility = if (numMyDebts == 0) {
-            VISIBLE
-        } else {
-            INVISIBLE
-        }
     }
 
     override fun onMyDebtClicked(position: Int, itemView: View, viewId: Int) {

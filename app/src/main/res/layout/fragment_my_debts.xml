@@ -33,7 +33,7 @@
         android:textColor="@color/colorBlack"
         android:textSize="19sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+        app:layout_constraintBottom_toTopOf="@+id/fabAddMyDebt"
         app:layout_constraintCircleRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -43,12 +43,11 @@
         tools:ignore="HardcodedText" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fabAddMyDebt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+"
-        app:fabSize="auto"
-        android:textSize="35sp"
+       android:src="@drawable/ic_add"
+        app:maxImageSize="30dp"
         android:textColor="@color/colorOrange"
         android:backgroundTint="@color/colorLightBgBlack"
         app:layout_constraintBottom_toBottomOf="parent"

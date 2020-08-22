@@ -13,10 +13,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"
         android:background="#1DFFF5D9">
 
         <EditText
-            android:id="@+id/addDebtorName"
+            android:id="@+id/addDebtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -29,13 +31,23 @@
             android:maxLength="15"
             android:textAlignment="center"
             android:textColorHint="#CEFF9100"
-            app:layout_constraintBottom_toTopOf="@+id/addDebtorAmount"
+            app:layout_constraintBottom_toTopOf="@+id/addDebtAmount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/addDebtorTitle"
             tools:ignore="HardcodedText"
-            tools:text="Eric gacoki" />
+             />
+
+        <ImageView
+            android:id="@+id/btnExitAddDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_black"
+            app:layout_constraintBottom_toBottomOf="@+id/addDebtorTitle"
+            app:layout_constraintEnd_toStartOf="@+id/addDebtorTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/addDebtorTitle" />
 
         <TextView
             android:id="@+id/addDebtorTitle"
@@ -44,17 +56,29 @@
             android:layout_marginTop="16dp"
             android:focusableInTouchMode="true"
             android:fontFamily="@font/exo_bold"
-            android:text="Add Debtor"
+            android:text="Choose type "
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/addDebtorName"
+            app:layout_constraintBottom_toTopOf="@+id/addDebtName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="HardcodedText" />
 
+        <Spinner
+            android:id="@+id/spinnerDebtDataType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            app:layout_constraintBottom_toBottomOf="@+id/addDebtorTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.675"
+            app:layout_constraintStart_toEndOf="@+id/addDebtorTitle"
+            app:layout_constraintTop_toTopOf="@+id/addDebtorTitle"
+            app:layout_constraintVertical_bias="1.0" />
+
         <EditText
-            android:id="@+id/addDebtorAmount"
+            android:id="@+id/addDebtAmount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -69,14 +93,14 @@
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textColorHint="#CDFF9100"
-            app:layout_constraintBottom_toTopOf="@+id/addDebtorPhone"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorName"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorName"
-            app:layout_constraintTop_toBottomOf="@+id/addDebtorName"
+            app:layout_constraintBottom_toTopOf="@+id/addDebtPhone"
+            app:layout_constraintEnd_toEndOf="@+id/addDebtName"
+            app:layout_constraintStart_toStartOf="@+id/addDebtName"
+            app:layout_constraintTop_toBottomOf="@+id/addDebtName"
             tools:ignore="HardcodedText" />
 
         <EditText
-            android:id="@+id/addDebtorPhone"
+            android:id="@+id/addDebtPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -92,9 +116,9 @@
             android:textColor="@color/colorBlack"
             android:textColorHint="#CDFF9100"
             app:layout_constraintBottom_toTopOf="@+id/startDateHeader"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorAmount"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorAmount"
-            app:layout_constraintTop_toBottomOf="@+id/addDebtorAmount"
+            app:layout_constraintEnd_toEndOf="@+id/addDebtAmount"
+            app:layout_constraintStart_toStartOf="@+id/addDebtAmount"
+            app:layout_constraintTop_toBottomOf="@+id/addDebtAmount"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -104,14 +128,14 @@
             android:fontFamily="@font/exo_bold"
             android:text="Select starting date"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/addDebtorStartDate"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorPhone"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorPhone"
-            app:layout_constraintTop_toBottomOf="@+id/addDebtorPhone"
+            app:layout_constraintBottom_toTopOf="@+id/selectDebtStartDate"
+            app:layout_constraintEnd_toEndOf="@+id/addDebtPhone"
+            app:layout_constraintStart_toStartOf="@+id/addDebtPhone"
+            app:layout_constraintTop_toBottomOf="@+id/addDebtPhone"
             tools:ignore="HardcodedText" />
 
         <DatePicker
-            android:id="@+id/addDebtorStartDate"
+            android:id="@+id/selectDebtStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -129,25 +153,25 @@
             android:fontFamily="@font/exo_bold"
             android:text="Select Deadline"
             android:textSize="18sp"
-            app:layout_constraintBottom_toTopOf="@+id/addDebtorDeadline"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorStartDate"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorStartDate"
-            app:layout_constraintTop_toBottomOf="@id/addDebtorStartDate"
+            app:layout_constraintBottom_toTopOf="@+id/selectDebtDueDate"
+            app:layout_constraintEnd_toEndOf="@+id/selectDebtStartDate"
+            app:layout_constraintStart_toStartOf="@+id/selectDebtStartDate"
+            app:layout_constraintTop_toBottomOf="@id/selectDebtStartDate"
             tools:ignore="HardcodedText" />
 
         <DatePicker
-            android:id="@+id/addDebtorDeadline"
+            android:id="@+id/selectDebtDueDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:theme="@style/ThemeOrangeCalendar"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorStartDate"
+            app:layout_constraintEnd_toEndOf="@+id/selectDebtStartDate"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorStartDate"
+            app:layout_constraintStart_toStartOf="@+id/selectDebtStartDate"
             app:layout_constraintTop_toBottomOf="@id/addDebtorStartDateHeader" />
 
         <Button
-            android:id="@+id/btnSaveDebtor"
+            android:id="@+id/btnSaveDebt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -160,10 +184,10 @@
             android:textColor="@color/colorWhite"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/addDebtorDeadline"
+            app:layout_constraintEnd_toEndOf="@+id/selectDebtDueDate"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/addDebtorDeadline"
-            app:layout_constraintTop_toBottomOf="@id/addDebtorDeadline"
+            app:layout_constraintStart_toStartOf="@+id/selectDebtDueDate"
+            app:layout_constraintTop_toBottomOf="@id/selectDebtDueDate"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="HardcodedText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
