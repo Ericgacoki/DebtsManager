@@ -405,7 +405,7 @@ class Profile : Fragment() {
                                 )
                                 toast("deleted successfully")
                             } else if (delete.isCanceled || !delete.isSuccessful) {
-                                toast("failed to delete")
+                                toast(" failed to delete ")
                             }
                         }
                 } else {
