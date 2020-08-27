@@ -30,8 +30,16 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         "Jd Kate", "3/10/2012", "01/20/2025", 1, "07024377...",
         701300, 120350, 5, null, null
     )
+    private val myDebt3 = DebtData(
+        "Jd Kate", "3/10/2016", "01/20/2025", 1, "07024...",
+        701300, 120350, 5, null, null
+    )
+    private val myDebt4 = DebtData(
+        "Jd Kate", "3/10/2018", "01/20/2025", 1, "07...",
+        701300, 120350, 5, null, null
+    )
 
-    private val myDebtsList: ArrayList<DebtData> = arrayListOf(myDebt1, myDebt2)
+    private val myDebtsList: ArrayList<DebtData> = arrayListOf(myDebt1, myDebt2, myDebt3, myDebt4)
     private val myDebtsAdapter = MyDebtsAdapter(myDebtsList, this)
 
     override fun onCreateView(

@@ -9,12 +9,11 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".admin.AboutDeveloper"
-    android:orientation="vertical"
-    android:layout_margin="0dp">
+    >
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:src="@drawable/pinkbubbles"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,6 +24,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/developer_image"
+        android:alpha="0.75"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
@@ -60,8 +60,9 @@ todo collect number of likes from firestore
 
 
     <com.like.LikeButton
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/likeBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:icon_size="20dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +70,18 @@ todo collect number of likes from firestore
         app:layout_constraintTop_toTopOf="@+id/developer_image"
         app:layout_constraintVertical_bias="0.0"
         app:liked="true" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 11.6 K"
+        app:layout_constraintStart_toStartOf="@+id/likeBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="2dp"
+        app:layout_constraintBottom_toTopOf="@id/likeBtn"
+        app:layout_constraintEnd_toEndOf="@id/likeBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="1"
+        />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -77,7 +90,7 @@ todo collect number of likes from firestore
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="70dp"
         app:cardCornerRadius="30dp"
-        android:backgroundTint="#3EFFC107"
+        android:alpha="0.95"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,6 +100,12 @@ todo collect number of likes from firestore
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/pinkbubbles"
+                />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
@@ -135,7 +154,7 @@ todo collect number of likes from firestore
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginVertical="10dp"
-                        android:src="@drawable/twitterlogo"
+                        android:src="@drawable/github_icon"
                         app:layout_constraintBottom_toTopOf="@+id/myFacebook"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0"
@@ -178,7 +197,7 @@ todo collect number of likes from firestore
                         android:layout_marginVertical="10dp"
                         android:src="@drawable/fbvector"
 
-                        app:layout_constraintBottom_toTopOf="@+id/myInstagram"
+                        app:layout_constraintBottom_toTopOf="@+id/myLinkedIn"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/myWhatsApp"
@@ -193,18 +212,18 @@ todo collect number of likes from firestore
                         android:layout_marginBottom="25dp"
                         android:src="@drawable/ic_email"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/myInstagram"
+                        app:layout_constraintEnd_toStartOf="@+id/myLinkedIn"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/myWhatsApp" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/myInstagram"
+                        android:id="@+id/myLinkedIn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="25dp"
-                        android:src="@drawable/iglogo2"
+                        android:src="@drawable/linkedinicon"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -243,17 +262,17 @@ todo collect number of likes from firestore
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:src="@drawable/money_hand"
-                app:layout_constraintBottom_toBottomOf="@+id/hireMe"
-                app:layout_constraintEnd_toStartOf="@+id/hireMe"
+                app:layout_constraintBottom_toBottomOf="@+id/hireMeOnUpWork"
+                app:layout_constraintEnd_toStartOf="@+id/hireMeOnUpWork"
                 app:layout_constraintStart_toEndOf="@+id/payPal"
                 app:layout_constraintTop_toBottomOf="@+id/showSomeLove" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/hireMe"
+                android:id="@+id/hireMeOnUpWork"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginVertical="10dp"
-                android:src="@drawable/money_hand"
+                android:src="@drawable/upworkicon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/showSomeLove"
                 app:layout_constraintHorizontal_bias="1"
@@ -285,7 +304,7 @@ todo collect number of likes from firestore
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:fontFamily="serif"
-                android:textColor="@color/colorFadedGrey"
+                android:textColor="@color/colorLightBgBlack"
                 android:text="Android software developer"
                 android:textAlignment="center"
                 android:textSize="12sp"

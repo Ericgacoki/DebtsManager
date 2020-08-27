@@ -9,11 +9,12 @@ import android.graphics.Color.BLUE
 import android.graphics.Color.WHITE
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.network.browse
+import com.ericg.debtsmanager.network.sendEmail
 import kotlinx.android.synthetic.main.activity_about_dev.*
 
 /**
@@ -33,23 +34,23 @@ open class AboutDeveloper : AppCompatActivity() {
         // TODO pass real links
         myTwitter.setOnClickListener {
             val twitterLink = "https://www.twitter.com"
-            browseUrl(twitterLink)
+            browse(twitterLink)
         }
 
         myGithub.setOnClickListener {
             val githubLink = "https://www.github.com/Ericgacoki"
-            browseUrl(githubLink)
+            browse(githubLink)
         }
 
-        myInstagram.setOnClickListener {
+        myLinkedIn.setOnClickListener {
             val iGLink = "https://www.instagram.com"
-            browseUrl(iGLink)
+            browse(iGLink)
         }
 
         myWhatsApp.setOnClickListener {
-            val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("tel:+254716965216"))
-            whatsAppIntent.putExtra(Intent.EXTRA_SUBJECT, "Hey there!")
-            whatsAppIntent.type = "textPlain"
+            val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254716965216"))
+            whatsAppIntent.putExtra(Intent.EXTRA_TEXT, "Hey there!")
+          //  whatsAppIntent.type = "text/plain"
             try {
                 startActivity(Intent.createChooser(whatsAppIntent, "Select whatsApp"))
             } catch (e: Exception) {
@@ -61,48 +62,13 @@ open class AboutDeveloper : AppCompatActivity() {
             myFacebook.snackBuilder("Sorry, I don't use facebook").apply {
                 setBackgroundTint(BLUE)
                 setTextColor(WHITE)
-                setAction("I know") {}
+                setAction("Ok") {}
                 show()
             }
         }
 
         myEmail.setOnClickListener {
-            val emailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto:"))
-            emailIntent.apply {
-                type = "textPlain"
-                putExtra(Intent.EXTRA_SUBJECT, "Hey there!")
-                putExtra(Intent.EXTRA_EMAIL, arrayOf("gacokieric@gmail.com"))
-            }
-            try {
-                startActivity(Intent.createChooser(emailIntent, "Select your email client"))
-            } catch (e: Exception) {
-                toast(e.toString())
-            }
-        }
-    }
-
-
-    private fun browseUrl(url: String) {
-        val browseIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        try {
-            startActivity(Intent.createChooser(browseIntent, "Select Browser"))
-
-        } catch (e: Exception) {
-            toast(e.toString())
-        }
-    }
-
-    private var exit = false
-
-    @Suppress("DEPRECATION")
-    override fun onBackPressed() {
-        if (exit) {
-            super.onBackPressed()
-            finish()
-        } else {
-            toast("press again to exit")
-            exit = true
-            Handler().postDelayed({ exit = false }, 2000)
+            sendEmail("Debts manager regards", arrayOf("gacokieric@gmail.com"))
         }
     }
 }

@@ -11,6 +11,9 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.Color.WHITE
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -23,20 +26,23 @@ import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.*
-import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
-import com.ericg.debtsmanager.adapters.InstallmentsAdapter
-import com.ericg.debtsmanager.adapters.LoansAdapter
-import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.admin.AboutDeveloper
 import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.extensions.userSharedPrefs
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.dialog_rate_app.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import java.util.*
+
+private var zoomed = false as Boolean?
 
 class Profile : Fragment() {
     override fun onCreateView(
@@ -45,39 +51,64 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_profile, container, false)
 
-    override fun onStart() {
-        super.onStart()
-        // TODO load image if its not set otherwise leave a place holder
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updatePieChart()
         updateProfile()
         handleClicks()
         handleCustomMenuClicks()
 
     }
 
+    private fun updatePieChart() {
+
+        // TODO get total debtors and myDebts from firestore
+
+        val totalDebtors = 14F
+        val totalMyDebts = 35F
+
+        val pieChart = dataAnalysisPieChart
+        val pieData: PieData
+        val pieDataSet: PieDataSet
+        val pieEntries: ArrayList<PieEntry> = arrayListOf()
+
+        pieEntries.add(PieEntry(totalDebtors, 0))
+        pieEntries.add(PieEntry(totalMyDebts, 1))
+
+        pieDataSet = PieDataSet(pieEntries, " Debtors  &  My debts ")
+        pieData = PieData(pieDataSet)
+        pieChart.data = pieData
+        pieChart.animateXY(1500, 1500)
+        pieDataSet.apply {
+            colors = mutableListOf(
+                Color.rgb(193, 37, 82),
+                Color.rgb(255, 102, 0),
+                Color.rgb(245, 199, 0),
+                Color.rgb(106, 150, 31),
+                Color.rgb(179, 100, 53)
+            )
+            sliceSpace = 1F
+            valueTextColor = WHITE
+            valueTextSize = 10F
+        }
+    }
+
     @Suppress("LocalVariableName")
     private fun updateProfile() {
 
         if (mUser != null) {
-            val mUserEmail: String? = mUser!!.email
+            val mUserEmail: String? = mUser?.email
             if (mUserEmail != null) {
-                profileUserEmail!!.text = mUserEmail.toString().trim()
+                profileUserEmail?.text = mUserEmail.toString().trim()
             }
         }
 
         val USER_NAME = "userName"
-        val userName = this.activity!!.getSharedPreferences(USER_NAME, 0)
-            .getString(USER_NAME, "Not registered")
-        profileUserName.text = userName!!.trim()
+        val userName = this.activity?.getSharedPreferences(USER_NAME, 0)
+            ?.getString(USER_NAME, "Not registered")
+        profileUserName.text = userName?.trim()
 
-        // todo use coroutine to fetch data from firestore
-
-        pDebtors.text = Debtors().debtorsList.size.toString()
-        pMyDebts.text = "loa..."
     }
 
     @Suppress("LocalVariableName")
@@ -89,7 +120,6 @@ class Profile : Fragment() {
 
                     // check from settings if user has disabled this feature. not all users might like to exit the menu by clicking outside it.
 
-                    val EXIT_BY_EXTERNAL_CLICK = "exitByExternalClick"
                     if (activity!!.getSharedPreferences(EXIT_BY_EXTERNAL_CLICK, 0)
                             .getBoolean(EXIT_BY_EXTERNAL_CLICK, false)
                     ) {
@@ -122,9 +152,19 @@ class Profile : Fragment() {
         }
     }
 
+    private fun unZoom() {
+        if (zoomed!!) {
+            zoomedProfileImage.apply {
+                visibility = INVISIBLE
+                // TODO animate fade away
+            }
+        }
+    }
+
     @Suppress("DEPRECATION")
     private fun handleClicks() {
         deleteAccount.setOnClickListener {
+            unZoom()
             deleteAccount.startAnimation(
                 AnimationUtils.loadAnimation(
                     context, R.anim.shake_up
@@ -134,6 +174,7 @@ class Profile : Fragment() {
         }
 
         showMenu.setOnClickListener {
+            unZoom()
             customMenu("show")
         }
 
@@ -141,15 +182,26 @@ class Profile : Fragment() {
             customMenu("exit")
         }
 
-        layMenuParent!!.setOnClickListener {
-            // this prevents clicks to all views with lower elevation ie views below it
+        mainProfileLayout.setOnClickListener {
+            unZoom()
         }
 
-        var zoom = false
+        layMenuParent!!.setOnClickListener {
+            // this prevents clicks to all views with lower elevation ie. views behind it in elevation hierarchy
+            unZoom()
+        }
+
         profileDp.setOnClickListener {
-            // zoom dp to full size image
-            // todo remove the following line
-            // this.activity!!.selectImage(RC_SELECT_DP_IMAGE)
+            zoomed = true
+            zoomedProfileImage.apply {
+                visibility = VISIBLE
+
+                // TODO animate from top
+            }
+        }
+
+        zoomedProfileImage.setOnClickListener {
+            unZoom()
         }
     }
 
@@ -187,8 +239,8 @@ class Profile : Fragment() {
                 "Hey, have you heard of Debts Manager ? I'ts an App heavily featured and capable " +
                         "of putting together your financial entities. I've been using it for a while now " +
                         "and its fun using the beautiful, smooth user interface that gives me the best user " +
-                        "experince ever. Don't hesitate to  Download Debts Manager App from here " +
-                        getString(R.string.download_link) + " Remember to share and rate it 5 star"
+                        "experience ever. Don't hesitate to  Download Debts Manager App from here " +
+                        getString(R.string.download_link) + " Remember to share and rate it 5 star. Thank you!"
 
             shareIntent.apply {
                 type = "text/plain"
@@ -217,7 +269,7 @@ class Profile : Fragment() {
                 btnRate.setOnClickListener {
                     feedBack = etRatingComment.text.toString().trim()
                     val processedFeedBack =
-                        if (feedBack.trim().isEmpty()) "no comment" else feedBack
+                        if (feedBack.trim().isEmpty()) " no comment" else feedBack
                     if (rating < 1) {
                         ratingBar.rating = 1F
                         toast("rating can't be zero")
@@ -324,6 +376,7 @@ class Profile : Fragment() {
         }
 
         delog.apply {
+            window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setContentView(delogView)
             create()
             show()
@@ -339,8 +392,8 @@ class Profile : Fragment() {
             setMessage("This action is potentially dangerous. Loss of your data is irreversible!")
             setPositiveButton("proceed") { _, _ ->
 // todo check if user is connected to internet
-                if (mUser != null) {
-                    mUser!!.delete()
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    FirebaseAuth.getInstance().currentUser!!.delete()
                         .addOnCompleteListener { delete ->
                             if (delete.isSuccessful) {
                                 clearSharedPrefs("all")

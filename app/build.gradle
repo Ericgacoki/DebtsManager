@@ -75,7 +75,6 @@ dependencies {
     // Animated Progress views (loading)
     implementation 'com.ldoublem.loadingview:loadingviewlib:1.0'
 
-
    // gif ImageView
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 

@@ -5,6 +5,7 @@
 package com.ericg.debtsmanager
 
 
+import android.graphics.Color.WHITE
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -92,10 +93,18 @@ class ParentActivity : AppCompatActivity() {
         val views: List<Int> =
             listOf(R.id.profile, R.id.debtors, R.id.myDebts /* R.id.loans, R.id.installments*/)
         views.forEach { view ->
-            findViewById<View>(view).isClickable = view != current
-            findViewById<View>(view).isEnabled = view != current
+            findViewById<View>(view).isClickable= view != current
+            findViewById<View>(view).isEnabled =  view != current
         }
     }
+/*
+    override fun onResume() {
+        super.onResume()
+        manageFragment(Profile())
+        disableCurrent(R.id.profile)
+        bottomNav.selectedItemId = R.id.profile
+        bottomNav.itemRippleColor = getColorStateList(R.color.colorWhite)
+    }*/
 
     private var backPressEnabled: Boolean = false
 

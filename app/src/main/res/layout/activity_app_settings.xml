@@ -172,7 +172,7 @@
         android:textAlignment="center"
         app:layout_constraintVertical_bias="1"
         android:layout_marginBottom="20dp"
-        android:text="Debts  Manager v2.0.1"
+        android:text="Debts  Manager v3.0.1"
         tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

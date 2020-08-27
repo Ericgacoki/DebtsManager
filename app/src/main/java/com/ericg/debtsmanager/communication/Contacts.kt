@@ -5,18 +5,16 @@
 package com.ericg.debtsmanager.communication
 
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.RC_PERMISSION_CALL
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.browse
-import com.ericg.debtsmanager.network.emailUs
+import com.ericg.debtsmanager.network.sendEmail
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_contacts.view.*
 
@@ -53,12 +51,12 @@ fun Activity.contacts(): BottomSheetDialog {
     customView.emailUs.setOnClickListener {
         val subject = "Debts manager help"
         val sendTo = arrayOf("gacokieric@gmail.com")   // debtsmanagerhelp@gmail.com
-        emailUs(subject, sendTo)
+        sendEmail(subject, sendTo)
     }
 
     customView.whatsAppUs.setOnClickListener {
         val body = "<Describe what help you need here>"
-        val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254745623611"))
+        val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254716965216"))
 
         whatsAppIntent.apply {
             putExtra(Intent.EXTRA_TEXT, body)

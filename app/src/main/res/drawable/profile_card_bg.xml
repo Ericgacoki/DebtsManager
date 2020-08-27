@@ -7,8 +7,8 @@
 
     <solid android:color="#54FFFFFF" />
     <corners
-        android:bottomLeftRadius="20dp"
-        android:bottomRightRadius="20dp"
+        android:bottomLeftRadius="30dp"
+        android:bottomRightRadius="30dp"
         android:topLeftRadius="30dp" />
     <stroke
         android:width="0.3dp"

@@ -31,15 +31,17 @@ class MyDebtsAdapter(
 
     override fun onBindViewHolder(holder: MyDebtViewHolder, position: Int) {
 
+        val debtAtPosition = myDebtsList[position]
+
         holder.bind(
-            name = myDebtsList[position].name,
-            startDate = myDebtsList[position].startDate,
-            dueDate = myDebtsList[position].dueDate,
-            phone = myDebtsList[position].phone,
-            initialAmt = myDebtsList[position].initialAmt,
-            paymentsDone = myDebtsList[position].paymentsDone.toString(),
-            remainingAmt = myDebtsList[position].remainingAmt!!.toInt(),
-            progressPercentage = myDebtsList[position].progressPercentage!!.toInt()
+            name = debtAtPosition.name,
+            startDate = debtAtPosition.startDate,
+            dueDate = debtAtPosition.dueDate,
+            phone = debtAtPosition.phone,
+            initialAmt = debtAtPosition.initialAmt,
+            paymentsDone = debtAtPosition.paymentsDone.toString(),
+            remainingAmt = debtAtPosition.remainingAmt!!.toInt(),
+            progressPercentage = debtAtPosition.progressPercentage!!.toInt()
         )
     }
 
@@ -101,7 +103,6 @@ class MyDebtsAdapter(
 
             mdAddPayment.setOnClickListener(this)
             mdAddReminder.setOnClickListener(this)
-
         }
 
         override fun onClick(view: View?) {

@@ -72,7 +72,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/ic_person"
+            android:src="@drawable/profileholder"
             app:layout_constraintEnd_toEndOf="@+id/addDebtName"
             app:layout_constraintStart_toStartOf="@+id/addDebtName"
             app:layout_constraintTop_toBottomOf="@+id/addDebtorTitle" />
@@ -82,12 +82,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:spinnerMode="dropdown"
-            app:layout_constraintBottom_toBottomOf="@+id/addDebtorTitle"
+            app:layout_constraintBottom_toTopOf="@+id/debtProfilePic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintStart_toEndOf="@+id/addDebtorTitle"
             app:layout_constraintTop_toTopOf="@+id/addDebtorTitle"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.8" />
 
         <EditText
             android:id="@+id/addDebtAmount"
@@ -103,7 +103,6 @@
             android:inputType="number"
             android:maxLength="9"
             android:textAlignment="center"
-            android:textColor="@color/colorBlack"
             android:textColorHint="#CDFF9100"
             app:layout_constraintBottom_toTopOf="@+id/addDebtPhone"
             app:layout_constraintEnd_toEndOf="@+id/addDebtName"
@@ -125,7 +124,6 @@
             android:inputType="phone"
             android:maxLength="15"
             android:textAlignment="center"
-            android:textColor="@color/colorBlack"
             android:textColorHint="#CDFF9100"
             app:layout_constraintBottom_toTopOf="@+id/startDateHeader"
             app:layout_constraintEnd_toEndOf="@+id/addDebtAmount"
@@ -190,7 +188,6 @@
             android:layout_margin="20dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/colorBlue"
-            android:padding="10dp"
             android:text="     Preview    "
             android:textAlignment="center"
             android:textAllCaps="false"
