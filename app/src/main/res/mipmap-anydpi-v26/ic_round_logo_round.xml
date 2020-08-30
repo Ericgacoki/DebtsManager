@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)  Updated by eric on  8/11/20 12:32 PM
+  -->
+
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background  android:drawable="@color/colorBlack" />
+    <foreground android:drawable="@mipmap/ic_round_logo_foreground"/>
+</adaptive-icon>

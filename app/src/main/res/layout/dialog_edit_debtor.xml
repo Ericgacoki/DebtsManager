@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  8/17/20 7:34 PM
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Edit necessary fields"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/editDebtorName"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/semi_curved_bg"
+        android:hint="New name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:maxLength="15"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="#A4303030"
+
+        />
+
+    <EditText
+        android:id="@+id/editDebtorPhone"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/semi_curved_bg"
+        android:hint="New Phone number"
+        android:importantForAutofill="no"
+        android:inputType="phone"
+        android:maxLength="15"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="#A4303030" />
+
+    <EditText
+        android:id="@+id/editAddDebt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/semi_curved_bg"
+        android:hint="Add New debt"
+        android:importantForAutofill="no"
+        android:inputType="number"
+        android:maxLength="12"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="#A4303030" />
+
+    <EditText
+        android:id="@+id/editDebtDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/semi_curved_bg"
+        android:hint="New due date  eg  12/10/2020"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        android:maxLength="15"
+        android:padding="10dp"
+        android:textColor="@color/colorBlack"
+        android:textColorHint="#A4303030" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/cancelEditing"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/semi_curved_bg"
+            android:backgroundTint="@color/colorRed"
+            android:text="cancel"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/saveChanges"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/semi_curved_bg"
+            android:backgroundTint="@color/colorGreen"
+            android:text="save" />
+
+    </LinearLayout>
+</LinearLayout>
+
+
+
+
+
+
+
+

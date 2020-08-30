@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  8/15/20 9:38 AM
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Circular translucent background -->
+    <item>
+        <shape
+            android:shape="rectangle"
+            android:useLevel="false">
+            <corners android:radius="300dp" />
+            <solid android:color="#5200E2FF" />
+        </shape>
+    </item>
+
+    <!-- Grey ring -->
+
+    <item>
+        <shape
+            android:shape="ring"
+            android:thicknessRatio="16"
+            android:useLevel="false">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+
+    <!-- Progress track -->
+
+    <item>
+        <rotate
+            android:fromDegrees="270"
+            android:toDegrees="270">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="16"
+                android:useLevel="true">
+                <gradient
+                    android:endColor="#FF760E"
+                    android:startColor="#FFC46C"
+                    android:type="sweep"
+                    android:useLevel="true" />
+            </shape>
+        </rotate>
+    </item>
+
+</layer-list>

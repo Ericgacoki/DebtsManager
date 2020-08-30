@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  8/18/20 2:00 AM
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/debtPaymentTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Add new payment for Eric"
+        android:textColor="@color/colorBlack"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/newPaymentAmt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/semi_curved_bg"
+        android:hint="new payment"
+        android:inputType="number"
+        android:maxLength="9"
+        android:textAlignment="center"
+        android:textColorHint="#B3B3B3" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/eraseDebtPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/semi_curved_bg"
+            android:backgroundTint="@color/colorRed"
+            android:text="erase" />
+
+        <Button
+            android:id="@+id/saveDebtPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/semi_curved_bg"
+            android:backgroundTint="@color/colorGreen"
+            android:text="save" />
+    </LinearLayout>
+</LinearLayout>
