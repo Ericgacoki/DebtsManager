@@ -144,7 +144,7 @@
             app:layout_constraintTop_toBottomOf="@+id/addDebtPhone"
             tools:ignore="HardcodedText" />
 
-        <DatePicker
+        <CalendarView
             android:id="@+id/selectDebtStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

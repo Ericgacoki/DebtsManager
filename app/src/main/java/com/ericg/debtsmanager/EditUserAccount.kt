@@ -30,7 +30,7 @@ class EditUserAccount : AppCompatActivity() {
 
     private var mUserName: String? = null
     private var mUserEmail: String? = null
-    private var mUserPhone: String? = "+254716965216"
+    private var mUserPhone: String? = ""
 
     private var displayName: String = ""
     private var editMode = false
@@ -55,8 +55,10 @@ class EditUserAccount : AppCompatActivity() {
 
     private fun fetchData() {
 
-        mUserName = getSharedPreferences("userName", 0).getString("userName", "")
+        mUserName = getSharedPreferences(USER_NAME, 0).getString(USER_NAME, "")
+        mUserPhone = getSharedPreferences(USER_PHONE, 0).getString(USER_PHONE, "")
         displayName = if (mUser != null) {
+            // fetch email and name
             mUserEmail = mUser!!.email
             mUser!!.displayName.toString()
         } else {
@@ -69,17 +71,24 @@ class EditUserAccount : AppCompatActivity() {
         if (updateImage) {
             // TODO delay 1 sec fetch image from cloud/cache, update dp if user exists otherwise leave the default
         }
+
+        /**
+         *  use .setText("...") since .text = "..." doesn't work in EditTexts
+         */
+
         if (displayName.isNotEmpty()) {
             etNewUserName.setText(displayName)
         } else {
             etNewUserName.setText(mUserName)
         }
 
+        if (!mUserPhone.isNullOrEmpty()){
+            etNewPhone.setText(mUserPhone)
+        }
+
         if (!mUserEmail.isNullOrEmpty()) {
             etNewEmail.setText(mUserEmail)
         }
-
-        etNewPhone.setText(mUserPhone)
     }
 
     private fun handleClicks() {

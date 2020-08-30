@@ -2,32 +2,30 @@
   ~ Copyright (c)  Updated by eric on  8/8/20 3:14 PM
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".admin.AboutDeveloper"
-    >
+    tools:context=".admin.AboutDeveloper">
 
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:src="@drawable/pinkbubbles"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
 
         />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/developer_image"
-        android:alpha="0.75"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_marginTop="20dp"
+        android:alpha="0.70"
         android:elevation="10dp"
         android:src="@drawable/eric_img"
         app:civ_border_color="@color/colorWhite"
@@ -61,27 +59,29 @@ todo collect number of likes from firestore
 
     <com.like.LikeButton
         android:id="@+id/likeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         app:icon_size="20dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/developer_image"
         app:layout_constraintTop_toTopOf="@+id/developer_image"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.5"
         app:liked="true" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" 11.6 K"
-        app:layout_constraintStart_toStartOf="@+id/likeBtn"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginBottom="2dp"
+        android:text=" 11.6 K"
+        android:textSize="12sp"
+        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toTopOf="@id/likeBtn"
         app:layout_constraintEnd_toEndOf="@id/likeBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="1"
-        />
+        app:layout_constraintStart_toStartOf="@+id/likeBtn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
@@ -89,8 +89,8 @@ todo collect number of likes from firestore
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="70dp"
-        app:cardCornerRadius="30dp"
         android:alpha="0.95"
+        app:cardCornerRadius="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,8 +104,7 @@ todo collect number of likes from firestore
             <pl.droidsonroids.gif.GifImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/pinkbubbles"
-                />
+                android:src="@drawable/pinkbubbles" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView5"
@@ -248,11 +247,11 @@ todo collect number of likes from firestore
                 app:layout_constraintTop_toBottomOf="@+id/cardView5"
                 app:layout_constraintVertical_bias="0" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/payPal"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/money_hand"
+                android:src="@drawable/pay_pal_gif"
                 app:layout_constraintBottom_toBottomOf="@+id/mPesa"
                 app:layout_constraintStart_toStartOf="@+id/showSomeLove"
                 app:layout_constraintTop_toTopOf="@+id/mPesa" />
@@ -261,7 +260,7 @@ todo collect number of likes from firestore
                 android:id="@+id/mPesa"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/money_hand"
+                android:src="@drawable/mpesa_logo"
                 app:layout_constraintBottom_toBottomOf="@+id/hireMeOnUpWork"
                 app:layout_constraintEnd_toStartOf="@+id/hireMeOnUpWork"
                 app:layout_constraintStart_toEndOf="@+id/payPal"
@@ -286,9 +285,9 @@ todo collect number of likes from firestore
                 android:fontFamily="@font/exo_bold"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
-                android:textColor="@color/colorOrange"
                 android:text="@string/developer"
                 android:textAlignment="center"
+                android:textColor="@color/colorOrange"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/cardView5"
@@ -304,9 +303,9 @@ todo collect number of likes from firestore
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:fontFamily="serif"
-                android:textColor="@color/colorLightBgBlack"
                 android:text="Android software developer"
                 android:textAlignment="center"
+                android:textColor="@color/colorLightBgBlack"
                 android:textSize="12sp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toTopOf="@+id/cardView5"

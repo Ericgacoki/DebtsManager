@@ -118,7 +118,8 @@ class Profile : Fragment() {
                 visibility = VISIBLE
                 setOnClickListener {
 
-                    // check from settings if user has disabled this feature. not all users might like to exit the menu by clicking outside it.
+                    /* check from settings if user has disabled this feature.
+                       not all users might like to exit the menu by clicking outside it. */
 
                     if (activity!!.getSharedPreferences(EXIT_BY_EXTERNAL_CLICK, 0)
                             .getBoolean(EXIT_BY_EXTERNAL_CLICK, false)
@@ -154,7 +155,7 @@ class Profile : Fragment() {
 
     private fun unZoom() {
         if (zoomed!!) {
-            zoomedProfileImage.apply {
+            zoomedProfileImageLayout.apply {
                 visibility = INVISIBLE
                 // TODO animate fade away
             }
@@ -164,7 +165,6 @@ class Profile : Fragment() {
     @Suppress("DEPRECATION")
     private fun handleClicks() {
         deleteAccount.setOnClickListener {
-            unZoom()
             deleteAccount.startAnimation(
                 AnimationUtils.loadAnimation(
                     context, R.anim.shake_up
@@ -174,7 +174,6 @@ class Profile : Fragment() {
         }
 
         showMenu.setOnClickListener {
-            unZoom()
             customMenu("show")
         }
 
@@ -188,16 +187,19 @@ class Profile : Fragment() {
 
         layMenuParent!!.setOnClickListener {
             // this prevents clicks to all views with lower elevation ie. views behind it in elevation hierarchy
-            unZoom()
         }
 
         profileDp.setOnClickListener {
             zoomed = true
-            zoomedProfileImage.apply {
+            zoomedProfileImageLayout.apply {
                 visibility = VISIBLE
 
                 // TODO animate from top
             }
+        }
+
+        zoomedProfileImageLayout.setOnClickListener {
+            unZoom()
         }
 
         zoomedProfileImage.setOnClickListener {
@@ -329,7 +331,6 @@ class Profile : Fragment() {
                 setIcon(R.drawable.ic_edit)
                 setTitle("Sure to Edit account ?")
                 setMessage("Please note that you will not be able to change your name after 2 months")
-                setHasOptionsMenu(true)
                 setPositiveButton("Proceed") { _, _ ->
                     // don't show this dialog again
                     this@Profile.activity!!.userSharedPrefs("ShowConfirmDialog")?.edit()?.apply {

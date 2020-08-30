@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
@@ -14,13 +13,7 @@
         android:background="@color/colorFadedGrey"
         android:layout_height="match_parent">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/rate_app_5star"
-            />
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/Widget.AppCompat.RatingBar"
@@ -43,11 +36,11 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/dev"
+            android:src="@drawable/profileholder"
             app:layout_constraintBottom_toTopOf="@+id/etRatingComment"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/etRatingComment"
             app:layout_constraintHorizontal_bias="0.70"
-            app:layout_constraintStart_toEndOf="@+id/ratingBar"
+            app:layout_constraintStart_toEndOf="@+id/etRatingComment"
             app:layout_constraintTop_toTopOf="@+id/ratingBar"
             app:layout_constraintVertical_bias="0.85" />
 
@@ -66,11 +59,11 @@
             android:textColorHint="#7A000000"
             app:layout_constraintBottom_toTopOf="@+id/btnRate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratingBar"
             tools:ignore="HardcodedText"
-            tools:text="The best financial app on the planet. ive enjoyed  very much and i recommend others to install it. " />
+            tools:text="The best financial app on the planet. I\'ve enjoyed  very much and I recommend you to install it. " />
 
         <ImageView
             android:id="@+id/collapseRatingView"
@@ -90,9 +83,9 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="30dp"
             android:layout_marginBottom="28dp"
-            android:backgroundTint="@color/colorBlack"
+            android:backgroundTint="@color/colorWhite"
             android:text="       Send      "
-            android:textColor="@color/colorYellow"
+            android:textColor="@color/colorBlack"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/etRatingComment"

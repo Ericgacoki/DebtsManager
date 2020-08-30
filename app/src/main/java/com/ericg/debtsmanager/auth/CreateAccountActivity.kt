@@ -15,23 +15,28 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
+import android.telecom.TelecomManager.DURATION_LONG
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.ericg.debtsmanager.ParentActivity
-import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
-import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.*
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.network.sendEmail
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import kotlinx.android.synthetic.main.activity_create_account.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 private const val CHANNEL_ID = "Account Management "
 private var NOTIFICATION_ID = 1
@@ -58,6 +63,7 @@ val permissions = arrayOf(
 class CreateAccountActivity : AppCompatActivity() {
 
     private var userName = ""
+    private var userPhone = ""
     private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,16 +90,13 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun createNotificationChannel() {
-        // A registered channel is required for notifications in android 8.0 +
+        // A registered channel is required for notifications in Oreo (API 27, android 8.0) and above
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Account management"
-            val descriptionText = "Account settings"
-            val importance = NotificationManager.IMPORTANCE_HIGH
             val accountChannel = NotificationChannel(
-                CHANNEL_ID, name, importance
+                CHANNEL_ID, "Account management", NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = descriptionText
+                description = "Account settings"
             }
 
             // register this channel with the system
@@ -119,7 +122,7 @@ class CreateAccountActivity : AppCompatActivity() {
             setContentText(nContentText)
             priority = NotificationCompat.PRIORITY_HIGH
             setContentIntent(nPendingIntent)
-            setAutoCancel(false)
+            setAutoCancel(true)
         }
         with(NotificationManagerCompat.from(this)) {
             notify(NOTIFICATION_ID, accountManager.build())
@@ -150,7 +153,6 @@ class CreateAccountActivity : AppCompatActivity() {
                         "Hey, contact us for help"
                     )
                 }
-
             }
         }
 
@@ -191,8 +193,7 @@ class CreateAccountActivity : AppCompatActivity() {
                     val mailToAddress: Array<String> = arrayOf("debtsmanagerhelp@gmail.com")
 
                     if (issueDescription.trim().isNotEmpty()) {
-
-                        emailUs(mailSubject, mailToAddress, issueDescription)
+                        sendEmail(mailSubject, mailToAddress, issueDescription)
                     } else {
                         toast("can't send empty description")
                     }
@@ -255,7 +256,7 @@ class CreateAccountActivity : AppCompatActivity() {
             aPassword.error = "not matching"
             aConfirmPassword.error = "not matching"
         } else {
-            for (password in passwords) {
+            passwords.forEach { password ->
                 if (password.text.toString().trim().isEmpty()) {
                     password.error = "${password.hint} is required"
                 }
@@ -265,7 +266,7 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun checkTheEmpty(items: Array<EditText>) {
-        for (item in items) {
+        items.forEach { item ->
             if (item.text.toString().trim().isEmpty()) {
                 item.error = "${item.hint} is required"
             }
@@ -275,14 +276,16 @@ class CreateAccountActivity : AppCompatActivity() {
     @Suppress("LocalVariableName")
     private fun setSharedPrefs() {
         val PRIVATE_MODE = 0
-        val HAS_ACCOUNT = "hasAccount"
-        val USER_NAME = "userName"
 
         val sharedPrefAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE)
         val accountEditor = sharedPrefAccount.edit()
 
         val sharedPrefName: SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
         val nameEditor = sharedPrefName.edit()
+
+        val sharedPrefsPhone = getSharedPreferences(USER_PHONE, PRIVATE_MODE)
+            .edit()
+            .putString(USER_PHONE, userPhone)
 
         accountEditor.apply {
             putBoolean(HAS_ACCOUNT, true)
@@ -293,22 +296,26 @@ class CreateAccountActivity : AppCompatActivity() {
             putString(USER_NAME, userName)
         }
         nameEditor.apply()
+
+        sharedPrefsPhone.apply()
     }
 
     private fun verifyInputs() {
 
         userName = aUserName.text.toString().trim()
+        userPhone = aPhone.text.toString().trim()
         val userEmail = aEmail.text.toString().trim()
         val userPhone = aPhone.text.toString().trim()
         val userPassword = aPassword.text.toString().trim()
         val userConfirmPassword = aConfirmPassword.text.toString().trim()
 
         val notEmpty: Boolean =
-            (userName.isNotEmpty() && userEmail.isNotEmpty() && userPhone.isNotEmpty()
+            (userName.isNotEmpty() && userPhone.isNotEmpty() && userEmail.isNotEmpty() && userPhone.isNotEmpty()
                     && userPassword.isNotEmpty() && userConfirmPassword.isNotEmpty())
 
         //val inputs = arrayOf(userName, userEmail, userPhone, userPassword, userConfirmPassword)
-        val inputsIds: Array<EditText> = arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
+        val inputsIds: Array<EditText> =
+            arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
 
         fun saveUserData() {
             // todo -> async (with coroutines) save data to fireStore which has offline support
@@ -329,8 +336,8 @@ class CreateAccountActivity : AppCompatActivity() {
                     userEmail,
                     userPassword
                 ) // todo() save this to fireStore
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+                .addOnCompleteListener { creating ->
+                    if (creating.isSuccessful) {
                         loadingStatus(false, btnEnabled = false)
                         sendVerificationEmail()
                         startActivity(
@@ -345,13 +352,13 @@ class CreateAccountActivity : AppCompatActivity() {
 
                         toast("Welcome to Debts manager")
                         notifyAccountManagement(
-                            "Congratulations $userName!",
+                            "Congratulations $userName !",
                             "To manage your account, click profile >> " +
                                     "settings then perform any changes you wish",
                             pendingIntent
                         )
                         finish()
-                    } else if (task.isCanceled || !task.isSuccessful) {
+                    } else if (creating.isCanceled || !creating.isSuccessful) {
                         toast("Oops! an error occurred")
                         loadingStatus(false, btnEnabled = true)
                     }
@@ -360,10 +367,15 @@ class CreateAccountActivity : AppCompatActivity() {
         } else if (!notEmpty) {
             checkTheEmpty(inputsIds)
         } else if (!passwordIsStrong() && userPassword == userConfirmPassword) {
-            val warning = AlertDialog.Builder(this)
+            val warning = AlertDialog.Builder(this, 0)
             warning.apply {
                 setTitle(getString(R.string.warning))
-                setIcon(getDrawable(R.drawable.ic_warning))
+                setIcon(
+                    ContextCompat.getDrawable(
+                        this@CreateAccountActivity,
+                        R.drawable.ic_warning
+                    )
+                )
                 setMessage("Use a more secure password")
                 setPositiveButton("Got it") { _, _ -> }
                 setCancelable(false)
@@ -434,18 +446,19 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun sendVerificationEmail() {
         // update user
-        if (mUser != null) { // Todo -> use a coroutine here and remove handler
-            Handler().postDelayed({
+        if (mUser != null) { //
+            // Todo -> use a coroutine here and remove handler
+            GlobalScope.launch(Dispatchers.IO) {
                 mUser!!
                     .sendEmailVerification()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            toast("Link sent to ${mUser!!.email}")
+                            toast("Link sent to ${mUser!!.email}. Please verify your email", LENGTH_LONG)
                         } else {
                             toast("Sending failed!")
                         }
                     }
-            }, 3000)
+            }
         } else {
             toast("no user to send email to")
         }

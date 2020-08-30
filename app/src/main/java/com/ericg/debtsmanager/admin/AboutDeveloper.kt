@@ -4,6 +4,9 @@
 
 package com.ericg.debtsmanager.admin
 
+import android.app.Application
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color.BLUE
 import android.graphics.Color.WHITE
@@ -15,6 +18,7 @@ import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.browse
 import com.ericg.debtsmanager.network.sendEmail
+import io.grpc.android.AndroidChannelBuilder
 import kotlinx.android.synthetic.main.activity_about_dev.*
 
 /**
@@ -43,14 +47,13 @@ open class AboutDeveloper : AppCompatActivity() {
         }
 
         myLinkedIn.setOnClickListener {
-            val iGLink = "https://www.instagram.com"
+            val iGLink = "https://www.linkedin.com"
             browse(iGLink)
         }
 
         myWhatsApp.setOnClickListener {
             val whatsAppIntent = Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:+254716965216"))
             whatsAppIntent.putExtra(Intent.EXTRA_TEXT, "Hey there!")
-          //  whatsAppIntent.type = "text/plain"
             try {
                 startActivity(Intent.createChooser(whatsAppIntent, "Select whatsApp"))
             } catch (e: Exception) {
@@ -68,7 +71,24 @@ open class AboutDeveloper : AppCompatActivity() {
         }
 
         myEmail.setOnClickListener {
-            sendEmail("Debts manager regards", arrayOf("gacokieric@gmail.com"))
+            sendEmail("Debts manager regards", toAddress = arrayOf("gacokieric@gmail.com"))
+        }
+
+        donateToDeveloper()
+    }
+
+    private fun donateToDeveloper() {
+        payPal.setOnClickListener {
+            browse("https://www.paypal.com")
+        }
+
+        mPesa.setOnClickListener {
+            // TODO use Mpesa Daraja API or a floating widget with my details,
+            Context.CLIPBOARD_SERVICE.plus("0716965216")
+        }
+
+        hireMeOnUpWork.setOnClickListener {
+            browse("https://upwork.com")
         }
     }
 }
