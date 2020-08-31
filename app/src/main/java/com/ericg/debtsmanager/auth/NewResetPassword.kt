@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
+ * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -8,16 +8,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.EditUserAccount
+import com.ericg.debtsmanager.FROM_ACTIVITY
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import kotlinx.android.synthetic.main.new_reset_password.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * @author eric
@@ -27,10 +25,14 @@ import kotlinx.coroutines.launch
 class NewResetPassword : AppCompatActivity() {
 
     private var userAccountEmail: String = ""
+    private lateinit var fromActivity: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.new_reset_password)
+
+        fromActivity =
+            getSharedPreferences(FROM_ACTIVITY, 0).getString(FROM_ACTIVITY, "null") as String
 
         viewsState(enabled = true)
         listenToClicks()
@@ -38,13 +40,7 @@ class NewResetPassword : AppCompatActivity() {
 
     private fun listenToClicks() {
         btnBack.setOnClickListener {
-            // todo read the previous activity from shared prefs and decide where to navigate
-
-            // testing
-            val intentChangePassword = Intent(applicationContext, EditUserAccount::class.java)
-            if (intentChangePassword.resolveActivity(packageManager) != null) {
-                startActivity(intentChangePassword)
-            }
+            super.onBackPressed()
         }
 
         btnGetResetPasswordLink.setOnClickListener {
@@ -56,8 +52,8 @@ class NewResetPassword : AppCompatActivity() {
         userAccountEmail = userResetPasswordEmail.text.toString()
 
         if (userAccountEmail.isNotEmpty() && mUser != null && mUser?.email == userAccountEmail) {
-            showProgress()
-            viewsState(enabled = false)
+            loadingView(true)
+            viewsState(false)
 
             GlobalScope.launch(Dispatchers.IO) {
                 val sendingJob = Job(this.coroutineContext[Job])
@@ -69,19 +65,21 @@ class NewResetPassword : AppCompatActivity() {
                             btnGetResetPasswordLink.snackBuilder(
                                 "link sent to $userAccountEmail",
                                 2000
-                            )
-                                .apply {
-                                    setBackgroundTint(getColor(R.color.colorGreen))
-                                    setTextColor(getColor(R.color.colorWhite))
-                                    show()
-                                }
+                            ).apply {
+                                setBackgroundTint(getColor(R.color.colorGreen))
+                                setTextColor(getColor(R.color.colorWhite))
+                                show()
+                            }
+
                             getLinkProgress.progress = 100
                             startActivity(Intent(this@NewResetPassword, SignInActivity::class.java))
                             finish()
                             sendingJob.complete()
 
                         } else if (!sending.isSuccessful || sending.isCanceled) {
+                            loadingView(false)
                             viewsState(true)
+
                             btnGetResetPasswordLink.snackBuilder(" server error !", 2000).apply {
                                 setBackgroundTint(getColor(R.color.colorRed))
                                 setTextColor(getColor(R.color.colorWhite))
@@ -102,16 +100,38 @@ class NewResetPassword : AppCompatActivity() {
     }
 
     private fun viewsState(enabled: Boolean) {
-        val views = arrayListOf(userResetPasswordEmail, btnGetResetPasswordLink)
+        val views = arrayListOf(btnBack, userResetPasswordEmail, btnGetResetPasswordLink)
         views.forEach { view ->
             view.isEnabled = enabled
             view.isClickable = enabled
         }
     }
 
-    private fun showProgress() {
-
+    private fun loadingView(show: Boolean) {
+        if (show){
+            getLinkLoadingView.apply {
+                setViewColor(getColor(R.color.colorOrange))
+                startAnim()
+            }
+        } else {
+            getLinkLoadingView.apply {
+                setViewColor(getColor(R.color.colorOrange))
+                stopAnim()
+            }
+        }
     }
 
-    override fun onBackPressed() = toast("can't go back at this stage")
+    override fun onBackPressed() {
+
+        if (!::fromActivity.isInitialized) fromActivity =
+            getSharedPreferences(FROM_ACTIVITY, 0).getString(FROM_ACTIVITY, "null") as String
+
+        val backTo: Class<*> =
+            if (fromActivity == "signIn") SignInActivity::class.java else EditUserAccount::class.java
+
+        val intentChangePassword = Intent(applicationContext, backTo)
+        if (intentChangePassword.resolveActivity(packageManager) != null) {
+            startActivity(intentChangePassword)
+        }
+    }
 }

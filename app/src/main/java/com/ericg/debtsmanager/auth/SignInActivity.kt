@@ -1,10 +1,11 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM 
+ * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
  */
 
 package com.ericg.debtsmanager.auth
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
@@ -15,10 +16,9 @@ import android.os.SystemClock
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.ericg.debtsmanager.ParentActivity
-import com.ericg.debtsmanager.R
-import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
+import com.ericg.debtsmanager.*
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
@@ -39,10 +39,10 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
+   /* override fun onStart() {
         super.onStart()
 
-    }
+    }*/
 
     @Suppress("DEPRECATION")
     @RequiresApi(Build.VERSION_CODES.N)
@@ -72,7 +72,8 @@ class SignInActivity : AppCompatActivity() {
         }
 
         sBtnReset.setOnClickListener {
-            startActivity(Intent(this, ResetPassword::class.java))
+            startActivity(Intent(this, NewResetPassword::class.java))
+            getSharedPreferences(FROM_ACTIVITY, Context.MODE_PRIVATE).edit().putString(FROM_ACTIVITY, "signIn").apply()
             finish()
         }
 
@@ -156,7 +157,6 @@ class SignInActivity : AppCompatActivity() {
 
     @Suppress("LocalVariableName")
     private fun setSharedPrefs() {
-        val AUTO_SIGN_IN = "autoSignIn"
         val autoSignIn = autoSignIn.isChecked
         val signInPrefs: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
         signInPrefs.edit().putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
@@ -164,8 +164,6 @@ class SignInActivity : AppCompatActivity() {
         /**
         in case the user had cleared app data, we need to set has account to true again
          */
-
-        val HAS_ACCOUNT = "hasAccount"
         getSharedPreferences(HAS_ACCOUNT, 0).edit().putBoolean(HAS_ACCOUNT, true).apply()
     }
 
@@ -244,4 +242,6 @@ class SignInActivity : AppCompatActivity() {
     }
 
 }
-//  @_ericgacoki -> (Twitter),  gacokieric@gmail.com, tel: +254716965216
+/**  @_ericgacoki on Twitter ,
+ * gacokieric@gmail.com,
+ * tel: +254716965216 */

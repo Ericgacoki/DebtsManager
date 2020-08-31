@@ -1,10 +1,11 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
+ * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
  */
 
 package com.ericg.debtsmanager
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -102,9 +103,9 @@ class EditUserAccount : AppCompatActivity() {
             } else {
                 change_dp.snackBuilder("First enable edit mode", 4000).apply {
 
-                    setBackgroundTint(getColor(R.color.colorLightOrange))
-                    setTextColor(getColor(R.color.colorBlack))
-                    setActionTextColor(getColor(R.color.colorWhite))
+                    setBackgroundTint(getColor(R.color.colorRed))
+                    setTextColor(getColor(R.color.colorWhite))
+                    setActionTextColor(getColor(R.color.colorBlack))
                     setAction("OK") {
                         editable.forEach { it.isEnabled = true }
                         switchEditMode.isChecked = true
@@ -121,7 +122,8 @@ class EditUserAccount : AppCompatActivity() {
             contacts.show()
         }
         btnChangePassword.setOnClickListener {
-            // todo  clear pref for auto sign in
+            getSharedPreferences(FROM_ACTIVITY, Context.MODE_PRIVATE).edit().putString(FROM_ACTIVITY, "editUserAccount").apply()
+
             val intentChangePassword = Intent(applicationContext, NewResetPassword::class.java)
             if (intentChangePassword.resolveActivity(packageManager) != null) {
                 startActivity(intentChangePassword)

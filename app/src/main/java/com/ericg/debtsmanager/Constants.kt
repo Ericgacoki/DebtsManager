@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/11/20 2:49 PM
+ * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
  */
 
 package com.ericg.debtsmanager
@@ -16,3 +16,4 @@ const val MUTE_NOTIFICATION = "muteNotification"
 const val EXIT_BY_EXTERNAL_CLICK = "exitByExternalClick"
 const val USER_NAME = "userName"
 const val USER_PHONE = "userPhone"
+const val FROM_ACTIVITY = "fromActivity"
