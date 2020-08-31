@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/2/20 6:36 PM
+ * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
  */
 
 package com.ericg.debtsmanager
@@ -12,6 +12,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.ericg.debtsmanager.auth.NewResetPassword
 import com.ericg.debtsmanager.auth.ResetPassword
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.selectImage
@@ -120,8 +121,8 @@ class EditUserAccount : AppCompatActivity() {
             contacts.show()
         }
         btnChangePassword.setOnClickListener {
-            // todo create a change password activity or dialog, -> clear pref for auto sign in
-            val intentChangePassword = Intent(applicationContext, ResetPassword::class.java)
+            // todo  clear pref for auto sign in
+            val intentChangePassword = Intent(applicationContext, NewResetPassword::class.java)
             if (intentChangePassword.resolveActivity(packageManager) != null) {
                 startActivity(intentChangePassword)
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
  */
 
 
@@ -72,7 +72,7 @@ class Profile : Fragment() {
         val pieData: PieData
         val pieDataSet: PieDataSet
         val pieEntries: ArrayList<PieEntry> = arrayListOf()
-
+        /** @_param data is the index of the pieEntry */
         pieEntries.add(PieEntry(totalDebtors, 0))
         pieEntries.add(PieEntry(totalMyDebts, 1))
 
@@ -308,7 +308,6 @@ class Profile : Fragment() {
             putExtra(Intent.EXTRA_EMAIL, receiver)
             putExtra(Intent.EXTRA_SUBJECT, "$displayUserName 's Debts Manager feedback")
             putExtra(Intent.EXTRA_TEXT, "< $rating stars > $message")
-            putExtra(Intent.ACTION_ATTACH_DATA, "rateing")
         }
         try {
             startActivity(Intent.createChooser(sendingIntent, " Please select Email client "))
@@ -405,6 +404,7 @@ class Profile : Fragment() {
                                     )
                                 )
                                 toast("deleted successfully")
+                                activity?.finish()
                             } else if (delete.isCanceled || !delete.isSuccessful) {
                                 toast(" failed to delete ")
                             }
