@@ -1,9 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager.communication
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,6 +18,9 @@ import com.ericg.debtsmanager.network.browse
 import com.ericg.debtsmanager.network.sendEmail
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_contacts.view.*
+
+@Suppress("SpellCheckingInspection")
+@SuppressLint("InflateParams")
 
 fun Activity.contacts(): BottomSheetDialog {
 
@@ -85,18 +89,5 @@ fun Activity.contacts(): BottomSheetDialog {
 
     return contactsBuilder.apply {
         setContentView(customView)
-        show()
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

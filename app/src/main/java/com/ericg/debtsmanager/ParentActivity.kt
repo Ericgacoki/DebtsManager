@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager
@@ -32,28 +32,6 @@ class ParentActivity : AppCompatActivity() {
         bottomNav.selectedItemId = R.id.debtors
         navigateTo()
     }
-
-/* override fun onStart() {
-  super.onStart()
-
-  bott.itemIconTintList = null
-  // set debtors as the onStart fragment
-  manageFragment(fragment = Debtors())
-  disableCurrent(R.id.debtors)
-  bottomNav.selectedItemId = R.id.debtors
-  navigateTo()
-} */
-
-/*
- override fun onResume() {
-  super.onResume()
-  bottomNav.itemIconTintList = null
-  // open profile fragment on resume
-  manageFragment(fragment = Profile())
-  disableCurrent(R.id.profile)
-  bottomNav.selectedItemId = R.id.profile
-  navigateTo()
-}*/
 
     private fun navigateTo() {
         bottomNav.setOnNavigationItemSelectedListener {
@@ -112,8 +90,8 @@ class ParentActivity : AppCompatActivity() {
     override fun onBackPressed() {
         Handler().postDelayed({ backPressEnabled = false }, 2000)
         if (backPressEnabled) {
-             super.onBackPressed()
-            // finish()
+             // super.onBackPressed()
+             finish()
         } else {
             toast("press again to exit")
             backPressEnabled = true

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  ~ Copyright (c)  Updated by eric on  9/2/20 8:38 PM
   -->
 
 <resources>
@@ -24,15 +24,13 @@
     <string name="installments_hp">Installments</string>
     <string name="step_one_description"> Enter the Email you used to create the
                                         account in the \'Account Email\' field. Ensure that
-                                        you have strong internet connection and do not exit the
-                                        App completely during the whole process.
-                                         Click \'Get link via Email\' button and you\'ll
+                                        you have strong internet connection.
+                                         Click \'Get link\' button and you\'ll
                                          receive an email containing a special link. </string>
-    <string name="step_two_description">Open Gmail (preferably by clicking the notification or by
-        first pressing the home button) then click the link you
-        just received and follow onscreen instructions to create
-        a new password. Upon come back to Debts Manager , enter
-        your new password and then click \'verify\' to proceed</string>
+    <string name="step_two_description">Open Gmail App then click the link you
+        just received from Debts Manager and follow onscreen instructions to create
+        a new password. Upon completion come back to Debts Manager App, enter
+        your new password and then click \'sign in\' to proceed</string>
     <string name="step_2">Step 2.</string>
     <string name="step_1">Step 1.</string>
     <string name="how_to_reset_password">How to reset password</string>

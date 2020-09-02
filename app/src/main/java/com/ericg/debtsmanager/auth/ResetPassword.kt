@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -19,9 +19,8 @@ import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.canvas.CanvasCompat
 import kotlinx.android.synthetic.main.activity_reset_password.*
-import kotlinx.android.synthetic.main.dialog_reset_password.view.*
+import kotlinx.android.synthetic.main.dialog_reset_password_guide.view.*
 
 class ResetPassword : AppCompatActivity() {
 
@@ -103,7 +102,7 @@ class ResetPassword : AppCompatActivity() {
 
     @SuppressLint("InflateParams")
     private fun showResetGuide() {
-        val guideLayout = layoutInflater.inflate(R.layout.dialog_reset_password, null)
+        val guideLayout = layoutInflater.inflate(R.layout.dialog_reset_password_guide, null)
         val guideDialog = BottomSheetDialog(this)
         guideLayout.rdCancel.setOnClickListener {
             guideDialog.dismiss()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  ~ Copyright (c)  Updated by eric on  9/2/20 8:38 PM
   -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,21 +8,21 @@
     android:id="@+id/addDebtorScrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.AddDebt"
-    >
+    tools:context=".fragments.AddDebt">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="50dp"
+        android:background="#1DFFF5D9"
         android:clipToPadding="false"
-        android:background="#1DFFF5D9">
+        android:paddingBottom="70dp">
 
         <EditText
             android:id="@+id/addDebtName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
+            android:cursorVisible="true"
             android:ems="10"
             android:focusableInTouchMode="true"
             android:hint="Name"
@@ -37,8 +37,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/debtProfilePic"
-            tools:ignore="HardcodedText"
-             />
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/btnExitAddDebt"
@@ -62,9 +61,9 @@
             app:layout_constraintBottom_toTopOf="@+id/addDebtName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.25"
-            app:layout_constraintVertical_bias="0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0"
             tools:ignore="HardcodedText" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -87,7 +86,7 @@
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintStart_toEndOf="@+id/addDebtorTitle"
             app:layout_constraintTop_toTopOf="@+id/addDebtorTitle"
-            app:layout_constraintVertical_bias="0.8" />
+            app:layout_constraintVertical_bias="0.75" />
 
         <EditText
             android:id="@+id/addDebtAmount"
@@ -95,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:cursorVisible="true"
             android:ems="10"
             android:focusableInTouchMode="true"
             android:hint="Amount"
@@ -116,6 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="12dp"
+            android:cursorVisible="true"
             android:ems="10"
             android:focusableInTouchMode="true"
             android:hint="Phone"
@@ -144,13 +145,13 @@
             app:layout_constraintTop_toBottomOf="@+id/addDebtPhone"
             tools:ignore="HardcodedText" />
 
-        <CalendarView
+        <DatePicker
             android:id="@+id/selectDebtStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:datePickerMode="calendar"
             android:calendarTextColor="@color/colorOrange"
+            android:datePickerMode="calendar"
             android:theme="@style/ThemeGreenCalendar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -184,19 +185,40 @@
         <Button
             android:id="@+id/btnPreviewDebt"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_height="36dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/colorBlue"
+            android:background="@drawable/semi_curved_transparent_bg"
+            android:backgroundTint="@color/colorGreen"
             android:text="     Preview    "
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSaveDebt"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="@+id/selectDebtDueDate"
+            app:layout_constraintTop_toBottomOf="@id/selectDebtDueDate"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btnSaveDebt"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/semi_curved_transparent_bg"
+            android:backgroundTint="@color/colorOrange"
+            android:text="       save      "
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBlack"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/selectDebtDueDate"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/selectDebtDueDate"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@+id/btnPreviewDebt"
             app:layout_constraintTop_toBottomOf="@id/selectDebtDueDate"
             app:layout_constraintVertical_bias="0.0"
             tools:ignore="HardcodedText" />

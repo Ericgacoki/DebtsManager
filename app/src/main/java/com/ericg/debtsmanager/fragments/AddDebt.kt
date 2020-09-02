@@ -1,15 +1,13 @@
 /*
- * Copyright (c)  Updated by eric on  8/21/20 6:20 PM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager.fragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -17,6 +15,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.extensions.selectImage
@@ -34,7 +34,6 @@ private lateinit var debtDpBitMap: Bitmap
 class AddDebt : Fragment() {
 
     private val today = Calendar.getInstance().timeInMillis
-
     lateinit var debtType: String  // Debtor or My Debt from spinner
 
 /*
@@ -65,7 +64,7 @@ class AddDebt : Fragment() {
     private fun updateCalendars() {
         // set date restrictions
         selectDebtStartDate.maxDate = today
-        selectDebtDueDate.minDate   = today
+        selectDebtDueDate.minDate = today
     }
 
     private fun updateSpinner() {
@@ -95,6 +94,32 @@ class AddDebt : Fragment() {
 
     private fun handleClicks() {
 
+        addDebtName.setOnClickListener { alterFieldsFocus(false) }
+        addDebtAmount.setOnClickListener { alterFieldsFocus(false) }
+        addDebtPhone.setOnClickListener { alterFieldsFocus(false) }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+
+            selectDebtStartDate.apply {
+                setOnClickListener { alterFieldsFocus(true) }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    setOnDateChangedListener { datePicker: DatePicker, i: Int, i1: Int, i2: Int ->
+                        alterFieldsFocus(true)
+                    }
+                }
+            }
+
+        selectDebtDueDate.apply {
+            setOnClickListener { alterFieldsFocus(true) }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                setOnDateChangedListener { datePicker: DatePicker, i: Int, i1: Int, i2: Int ->
+                    alterFieldsFocus(true)
+                }
+            }
+        }
+
         btnExitAddDebt.setOnClickListener {
             super.getActivity()!!.onBackPressed()
         }
@@ -105,6 +130,23 @@ class AddDebt : Fragment() {
 
         btnPreviewDebt.setOnClickListener {
             previewDebt()
+        }
+
+        btnSaveDebt.setOnClickListener {
+            saveDebt()
+        }
+    }
+
+    private fun alterFieldsFocus(clearFocus: Boolean) {
+        val inputFields = arrayOf(addDebtName, addDebtAmount, addDebtPhone)
+        if (clearFocus) {
+            inputFields.forEach {
+                it.clearFocus()
+            }
+        } else {
+            inputFields.forEach {
+                it.requestFocus()
+            }
         }
     }
 
@@ -123,17 +165,20 @@ class AddDebt : Fragment() {
         }
 
         val view = layoutInflater.inflate(layout, null)
-
         view.apply {
             //TODO set collected data to respective fields
         }
 
         previewDebtDialogBuilder.apply {
-           // activity?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            // activity?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setView(view)
             setCancelable(true)
             create().show()
         }
+    }
+
+    private fun saveDebt() {
+        toast("saving coming soon ...")
     }
 
     @Suppress("DEPRECATION")
@@ -141,14 +186,14 @@ class AddDebt : Fragment() {
         //super.onActivityResult(requestCode, resultCode, data)
         if (/*requestCode == SELECT_DEBT_PROFILE_PIC &&*/ /*resultCode == Activity.RESULT_OK && */ data != null && data.data != null) {
             debtDpBitMap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, data.data)
-            debtProfilePic.setImageBitmap(debtDpBitMap)
+            activity!!.debtProfilePic?.setImageBitmap(debtDpBitMap)
         }
     }
 
     override fun onStart() {
         super.onStart()
         if (::debtDpBitMap.isInitialized) {
-            debtProfilePic.setImageBitmap(debtDpBitMap)
+            activity!!.debtProfilePic?.setImageBitmap(debtDpBitMap)
         }
     }
 }

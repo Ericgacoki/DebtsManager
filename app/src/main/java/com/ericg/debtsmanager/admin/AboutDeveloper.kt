@@ -1,10 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  8/9/20 2:23 AM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager.admin
 
-import android.app.Application
+import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
@@ -18,7 +18,6 @@ import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.browse
 import com.ericg.debtsmanager.network.sendEmail
-import io.grpc.android.AndroidChannelBuilder
 import kotlinx.android.synthetic.main.activity_about_dev.*
 
 /**
@@ -84,7 +83,10 @@ open class AboutDeveloper : AppCompatActivity() {
 
         mPesa.setOnClickListener {
             // TODO use Mpesa Daraja API or a floating widget with my details,
-            Context.CLIPBOARD_SERVICE.plus("0716965216")
+            val clipBoard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("phone", "+254716965216")
+            clipBoard.setPrimaryClip(clipData)
+            toast("phone number copied")
         }
 
         hireMeOnUpWork.setOnClickListener {

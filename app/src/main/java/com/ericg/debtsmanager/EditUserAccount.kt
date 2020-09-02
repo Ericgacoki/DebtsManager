@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
+ * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
  */
 
 package com.ericg.debtsmanager
@@ -14,7 +14,6 @@ import android.provider.MediaStore
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.auth.NewResetPassword
-import com.ericg.debtsmanager.auth.ResetPassword
 import com.ericg.debtsmanager.communication.contacts
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
@@ -30,13 +29,12 @@ class EditUserAccount : AppCompatActivity() {
 
     private lateinit var selectedImageBitmap: Bitmap
 
-    private var mUserName: String? = null
-    private var mUserEmail: String? = null
-    private var mUserPhone: String? = ""
+    private lateinit var mUserName: String
+    private lateinit var mUserEmail: String
+    private lateinit var mUserPhone: String
+    private lateinit var displayName: String
 
-    private var displayName: String = ""
-    private var editMode = false
-
+    private  var editMode = false
 
     private fun editMode() {
         val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
@@ -57,12 +55,12 @@ class EditUserAccount : AppCompatActivity() {
 
     private fun fetchData() {
 
-        mUserName = getSharedPreferences(USER_NAME, 0).getString(USER_NAME, "")
-        mUserPhone = getSharedPreferences(USER_PHONE, 0).getString(USER_PHONE, "")
+        mUserName = getSharedPreferences(USER_NAME, 0).getString(USER_NAME, "")    as String
+        mUserPhone = getSharedPreferences(USER_PHONE, 0).getString(USER_PHONE, "") as String
         displayName = if (mUser != null) {
-            // fetch email and name
-            mUserEmail = mUser!!.email
-            mUser!!.displayName.toString()
+            // fetch email too
+            mUserEmail = mUser?.email.toString()
+            mUser?.displayName.toString()
         } else {
             mUserName.toString()
         }
@@ -84,11 +82,11 @@ class EditUserAccount : AppCompatActivity() {
             etNewUserName.setText(mUserName)
         }
 
-        if (!mUserPhone.isNullOrEmpty()){
+        if (mUserPhone.isNotEmpty()) {
             etNewPhone.setText(mUserPhone)
         }
 
-        if (!mUserEmail.isNullOrEmpty()) {
+        if (mUserEmail.isNotEmpty()) {
             etNewEmail.setText(mUserEmail)
         }
     }
@@ -122,7 +120,8 @@ class EditUserAccount : AppCompatActivity() {
             contacts.show()
         }
         btnChangePassword.setOnClickListener {
-            getSharedPreferences(FROM_ACTIVITY, Context.MODE_PRIVATE).edit().putString(FROM_ACTIVITY, "editUserAccount").apply()
+            getSharedPreferences(FROM_ACTIVITY, Context.MODE_PRIVATE).edit()
+                .putString(FROM_ACTIVITY, "editUserAccount").apply()
 
             val intentChangePassword = Intent(applicationContext, NewResetPassword::class.java)
             if (intentChangePassword.resolveActivity(packageManager) != null) {
@@ -186,12 +185,12 @@ class EditUserAccount : AppCompatActivity() {
         }
     }
 
-   private var exit = false
+    private var exit = false
 
     @Suppress("DEPRECATION")
     override fun onBackPressed() {
         if (exit) {
-            super.onBackPressed()
+            // super.onBackPressed()
             finish()
         } else {
             toast("press again to exit")
