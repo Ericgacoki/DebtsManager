@@ -1,10 +1,11 @@
 /*
- * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+ * Copyright (c)  Updated by eric on  9/3/20 11:48 AM
  */
 
 package com.ericg.debtsmanager
 
 
+import android.content.Intent
 import android.graphics.Color.WHITE
 import android.os.Bundle
 import android.os.Handler
@@ -91,6 +92,7 @@ class ParentActivity : AppCompatActivity() {
         Handler().postDelayed({ backPressEnabled = false }, 2000)
         if (backPressEnabled) {
              // super.onBackPressed()
+            startActivity(Intent(this, ExitScreen::class.java))
              finish()
         } else {
             toast("press again to exit")

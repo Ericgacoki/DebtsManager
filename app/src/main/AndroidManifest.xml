@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?> <!--
-  ~ Copyright (c)  Updated by eric on  8/31/20 11:17 AM
+  ~ Copyright (c)  Updated by eric on  9/3/20 11:48 AM
   -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
@@ -53,6 +53,10 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".auth.ResetPassword"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ExitScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".auth.NewResetPassword"
