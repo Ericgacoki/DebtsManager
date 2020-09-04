@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -121,6 +121,8 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
             deactivateBottomNavigation()
 
             /** @Testing */
+
+            // todo refresh data from cloud firestore or cache
             debtorsList.apply {
 
                 add(

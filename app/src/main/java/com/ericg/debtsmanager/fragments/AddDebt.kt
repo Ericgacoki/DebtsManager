@@ -1,10 +1,12 @@
 /*
- * Copyright (c)  Updated by eric on  9/4/20 3:40 AM
+ * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
  */
 
 package com.ericg.debtsmanager.fragments
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
@@ -16,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.data.DebtData
@@ -23,7 +26,10 @@ import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.SaveDebt
 import kotlinx.android.synthetic.main.fragment_add_debt.*
+import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
+import kotlinx.android.synthetic.main.row_mydebt_item.view.*
 import java.util.*
+import kotlin.properties.Delegates
 
 /**
  * @author eric
@@ -32,20 +38,19 @@ import java.util.*
 private const val SELECT_DEBT_PROFILE_PIC = 5
 private lateinit var debtDpBitMap: Bitmap
 
-private val today = Calendar.getInstance().timeInMillis
-private lateinit var debtType: String  // Debtor or My Debt from spinner
-
 class AddDebt : Fragment() {
 
-/*
+    private val today = Calendar.getInstance().timeInMillis
+    private lateinit var debtType: String  // Debtor or My Debt from spinner
+
     lateinit var userName: String
     lateinit var startDate: String
     lateinit var dueDate: String
-    private var status: Int = 1  // good
-    lateinit var userPhone: String
-    var initialAmt by Delegates.notNull<Int>()
-    var amtPaid by Delegates.notNull<Int>()
-    var paymentsDone: Int = 0*/
+    private var debtStatus: Int = 1  // good
+    lateinit var debtPhone: String
+    private var initialAmt by Delegates.notNull<Int>()
+    private var amtPaid: Int = 0
+    private var paymentsDone: Int = 0
 
 
     override fun onCreateView(
@@ -151,8 +156,39 @@ class AddDebt : Fragment() {
         }
     }
 
+    private var notEmpty: Boolean = false
+
+    private fun collectData() {
+        val inputs = arrayOf(addDebtName, addDebtAmount, addDebtPhone)
+        notEmpty =
+            addDebtName.text.toString().trim().isNotEmpty() &&
+                    addDebtAmount.text.toString().trim().isNotEmpty() &&
+                    addDebtPhone.text.toString().trim().isNotEmpty()
+
+        if (notEmpty) {
+            userName = addDebtName.text.toString().trim()
+            initialAmt = addDebtAmount.text.toString().trim().toInt()
+            debtPhone = addDebtPhone.text.toString().trim()
+
+            val sDSD = selectDebtStartDate
+            startDate = "${sDSD.dayOfMonth}/ ${sDSD.month}/ ${sDSD.year}"
+
+            val sDDD = selectDebtDueDate
+            dueDate = "${sDDD.dayOfMonth}/ ${sDDD.month} /${sDDD.year}"
+
+        } else {
+            inputs.forEach { input ->
+                if (input.text.toString().trim().isEmpty()) {
+                    input.error = "${input.hint} is required"
+                }
+            }
+        }
+    }
+
+    @SuppressLint("InflateParams")
     private fun previewDebt() {
-        // TODO collect data from relevant fields and assign to the corresponding late init variables
+        collectData()
+        if (notEmpty) alterFieldsFocus(true)
 
         val previewDebtDialogBuilder = AlertDialog.Builder(this.context)
         var layout = R.layout.new_row_debtor_item // default
@@ -165,35 +201,106 @@ class AddDebt : Fragment() {
             }
         }
 
-        val view = layoutInflater.inflate(layout, null)
-        view.apply {
-            //TODO set collected data to respective fields
-        }
+        val view: View
+        if (layout == R.layout.new_row_debtor_item) {
+            view = layoutInflater.inflate(R.layout.new_row_debtor_item, null)
 
-        previewDebtDialogBuilder.apply {
-            // activity?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            setView(view)
-            setCancelable(true)
-            create().show()
+            // set debtor values
+            if (notEmpty) {
+                view.apply {
+                    debtorName.text = userName
+                    debtAmount.text = initialAmt.toString()
+                    debtDate.text = startDate
+                    debtDueDate.text = dueDate
+                    debtStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@AddDebt.context as Context,
+                            R.drawable.ic_on_time
+                        )
+                    )
+                    debtorPhone.text = debtPhone
+
+                    debtsInitialAmount.text = initialAmt.toString()
+                    debtPaymentPercentage.text = "0 %"
+                    debtsNumPaymentsDone.text = paymentsDone.toString()
+
+                }
+            }
+
+        } else {
+            view = layoutInflater.inflate(R.layout.row_mydebt_item, null)
+
+            // set my debt values
+            if (notEmpty) {
+                view.apply {
+                    myDebtName.text = userName
+                    myDebtAmt.text = initialAmt.toString()
+                    myDebtDate.text = startDate
+                    myDebtDueDate.text = dueDate
+                    myDebtStatus.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this@AddDebt.context as Context,
+                            R.drawable.ic_on_time
+                        )
+                    )
+                    myDebtPhone.text = debtPhone
+
+                    myDebtInitialAmt.text = initialAmt.toString()
+                    myDebtProgressPercentage.text = "0 %"
+                    myDebtNumPayments.text = paymentsDone.toString()
+                }
+            }
+
+        }
+        if (notEmpty) {
+            previewDebtDialogBuilder.apply {
+                setView(view)
+                setCancelable(true)
+                create().show()
+            }
         }
     }
 
     private fun saveDebt() {
-        SaveDebt(
-            debtType,
-            DebtData(
-                "Eric gacoki",
-                "20/01/2020",
-                "13/11/2021",
-                1,
-                "0716965216",
-                21450,
-                8075,
-                1,
-                null,
-                null
+        collectData()
+        if (notEmpty) {
+            alterFieldsFocus(true)
+            val newDebt = DebtData(
+                name = userName,
+                startDate = startDate,
+                dueDate = dueDate,
+                debtStatus = debtStatus,
+                phone = debtPhone,
+                initialAmt = initialAmt,
+                amtPaid = amtPaid,
+                paymentsDone = paymentsDone,
+                remainingAmt = null,
+                progressPercentage = null
             )
-        )
+            val confirmSaveDebt = AlertDialog.Builder(this.context as Context, 3)
+            confirmSaveDebt.apply {
+                setTitle("sure to save new $debtType ?")
+
+                setPositiveButton("Ok") { _, _ ->
+                    /*         SaveDebt uses a coroutine so we don't have to do it again      */
+
+                    SaveDebt(debtType, newDebt).apply {
+                        if (done()) {
+                            toast("saved successfully!")
+                            // show saved debt success dialog
+                        } else if (!done() && this.savingJob.isCompleted) {
+                            toast("failed to save!")
+                        } else if (this.savingJob.isActive) {
+                            toast("saving ...")
+                        } else {
+                            toast("...")
+                        }
+                    }
+                }
+                setNegativeButton("cancel") { _, _ -> /* dismiss */ }
+                create().show()
+            }
+        }
     }
 
     @Suppress("DEPRECATION")

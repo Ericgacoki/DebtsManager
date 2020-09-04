@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
  */
 
 package com.ericg.debtsmanager.adapters
@@ -56,7 +56,7 @@ class MyDebtsAdapter(
         private val mdPhone: TextView = itemView.myDebtPhone
 
         private val mdProfilePic: ImageView = itemView.myDebtProfilePic
-        private val mdStatus: TextView = itemView.myDebtStatus
+        //private val mdStatus: TextView = itemView.myDebtStatus
 
         private val mdInitialAmt: TextView = itemView.myDebtInitialAmt
         private val mdPaymentProgressBar: ProgressBar = itemView.myDebtProgressBar
