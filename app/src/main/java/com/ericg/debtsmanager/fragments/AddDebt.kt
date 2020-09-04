@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+ * Copyright (c)  Updated by eric on  9/4/20 3:40 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -16,11 +16,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.utils.SaveDebt
 import kotlinx.android.synthetic.main.fragment_add_debt.*
 import java.util.*
 
@@ -31,10 +32,10 @@ import java.util.*
 private const val SELECT_DEBT_PROFILE_PIC = 5
 private lateinit var debtDpBitMap: Bitmap
 
-class AddDebt : Fragment() {
+private val today = Calendar.getInstance().timeInMillis
+private lateinit var debtType: String  // Debtor or My Debt from spinner
 
-    private val today = Calendar.getInstance().timeInMillis
-    lateinit var debtType: String  // Debtor or My Debt from spinner
+class AddDebt : Fragment() {
 
 /*
     lateinit var userName: String
@@ -178,7 +179,21 @@ class AddDebt : Fragment() {
     }
 
     private fun saveDebt() {
-        toast("saving coming soon ...")
+        SaveDebt(
+            debtType,
+            DebtData(
+                "Eric gacoki",
+                "20/01/2020",
+                "13/11/2021",
+                1,
+                "0716965216",
+                21450,
+                8075,
+                1,
+                null,
+                null
+            )
+        )
     }
 
     @Suppress("DEPRECATION")
