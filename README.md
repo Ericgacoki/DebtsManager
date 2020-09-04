@@ -1,5 +1,5 @@
 # <u>DebtsManager</u>
-<b> Debts manager is an android app that mainly focuses on financial debts management. It does so  by bringing together who you owe and what you owe them as well as who owes you what. It also analyzes how well you pay your debts and how well people pay you back. Among a bunch of other services is installments and lease management. </b>
+<b> Debts manager is an android app that mainly focuses on financial debts management. It does so  by bringing together who you owe and what you owe them as well as who owes you what. It also analyzes how well you pay your debts and how well people pay you back. Among a bunch of other services is account management, simplified beautiful UI and smooth running that brings you the best user experience ever. </b>
 
 ## Here are some screenshots 
 
@@ -14,10 +14,6 @@
 ![dm5](https://user-images.githubusercontent.com/54077752/82501500-0a18f580-9afe-11ea-9a02-dd5ea14379da.png)
 
 ![dm6](https://user-images.githubusercontent.com/54077752/82501541-1ac96b80-9afe-11ea-9b54-e9861e670abd.png)
-
-![dm7](https://user-images.githubusercontent.com/54077752/82501544-1c932f00-9afe-11ea-995b-c02dea84c424.png)
-
-![dm8](https://user-images.githubusercontent.com/54077752/82501552-1dc45c00-9afe-11ea-8eb2-4a195e2493e1.png)
 
 ![dm9](https://user-images.githubusercontent.com/54077752/82501555-1ef58900-9afe-11ea-9b34-77515f2e91f3.png)
 
