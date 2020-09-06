@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
   -->
 
 <resources>
@@ -44,6 +44,10 @@
     </style>
 
     <style name="ThemeOrangeCalendar" >
+        <item name="android:colorAccent">@color/colorOrange</item>
+        <item name="android:colorPrimary">@color/colorOrange</item>
+
+    </style><style name="Material" parent="Theme.MaterialComponents">
         <item name="android:colorAccent">@color/colorOrange</item>
         <item name="android:colorPrimary">@color/colorOrange</item>
 

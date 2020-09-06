@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
+ * Copyright (c)  Updated by eric on  9/6/20 10:06 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -15,7 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
@@ -25,7 +24,7 @@ import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
-import kotlinx.android.synthetic.main.fragment_add_debt.view.*
+import kotlinx.android.synthetic.main.dialog_calendar.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
 import java.util.*
@@ -99,7 +98,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
     @Suppress("DEPRECATION")
     private fun deactivateBottomNavigation(duration: Long = 5000) {
         val navItems =
-            arrayOf(R.id.debtors, R.id.myDebts,R.id.profile /*R.id.loans, R.id.installments*/ )
+            arrayOf(R.id.debtors, R.id.myDebts, R.id.profile /*R.id.loans, R.id.installments*/)
         navItems.forEach { item ->
             val foundItem = activity!!.findViewById<View>(item)
             foundItem.isClickable = false
@@ -160,6 +159,27 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         }
     }
 
+    private lateinit var newDate: String
+    private fun showCalendar(){
+
+        val calendarDialog = AlertDialog.Builder(this.context)
+        val view = layoutInflater.inflate(R.layout.dialog_calendar, null)
+        /*view.apply {
+            pickNewDueDate.minDate = Calendar.getInstance().timeInMillis
+            btnNewDueDateOk.setOnClickListener {
+                newDate =
+                    "${pickNewDueDate.dayOfMonth} /${pickNewDueDate.month} /${pickNewDueDate.year}"
+                editDebtDueDate.setText(newDate)
+               // calendarDialog.create().dismiss()
+            }
+        }*/
+        calendarDialog.apply {
+            setView(view)
+            create()
+            show()
+        }
+    }
+
     override fun onItemClick(itemView: View, itemViewId: Int, position: Int) {
 
         when (itemViewId) {
@@ -207,7 +227,10 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 customEditDialogView.apply {
                     editDebtorName.setText(name)
                     editDebtorPhone.setText(phone)
-                    editDebtDueDate.setText(debtDueDate)
+                    editDebtDueDate.setOnClickListener {
+
+                        showCalendar()
+                    }
 
                     cancelEditing.setOnClickListener {
                         editDialogBuilder.dismiss()
@@ -314,7 +337,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                                     debtorsRecyclerView.scrollToPosition(position)
                                     toast("saved successfully")
                                     saved = true
-                                   // paymentBuilder.show().dismiss()
+                                    // paymentBuilder.show().dismiss()
 
                                 } else toast("you can only save once at a time")
 
@@ -356,7 +379,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
             adapter = debtorsAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
             // scroll to bottom
-           scrollToPosition(debtorsList.size - 1)
+            scrollToPosition(debtorsList.size - 1)
             setOnScrollChangeListener { _: View, _: Int, _: Int, _: Int, _: Int ->
                 fabAddDebtor.startAnimation(
                     android.view.animation.AnimationUtils.loadAnimation(

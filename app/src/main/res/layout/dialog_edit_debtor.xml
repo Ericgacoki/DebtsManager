@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  8/17/20 7:34 PM
+  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -72,11 +72,13 @@
         android:id="@+id/editDebtDueDate"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/semi_curved_bg"
-        android:hint="New due date  eg  12/10/2020"
+        android:hint="New due date"
         android:importantForAutofill="no"
         android:inputType="date"
         android:maxLength="15"

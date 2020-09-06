@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c)  Updated by eric on  9/4/20 3:43 AM
+  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="#0CFFFFFF"
     android:layout_height="match_parent">
 
     <TextView

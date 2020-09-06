@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
   -->
 
 <resources>
@@ -15,4 +15,5 @@
     <color name="colorBlack">#FC000000</color>
     <color name="colorLightBgBlack">#C4000000</color>
     <color name="colorFabTint">#DC000102</color>
+    <color name="colorTransparent">#0FFFFFFF</color>
 </resources>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
+ * Copyright (c)  Updated by eric on  9/6/20 10:06 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -9,6 +9,8 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,6 +22,7 @@ import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.selectImage
@@ -61,6 +64,7 @@ class AddDebt : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // this.activity?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         updateCalendars()
         updateSpinner()
@@ -182,6 +186,7 @@ class AddDebt : Fragment() {
                     input.error = "${input.hint} is required"
                 }
             }
+            addDebtScrollView.scrollTo(0, 0)
         }
     }
 
@@ -285,21 +290,46 @@ class AddDebt : Fragment() {
                     /*         SaveDebt uses a coroutine so we don't have to do it again      */
 
                     SaveDebt(debtType, newDebt).apply {
-                        if (done()) {
-                            toast("saved successfully!")
-                            // show saved debt success dialog
-                        } else if (!done() && this.savingJob.isCompleted) {
-                            toast("failed to save!")
-                        } else if (this.savingJob.isActive) {
-                            toast("saving ...")
-                        } else {
-                            toast("...")
-                        }
+
+                        done().observe(viewLifecycleOwner, {success ->
+                            when (success) {
+                                true -> {
+                                    showSuccessDialog()
+                                }
+                                else -> {
+                                    toast("failed to save!")
+                                }
+                            }
+                        })
                     }
+
+                    // todo delay this up to when saving job is complete
+                    showSuccessDialog()
                 }
                 setNegativeButton("cancel") { _, _ -> /* dismiss */ }
                 create().show()
             }
+        }
+    }
+
+    private fun setOkAction() {
+
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayout, Debtors())
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .commit()
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showSuccessDialog() {
+        val saved = AlertDialog.Builder(this.context)
+        val view = layoutInflater.inflate(R.layout.dialog_debt_saving_done, null)
+
+        saved.apply {
+            setOnDismissListener { setOkAction() }
+            setView(view)
+            show()
         }
     }
 
