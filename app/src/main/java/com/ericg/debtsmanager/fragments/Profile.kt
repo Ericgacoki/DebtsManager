@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 11:17 AM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 
@@ -25,13 +25,16 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.ericg.debtsmanager.*
 import com.ericg.debtsmanager.admin.AboutDeveloper
 import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.extensions.userSharedPrefs
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -65,13 +68,16 @@ class Profile : Fragment() {
 
         // TODO get total debtors and myDebts from firestore
 
-        val totalDebtors = 14F
-        val totalMyDebts = 35F
+        val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
+
+        val totalDebtors = viewModel.numOfDebtors
+        val totalMyDebts = viewModel.numOfMyDebts
 
         val pieChart = dataAnalysisPieChart
         val pieData: PieData
         val pieDataSet: PieDataSet
         val pieEntries: ArrayList<PieEntry> = arrayListOf()
+
         /** @_param data is the index of the pieEntry */
         pieEntries.add(PieEntry(totalDebtors, 0))
         pieEntries.add(PieEntry(totalMyDebts, 1))
@@ -101,6 +107,7 @@ class Profile : Fragment() {
             val mUserEmail: String? = mUser?.email
             if (mUserEmail != null) {
                 profileUserEmail?.text = mUserEmail.toString().trim()
+                userUID.text = "ID: ${mAuth?.currentUser?.uid}"
             }
         }
 

@@ -1,84 +1,41 @@
 /*
- * Copyright (c)  Updated by eric on  9/6/20 10:06 AM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.fragments
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
-import kotlinx.android.synthetic.main.dialog_calendar.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
-import java.util.*
 
 class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
-    // fetch data from firestore
-
-    private val debtor1 = DebtData(
-        "Eric", "Feb 1 2020", "Aug 3 2020", 0, "07245778346",
-        5000, 4530, 1, null, null
-    )
-
-
-    private val debtor2 = DebtData(
-        "Jane", "Feb 1 2020", "Aug 3 2020", 1, "17245778346",
-        2000, 1000, 2, null, null
-    )
-
-
-    private val debtor3 = DebtData(
-        "Marry", "jan 1 2020", "Aug 3 2020", 1,
-        "2", 2361, 0, 0, null, null
-    )
-
-    private val debtor4 = DebtData(
-        "John", "may 1 2020", "Aug 3 2022", 0, "37245778346",
-        21000, 0, 0, null, null
-    )
-
-    private val debtor5 = DebtData(
-        "Faith", "june 1 2020", "dec 3 2020", 0, "47245778346",
-        3000, 0, 2, null, null
-    )
-
-    private val debtor6 = DebtData(
-        "Ken brissat", "july 1 2020", "Aug 3 2021", 1, "5",
-        2370, 0, 2, null, null
-    )
-
-    private val debtor7 = DebtData(
-        "Maya hendrig", "Mar 1 2020", "Aug 3 2020", 0, "6",
-        4283, 0, 3, null, null
-    )
-
-
-    val debtorsList: ArrayList<DebtData> =
-        arrayListOf(debtor1, debtor2, debtor3, debtor4, debtor5, debtor6, debtor7)
+    private var debtorsList: List<DebtData> = ArrayList()
 
     private val debtorsAdapter =
         DebtorsAdapter(
-            thisContext = null,
-            debtorsList = debtorsList,
-            listener = this
+            thisContext = null, debtorsList = debtorsList, listener = this
         )
 
     override fun onCreateView(
@@ -95,72 +52,66 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         fabAddDebtor.setOnClickListener { openAddDebtFragment() }
     }
 
-    @Suppress("DEPRECATION")
-    private fun deactivateBottomNavigation(duration: Long = 5000) {
+    private fun loadData(): MutableLiveData<Boolean> {
+        activateBtmNav(false)
+        val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
+
+        val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
+        viewModel.getData("Debtor")?.addOnCompleteListener { it ->
+            if (it.isSuccessful) {
+                retrieved.value = true
+                activateBtmNav(true)
+                debtorsList = it.result!!.toObjects(DebtData::class.java)
+                debtorsAdapter.debtorsList = debtorsList
+                debtorsAdapter.notifyDataSetChanged()
+
+                viewModel.numOfDebtors = debtorsList.size.toFloat()
+
+            } else {
+                activateBtmNav(true)
+                toast("refreshing...")
+            }
+        }
+        return retrieved
+    }
+
+    private fun activateBtmNav(activate: Boolean) {
         val navItems =
             arrayOf(R.id.debtors, R.id.myDebts, R.id.profile /*R.id.loans, R.id.installments*/)
-        navItems.forEach { item ->
-            val foundItem = activity!!.findViewById<View>(item)
-            foundItem.isClickable = false
-            foundItem.isEnabled = false
-        }
 
-        Handler().postDelayed({
+        if (!activate) {
+
+            navItems.forEach { item ->
+                val foundItem = activity!!.findViewById<View>(item)
+                foundItem.isClickable = false
+                foundItem.isEnabled = false
+            }
+        } else {
             navItems.forEach { item ->
                 val foundItem = activity!!.findViewById<View>(item)
                 foundItem.isClickable = true
                 foundItem.isEnabled = true
             }
-        }, duration)
+        }
     }
 
     @Suppress("DEPRECATION")
     private fun onSwipeToRefresh() {
         swipeToRefreshDebtors.setOnRefreshListener {
-            deactivateBottomNavigation()
+           loadData().observe(viewLifecycleOwner, {
+                if (it) {
 
-            /** @Testing */
-
-            // todo refresh data from cloud firestore or cache
-            debtorsList.apply {
-
-                add(
-                    DebtData(
-                        "Added Eric 2", "Feb 1 2020", "Aug 3 2020", 1, "1234788743",
-                        8000, 7300, 2, null, null
-                    )
-                )
-
-
-                add(
-                    DebtData(
-                        "Added kevoh", "Feb 1 2020", "Aug 3 2020", 0, "1234788743",
-                        2000, 2000, 1, null, null
-                    )
-                )
-
-                add(
-                    DebtData(
-                        "Nurse sharon", "Feb 1 2020", "Aug 3 2020", 0, "01234788743",
-                        70000, 59330, 0, null, null
-                    )
-                )
-            }
-
-            debtorsAdapter.notifyDataSetChanged()
-            Handler().postDelayed(
-                {
-                    updateUI()
                     toast("refreshed successfully")
                     swipeToRefreshDebtors.isRefreshing = false
-                },
-                2000
-            )
+                } else {
+                    toast("error loading data")
+                }
+            })
         }
     }
 
     private lateinit var newDate: String
-    private fun showCalendar(){
+    private fun showCalendar() {
 
         val calendarDialog = AlertDialog.Builder(this.context)
         val view = layoutInflater.inflate(R.layout.dialog_calendar, null)
@@ -203,7 +154,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     )
                     setMessage(message)
                     setPositiveButton("proceed") { _, _ ->
-                        removeDebtorAt(position)
+                        // removeDebtorAt(position)
                         toast("Debtor number ${position + 1} -> $name removed")
 
                     }
@@ -329,15 +280,8 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                                 )
                                 /* save once to avoid overpayment and negative balance */
                                 if (!saved) {
-                                    debtorsList.removeAt(position)
-                                    debtorsAdapter.notifyItemRemoved(position)
-                                    debtorsList.add(position, newDebtorCopy)
-                                    debtorsAdapter.notifyItemInserted(position)
-                                    debtorsAdapter.notifyDataSetChanged()
-                                    debtorsRecyclerView.scrollToPosition(position)
-                                    toast("saved successfully")
+                                    // todo save the changes made to this persons data and reload
                                     saved = true
-                                    // paymentBuilder.show().dismiss()
 
                                 } else toast("you can only save once at a time")
 
@@ -356,7 +300,6 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     paymentBuilder.apply {
                         setNegativeButton("") { _, _ -> eraseDebtPayment.setOnClickListener { } }
                         setView(paymentView)
-                        setCancelable(true)
                         create()
                         show()
                     }
@@ -369,12 +312,11 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
     private fun removeDebtorAt(position: Int) {
         // TODO remove from firestore and refresh the data
-        debtorsList.removeAt(position)
-        debtorsAdapter.notifyItemRemoved(position)
-        debtorsAdapter.notifyDataSetChanged()
+
     }
 
     private fun updateUI() {
+        loadData()
         debtorsRecyclerView.apply {
             adapter = debtorsAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
@@ -387,24 +329,16 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     )
                 )
             }
-            /*
-            addOnScrollListener(object : RecyclerView.OnScrollListener(){
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-
-                    fabAddDebtor.startAnimation(
-                        android.view.animation.AnimationUtils.loadAnimation(
-                            context ,R.anim.hide_on_scroll
-                        )
-                    )
-                    if (dy > 0){
-                        searchDebtor.visibility = INVISIBLE
-                    }
-                    else {
-                        searchDebtor.visibility = VISIBLE
-                    }
-                    super.onScrolled(recyclerView, dx, dy)
-                }
-            }) */
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadData()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadData()
     }
 }

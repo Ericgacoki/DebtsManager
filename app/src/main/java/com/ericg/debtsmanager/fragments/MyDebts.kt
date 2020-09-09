@@ -1,45 +1,34 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.fragments
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import kotlinx.android.synthetic.main.fragment_my_debts.*
 
 @Suppress("SpellCheckingInspection")
 class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
-    private val myDebt1 = DebtData(
-        "Mson D", "02/10/2019", "01/20/2020", 1, "0702437...",
-        50130, 12350, 2, null, null
-    )
-    private val myDebt2 = DebtData(
-        "Jd Kate", "3/10/2012", "01/20/2025", 1, "07024377...",
-        701300, 120350, 5, null, null
-    )
-    private val myDebt3 = DebtData(
-        "Jd Kate", "3/10/2016", "01/20/2025", 1, "07024...",
-        701300, 120350, 5, null, null
-    )
-    private val myDebt4 = DebtData(
-        "Jd Kate", "3/10/2018", "01/20/2025", 1, "07...",
-        701300, 120350, 5, null, null
-    )
 
-    private val myDebtsList: ArrayList<DebtData> = arrayListOf(myDebt1, myDebt2, myDebt3, myDebt4)
+    private var myDebtsList: List<DebtData> = ArrayList()
     private val myDebtsAdapter = MyDebtsAdapter(myDebtsList, this)
 
     override fun onCreateView(
@@ -50,7 +39,21 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        loadMyDebts()
+
         fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
+
+        swipeToRefreshMyDebts.setOnRefreshListener {
+            loadMyDebts().observe(viewLifecycleOwner, {
+                if (it) {
+                    toast("refreshed successfully !")
+                    swipeToRefreshMyDebts.isRefreshing = false
+                } else {
+                    toast("refreshing...")
+                    swipeToRefreshMyDebts.isRefreshing = true
+                }
+            })
+        }
 
         val numMyDebts = myDebtsList.size
         noDebts.visibility = if (numMyDebts == 0) {
@@ -62,12 +65,69 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
     override fun onStart() {
         super.onStart()
+        loadMyDebts()
+    }
 
+    override fun onResume() {
+        super.onResume()
+        loadMyDebts()
+    }
+
+    private fun activateBtmNav(activate: Boolean) {
+        val navItems =
+            arrayOf(R.id.debtors, R.id.myDebts, R.id.profile /*R.id.loans, R.id.installments*/)
+
+        if (!activate) {
+
+            navItems.forEach { item ->
+                val foundItem = activity!!.findViewById<View>(item)
+                foundItem.isClickable = false
+                foundItem.isEnabled = false
+            }
+        } else {
+            navItems.forEach { item ->
+                val foundItem = activity!!.findViewById<View>(item)
+                foundItem.isClickable = true
+                foundItem.isEnabled = true
+            }
+        }
+    }
+
+    private fun loadMyDebts(): MutableLiveData<Boolean> {
+        activateBtmNav(false)
+        val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
         mRecyclerView.apply {
             adapter = myDebtsAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+            // scrollToPosition(myDebtsList.size - 1)
         }
 
+        val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
+        viewModel.getData("myDebts")?.addOnCompleteListener { it ->
+            if (it.isSuccessful) {
+                retrieved.value =  true
+                activateBtmNav(true)
+
+                myDebtsList = it.result!!.toObjects(DebtData::class.java)
+                myDebtsAdapter.myDebtsList = myDebtsList
+                myDebtsAdapter.notifyDataSetChanged()
+
+                viewModel.numOfMyDebts = myDebtsList.size.toFloat()
+
+                val numMyDebts = myDebtsList.size
+                noDebts.visibility = if (numMyDebts == 0) {
+                    VISIBLE
+                } else {
+                    INVISIBLE
+                }
+
+            } else {
+                activateBtmNav(true)
+                toast("refreshing...")
+            }
+        }
+
+        return retrieved
     }
 
     override fun onMyDebtClicked(position: Int, itemView: View, viewId: Int) {

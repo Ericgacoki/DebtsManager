@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.adapters
@@ -20,8 +20,8 @@ import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
 
 
 class DebtorsAdapter(
-    thisContext: Context? ,
-    private val debtorsList: ArrayList<DebtData>,
+    thisContext: Context?,
+    var debtorsList: List<DebtData>,
     private val listener: OnDebtorClickListener
 ) : RecyclerView.Adapter<DebtorsAdapter.CustomDebtorViewHolder>() {
 
@@ -51,8 +51,7 @@ class DebtorsAdapter(
         )
 
         @NonNull
-        context = holder.itemView.context // context must not be null
-
+        context = holder.itemView.context
 
         if (holder.adapterPosition > lastPosition && context != null) {
             // when scrolling down

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/5/20 1:16 AM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.adapters
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.row_mydebt_item.view.*
 
 
 class MyDebtsAdapter(
-    private val myDebtsList: ArrayList<DebtData>,
+    var myDebtsList: List<DebtData>,
     private val clickListener: MyDebtItemClickListener
 ) : RecyclerView.Adapter<MyDebtsAdapter.MyDebtViewHolder>() {
 

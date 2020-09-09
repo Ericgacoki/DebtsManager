@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/12/20 10:55 AM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.data
@@ -10,20 +10,26 @@ package com.ericg.debtsmanager.data
  */
 
 data class DebtData(
-    var name: String,
-    var startDate: String,
-    var dueDate: String,
-    var debtStatus: Int,
-    var phone: String,
-    var initialAmt: Int,
-    var amtPaid: Int,
-    var paymentsDone: Int,
+    val name: String,
+    val startDate: String,
+    val dueDate: String,
+    val debtStatus: Int,
+    val phone: String,
+    val initialAmt: Int,
+    val amtPaid: Int,
+    val paymentsDone: Int,
     var remainingAmt: Int?,
     var progressPercentage: Int?
 ) {
+
     init {
-        name = name.trim()
         remainingAmt = (initialAmt - amtPaid)
         progressPercentage = (amtPaid * 100 / initialAmt)
     }
+
+    /**@__IMPORTANT__ A no-argument constructor is required by firestore documents   */
+
+    private constructor() : this(
+        "", "", "", 1, "", 1, 0, 0, null, null
+    )
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/6/20 10:06 AM
+ * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -9,8 +9,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -64,7 +62,6 @@ class AddDebt : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // this.activity?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         updateCalendars()
         updateSpinner()
@@ -268,7 +265,7 @@ class AddDebt : Fragment() {
 
     private fun saveDebt() {
         collectData()
-        if (notEmpty) {
+        if (notEmpty && addDebtAmount.text.toString().trim().toInt() > 0) {
             alterFieldsFocus(true)
             val newDebt = DebtData(
                 name = userName,
@@ -302,21 +299,24 @@ class AddDebt : Fragment() {
                             }
                         })
                     }
-
-                    // todo delay this up to when saving job is complete
-                    showSuccessDialog()
                 }
                 setNegativeButton("cancel") { _, _ -> /* dismiss */ }
                 create().show()
             }
+        } else if (addDebtAmount.text.toString().trim().toInt() < 1 ) {
+            toast("Zero input is not allowed !")
+            addDebtAmount.error = "must be more than zero"
+            addDebtScrollView.scrollTo(0, 0)
         }
     }
 
-    private fun setOkAction() {
+    private fun onDismissAction() {
+
+        val fragment: Fragment = if (debtType == "Debtor") Debtors() else MyDebts()
 
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.frameLayout, Debtors())
+            .replace(R.id.frameLayout, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
     }
@@ -327,7 +327,7 @@ class AddDebt : Fragment() {
         val view = layoutInflater.inflate(R.layout.dialog_debt_saving_done, null)
 
         saved.apply {
-            setOnDismissListener { setOkAction() }
+            setOnDismissListener { onDismissAction() }
             setView(view)
             show()
         }
