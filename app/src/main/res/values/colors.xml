@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
+  ~ Copyright (c)  Updated by eric on  9/13/20 12:31 AM
   -->
 
 <resources>
-
     <color name="colorBlue">#0329FC</color>
+    <color name="colorLightBlue">#00E2FF</color>
+    <color name="colorRed">#FF0000</color>
     <color name="colorOrange">#FF6B00</color>
     <color name="colorLightOrange">#FF9800</color>
-    <color name="colorRed">#FF0000</color>
     <color name="colorYellow">#FDB829</color>
     <color name="colorGreen">#34FF00</color>
     <color name="colorWhite">#FFFFFF</color>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.auth
@@ -14,10 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.ParentActivity
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.contacts.contacts
+import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
-import com.ericg.debtsmanager.communication.contacts
-import com.ericg.debtsmanager.extensions.toast
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_reset_password.*
 import kotlinx.android.synthetic.main.dialog_reset_password_guide.view.*

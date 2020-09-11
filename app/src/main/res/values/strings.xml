@@ -1,9 +1,9 @@
 <!--
-  ~ Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+  ~ Copyright (c)  Updated by eric on  9/13/20 12:31 AM
   -->
 
 <resources>
-    <string name="app_name">Debts Manager</string>
+    <string name="app_name">Debts Manager [Beta]</string>
     <string name="reset_password">Reset Password   </string>
     <string name="account_email">Account Email</string>
     <string name="get_link_via_email">Get link via Email</string>

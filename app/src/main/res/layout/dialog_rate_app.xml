@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  8/8/20 3:14 PM
+  ~ Copyright (c)  Updated by eric on  9/13/20 12:31 AM
   -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -65,9 +65,21 @@
             tools:ignore="HardcodedText"
             tools:text="The best financial app on the planet. I\'ve enjoyed  very much and I recommend you to install it. " />
 
+        <TextView
+            android:id="@+id/tvFeedBackLength"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/collapseRatingView"
+            app:layout_constraintEnd_toEndOf="@+id/collapseRatingView"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@+id/etRatingComment"
+            app:layout_constraintTop_toBottomOf="@+id/etRatingComment"
+            tools:text="23/100" />
+
         <ImageView
             android:id="@+id/collapseRatingView"
-            android:layout_width= "60dp"
+            android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/ic_arrow_expand"
             app:layout_constraintEnd_toStartOf="@id/btnRate"
@@ -87,9 +99,9 @@
             android:text="       Send      "
             android:textColor="@color/colorBlack"
             android:textStyle="bold"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/etRatingComment"
-
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="HardcodedText" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
+  ~ Copyright (c)  Updated by eric on  9/12/20 12:17 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -11,7 +11,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/exitTextMessage"
         android:layout_width="409dp"
         android:layout_height="657dp"
         android:gravity="center"

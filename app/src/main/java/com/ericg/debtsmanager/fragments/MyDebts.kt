@@ -1,9 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ import com.ericg.debtsmanager.TOTAL_MY_DEBTS
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
+import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.network.Internet.isConnected
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import kotlinx.android.synthetic.main.fragment_my_debts.*
 import kotlinx.coroutines.Dispatchers
@@ -50,6 +53,7 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         }
 
         fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
+        dataLoadingLayout2.setOnClickListener { /* do nothing*/ }
 
         swipeToRefreshMyDebts.setOnRefreshListener {
             loadMyDebts(load = false).observe(viewLifecycleOwner, {
@@ -64,11 +68,6 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
     override fun onStart() {
         super.onStart()
-        loadMyDebts()
-    }
-
-    override fun onResume() {
-        super.onResume()
         loadMyDebts()
     }
 
@@ -107,9 +106,22 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private fun loadMyDebts(
-        cancel: Boolean? = false,
-        load: Boolean? = true
+        cancel: Boolean? = false, load: Boolean? = true
     ): MutableLiveData<Boolean> {
+
+        if (!isConnected()!!) {
+            fabAddMyDebt.snackBuilder("Its better when online !", 2000).apply {
+                setTextColor(Color.WHITE)
+                setBackgroundTint(Color.GREEN)
+
+                setActionTextColor(Color.YELLOW)
+                setAction("switch") {
+                    // todo open internet connection settings
+                }
+                show()
+            }
+        }
+
         activateBtmNav(false)
         if (load!!) loadingBar(load) else loadingBar(false)
         noDebts.visibility = INVISIBLE
@@ -151,7 +163,7 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         if (show) {
             dataLoadingLayout2.visibility = VISIBLE
             loadingRing2.apply {
-                setViewColor(ActivityCompat.getColor(this.context, R.color.colorOrange))
+                setViewColor(ActivityCompat.getColor(this.context, R.color.colorGreen))
                 startAnim()
             }
         } else {

@@ -1,8 +1,8 @@
 /*
- * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
-package com.ericg.debtsmanager.communication
+package com.ericg.debtsmanager.contacts
 
 import android.annotation.SuppressLint
 import android.app.Activity

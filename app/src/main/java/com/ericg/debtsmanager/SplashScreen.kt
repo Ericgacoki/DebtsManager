@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager
@@ -42,11 +42,6 @@ class SplashScreen : AppCompatActivity() {
         Handler().postDelayed({
             kotlin.run { splashOut() }
         }, 3000)
-
-        /*GlobalScope.launch(Dispatchers.Default) {
-            delay(3000L)
-            kotlin.run { splashOut() }
-        }*/
 
         val pIndices = 0..5
         val imagesIndices = 0..6
@@ -106,7 +101,7 @@ class SplashScreen : AppCompatActivity() {
         val sharedPrefsHasAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, 0)
         val hasAccount = sharedPrefsHasAccount.getBoolean(HAS_ACCOUNT, false)
 
-        if (autoSignIn && hasAccount) {
+        if (hasAccount && autoSignIn) {
 
             val intent = Intent(this, ParentActivity::class.java)
             if (intent.resolveActivity(packageManager) != null) {

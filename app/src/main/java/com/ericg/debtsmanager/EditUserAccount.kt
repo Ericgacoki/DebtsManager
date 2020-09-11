@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager
@@ -14,7 +14,7 @@ import android.provider.MediaStore
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.auth.NewResetPassword
-import com.ericg.debtsmanager.communication.contacts
+import com.ericg.debtsmanager.contacts.contacts
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast

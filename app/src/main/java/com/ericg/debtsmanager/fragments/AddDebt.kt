@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -9,8 +9,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Color.RED
-import android.graphics.Color.WHITE
+import android.graphics.Color.*
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -28,6 +27,7 @@ import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.network.Internet.isConnected
 import com.ericg.debtsmanager.utils.SaveDebt
 import kotlinx.android.synthetic.main.fragment_add_debt.*
 import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
@@ -287,6 +287,7 @@ class AddDebt : Fragment() {
                     remainingAmt = null,
                     progressPercentage = null
                 )
+
                 val confirmSaveDebt = AlertDialog.Builder(this.context as Context, 3)
                 confirmSaveDebt.apply {
                     setTitle("sure to save new $debtType ?")
@@ -294,20 +295,32 @@ class AddDebt : Fragment() {
                     setPositiveButton("Ok") { _, _ ->
                         /*         SaveDebt uses a coroutine so we don't have to do it again      */
 
-                        SaveDebt(debtType, newDebt).apply {
-
-                            done().observe(viewLifecycleOwner, { success ->
-                                // todo check internet connection
-
-                                when (success) {
-                                    true -> {
-                                        showSuccessDialog()
+                        if (isConnected()!!) {
+                            SaveDebt(debtType, newDebt).apply {
+                                done().observe(viewLifecycleOwner, { success ->
+                                    // todo check internet connection
+                                    when (success) {
+                                        true -> {
+                                            showSuccessDialog()
+                                        }
+                                        else -> {
+                                            toast("failed to save!")
+                                        }
                                     }
-                                    else -> {
-                                        toast("failed to save!")
-                                    }
+                                })
+                            }
+                        } else {
+                            btnSaveDebt.snackBuilder("please go online !", 2000).apply {
+                                setTextColor(WHITE)
+                                setBackgroundTint(RED)
+
+                                setActionTextColor(YELLOW)
+                                setAction("switch") {
+                                    // todo open internet connection settings
                                 }
-                            })
+                                setTitle("No internet")
+                                show()
+                            }
                         }
                     }
                     setNegativeButton("cancel") { _, _ -> /* dismiss */ }

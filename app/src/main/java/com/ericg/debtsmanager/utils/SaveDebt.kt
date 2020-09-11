@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.utils
@@ -28,11 +28,13 @@ class SaveDebt(private val type: String, private val debtData: DebtData) {
 
             if (type == "Debtor") {
                 usersCollection.document(userUID).collection("debtors").add(debtData)
-                    .addOnCompleteListener { saving -> done.value = saving.isSuccessful }
+                    .addOnSuccessListener { done.value = true }
+                    .addOnFailureListener { done.value = false }
 
             } else {
                 usersCollection.document(userUID).collection("myDebts").add(debtData)
-                    .addOnCompleteListener { saving -> done.value =  saving.isSuccessful }
+                    .addOnSuccessListener { done.value = true }
+                    .addOnFailureListener { done.value = false }
             }
         }
     }

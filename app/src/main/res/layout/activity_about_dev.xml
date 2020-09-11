@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  8/8/20 3:14 PM
+  ~ Copyright (c)  Updated by eric on  9/13/20 12:31 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -247,11 +247,11 @@ todo collect number of likes from firestore
                 app:layout_constraintTop_toBottomOf="@+id/cardView5"
                 app:layout_constraintVertical_bias="0" />
 
-            <pl.droidsonroids.gif.GifImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/payPal"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:src="@drawable/pay_pal_gif"
+                android:src="@drawable/official_paypal_logo"
                 app:layout_constraintBottom_toBottomOf="@+id/mPesa"
                 app:layout_constraintStart_toStartOf="@+id/showSomeLove"
                 app:layout_constraintTop_toTopOf="@+id/mPesa" />

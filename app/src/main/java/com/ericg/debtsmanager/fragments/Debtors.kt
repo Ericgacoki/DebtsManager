@@ -1,11 +1,12 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.fragments
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,7 +25,9 @@ import com.ericg.debtsmanager.TOTAL_DEBTORS
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
+import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.network.Internet.isConnected
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
@@ -56,6 +59,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         updateUI()
         onSwipeToRefresh()
         fabAddDebtor.setOnClickListener { openAddDebtFragment() }
+        dataLoadingLayout1.setOnClickListener { /* do nothing */ }
     }
 
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -64,6 +68,19 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         cancel: Boolean? = false,
         load: Boolean? = true
     ): MutableLiveData<Boolean> {
+
+        if (!isConnected()!!) {
+            fabAddDebtor.snackBuilder("Its faster when online !", 2000).apply {
+                setTextColor(Color.WHITE)
+                setBackgroundTint(Color.RED)
+                setActionTextColor(Color.YELLOW)
+
+                setAction("switch") {
+                    // todo open internet connection settings
+                }
+                show()
+            }
+        }
 
         activateBtmNav(false)
         if (load!!) loadingBar(show = true) else loadingBar(false)
@@ -108,7 +125,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         if (show) {
             dataLoadingLayout1.visibility = View.VISIBLE
             loadingRing1.apply {
-                setViewColor(ActivityCompat.getColor(this.context, R.color.colorOrange))
+                setViewColor(ActivityCompat.getColor(this.context, R.color.colorLightBlue))
                 startAnim()
             }
         } else {
@@ -386,11 +403,6 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 )
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadData()
     }
 
     override fun onStart() {

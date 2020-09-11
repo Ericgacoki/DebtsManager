@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 package com.ericg.debtsmanager.auth
@@ -24,7 +24,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.*
-import com.ericg.debtsmanager.communication.contacts
+import com.ericg.debtsmanager.contacts.contacts
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.sendEmail
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth

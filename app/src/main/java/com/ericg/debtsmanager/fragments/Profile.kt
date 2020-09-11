@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
  */
 
 
@@ -17,6 +17,8 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -25,16 +27,13 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.ericg.debtsmanager.*
 import com.ericg.debtsmanager.admin.AboutDeveloper
 import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.extensions.userSharedPrefs
-import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
-import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -71,9 +70,11 @@ class Profile : Fragment() {
 
     private fun updatePieChart() {
 
-        val totalDebtors = activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).getFloat(TOTAL_DEBTORS, 0F)
+        val totalDebtors =
+            activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).getFloat(TOTAL_DEBTORS, 0F)
 
-        val totalMyDebts = activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).getFloat(TOTAL_MY_DEBTS, 0F)
+        val totalMyDebts =
+            activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).getFloat(TOTAL_MY_DEBTS, 0F)
 
         val pieChart = dataAnalysisPieChart
         val pieData: PieData
@@ -106,13 +107,13 @@ class Profile : Fragment() {
     private fun updateProfile() {
 
         if (mUser != null) {
-            profileUserEmail?.text  = mUser?.email ?: ""
+            profileUserEmail?.text = mUser?.email ?: ""
             userUID.text = "ID : ${mUser!!.uid}"
         }
 
-        val userName = this.activity?.getSharedPreferences(USER_NAME, 0)
+        /*val userName = this.activity?.getSharedPreferences(USER_NAME, 0)
             ?.getString(USER_NAME, "Anonymous")
-            profileUserName.text = userName?.trim()
+            profileUserName.text = userName?.trim()*/
     }
 
     @Suppress("LocalVariableName")
@@ -269,6 +270,20 @@ class Profile : Fragment() {
             val ratingView = layoutInflater.inflate(R.layout.dialog_rate_app, null)
 
             ratingView.apply {
+
+                etRatingComment.addTextChangedListener(object : TextWatcher {
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun afterTextChanged(p0: Editable?) {
+                        tvFeedBackLength.text = "${etRatingComment.text.toString().length}/100"
+                    }
+                })
+
                 ratingBar.setOnRatingBarChangeListener { ratingBar, _, _ ->
                     rating = ratingBar.rating
                 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+  ~ Copyright (c)  Updated by eric on  9/13/20 12:31 AM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -16,7 +16,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:background="@drawable/curved_bg"
-        android:backgroundTint="#92FFA1"
+        android:backgroundTint="#72FF85"
         android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
