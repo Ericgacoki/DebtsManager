@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/12/20 12:17 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -50,6 +50,7 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         }
 
         fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
+        dataLoadingLayout2.setOnClickListener { /* do nothing*/ }
 
         swipeToRefreshMyDebts.setOnRefreshListener {
             loadMyDebts(load = false).observe(viewLifecycleOwner, {
@@ -66,11 +67,11 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         super.onStart()
         loadMyDebts()
     }
-
+/*
     override fun onResume() {
         super.onResume()
         loadMyDebts()
-    }
+    }*/
 
     private fun activateBtmNav(activate: Boolean) {
         val navItems =

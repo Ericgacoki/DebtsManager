@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/12/20 12:17 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -56,6 +56,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         updateUI()
         onSwipeToRefresh()
         fabAddDebtor.setOnClickListener { openAddDebtFragment() }
+        dataLoadingLayout1.setOnClickListener { /* do nothing */}
     }
 
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)

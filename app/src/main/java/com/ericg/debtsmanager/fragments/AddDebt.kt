@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/12/20 12:17 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -287,6 +287,7 @@ class AddDebt : Fragment() {
                     remainingAmt = null,
                     progressPercentage = null
                 )
+
                 val confirmSaveDebt = AlertDialog.Builder(this.context as Context, 3)
                 confirmSaveDebt.apply {
                     setTitle("sure to save new $debtType ?")
@@ -295,7 +296,6 @@ class AddDebt : Fragment() {
                         /*         SaveDebt uses a coroutine so we don't have to do it again      */
 
                         SaveDebt(debtType, newDebt).apply {
-
                             done().observe(viewLifecycleOwner, { success ->
                                 // todo check internet connection
 

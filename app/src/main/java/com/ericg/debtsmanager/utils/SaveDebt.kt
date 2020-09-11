@@ -1,9 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/12/20 12:17 AM
  */
 
 package com.ericg.debtsmanager.utils
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ericg.debtsmanager.data.DebtData
@@ -28,11 +29,11 @@ class SaveDebt(private val type: String, private val debtData: DebtData) {
 
             if (type == "Debtor") {
                 usersCollection.document(userUID).collection("debtors").add(debtData)
-                    .addOnCompleteListener { saving -> done.value = saving.isSuccessful }
+                    .addOnSuccessListener { done.value = true }
 
             } else {
                 usersCollection.document(userUID).collection("myDebts").add(debtData)
-                    .addOnCompleteListener { saving -> done.value =  saving.isSuccessful }
+                    .addOnSuccessListener { done.value =  true}
             }
         }
     }
