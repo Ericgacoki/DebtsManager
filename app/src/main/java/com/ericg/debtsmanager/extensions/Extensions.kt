@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/4/20 4:48 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager.extensions
@@ -22,10 +22,6 @@ import com.google.android.material.snackbar.Snackbar
  */
 fun Activity.toast(msg: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, msg, duration).show()
-}
-
-fun Activity.thisContext(): Context {
-    return this
 }
 
 fun Fragment.toast(msg: String, duration: Int = Toast.LENGTH_SHORT) {

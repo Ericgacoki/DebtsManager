@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/3/20 11:48 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager
@@ -13,10 +13,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.fragments.Debtors
 import com.ericg.debtsmanager.fragments.MyDebts
 import com.ericg.debtsmanager.fragments.Profile
+import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import kotlinx.android.synthetic.main.activity_parent.*
 
 class ParentActivity : AppCompatActivity() {

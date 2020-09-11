@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -14,10 +14,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.TOTAL_DEBTORS
 import com.ericg.debtsmanager.adapters.DebtorsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
@@ -28,6 +28,9 @@ import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
@@ -52,33 +55,62 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         fabAddDebtor.setOnClickListener { openAddDebtFragment() }
     }
 
-    private fun loadData(): MutableLiveData<Boolean> {
+    private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private fun loadData(cancel: Boolean? = false): MutableLiveData<Boolean> {
         activateBtmNav(false)
-        val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
+        loadingBar(show = true)
 
         val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
-        viewModel.getData("Debtor")?.addOnCompleteListener { it ->
-            if (it.isSuccessful) {
-                retrieved.value = true
-                activateBtmNav(true)
-                debtorsList = it.result!!.toObjects(DebtData::class.java)
-                debtorsAdapter.debtorsList = debtorsList
-                debtorsAdapter.notifyDataSetChanged()
+        val job = GlobalScope.launch(Dispatchers.Main) {
 
-                viewModel.numOfDebtors = debtorsList.size.toFloat()
+            viewModel.getData("Debtor")?.addOnCompleteListener { get ->
+                if (get.isSuccessful) {
+                    retrieved.value = true
+                    activateBtmNav(true)
+                    loadingBar(show = false)
+                    debtorsList = get.result!!.toObjects(DebtData::class.java)
+                    debtorsAdapter.debtorsList = debtorsList
+                    debtorsAdapter.notifyDataSetChanged()
 
-            } else {
-                activateBtmNav(true)
-                toast("refreshing...")
+                    val numOfDebtors = debtorsList.size.toFloat()
+                    activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
+                        .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
+                } else {
+                    activateBtmNav(true)
+                    loadingBar(show = false)
+                }
             }
         }
+        if (cancel!!) {
+            job.cancel()
+        }
+
         return retrieved
     }
 
-    private fun activateBtmNav(activate: Boolean) {
-        val navItems =
-            arrayOf(R.id.debtors, R.id.myDebts, R.id.profile /*R.id.loans, R.id.installments*/)
+    private fun loadingBar(show: Boolean){
+        if (show){
+            dataLoadingView.visibility = View.VISIBLE
+        } else{
+            dataLoadingView.visibility = View.INVISIBLE
+        }
+    }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        retrieved.value = false
+    }
+
+    private fun activateBtmNav(activate: Boolean) {
+
+        val navItems =
+            arrayOf(
+                R.id.debtors, R.id.myDebts, R.id.profile
+                /*R.id.loans, R.id.installments*/,
+                R.id.fabAddDebtor
+            )
         if (!activate) {
 
             navItems.forEach { item ->
@@ -87,10 +119,17 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 foundItem.isEnabled = false
             }
         } else {
+            val debtors = activity!!.findViewById<View>(R.id.debtors)
+
             navItems.forEach { item ->
                 val foundItem = activity!!.findViewById<View>(item)
                 foundItem.isClickable = true
                 foundItem.isEnabled = true
+            }
+
+            debtors.apply {
+                isClickable = false
+                isEnabled = false
             }
         }
     }
@@ -98,13 +137,10 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
     @Suppress("DEPRECATION")
     private fun onSwipeToRefresh() {
         swipeToRefreshDebtors.setOnRefreshListener {
-           loadData().observe(viewLifecycleOwner, {
-                if (it) {
-
+            loadData().observe(viewLifecycleOwner, { retrieved ->
+                if (retrieved) {
                     toast("refreshed successfully")
                     swipeToRefreshDebtors.isRefreshing = false
-                } else {
-                    toast("error loading data")
                 }
             })
         }

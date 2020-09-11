@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -9,6 +9,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Color.RED
+import android.graphics.Color.WHITE
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,11 +22,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.R
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.selectImage
+import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.SaveDebt
 import kotlinx.android.synthetic.main.fragment_add_debt.*
@@ -172,10 +177,10 @@ class AddDebt : Fragment() {
             debtPhone = addDebtPhone.text.toString().trim()
 
             val sDSD = selectDebtStartDate
-            startDate = "${sDSD.dayOfMonth}/ ${sDSD.month}/ ${sDSD.year}"
+            startDate = "${sDSD.dayOfMonth}/ ${sDSD.month + 1}/ ${sDSD.year}"
 
             val sDDD = selectDebtDueDate
-            dueDate = "${sDDD.dayOfMonth}/ ${sDDD.month} /${sDDD.year}"
+            dueDate = "${sDDD.dayOfMonth}/ ${sDDD.month + 1} /${sDDD.year}"
 
         } else {
             inputs.forEach { input ->
@@ -267,6 +272,10 @@ class AddDebt : Fragment() {
         collectData()
         if (notEmpty && addDebtAmount.text.toString().trim().toInt() > 0) {
             alterFieldsFocus(true)
+
+            btnSaveDebt.isClickable = false
+            btnSaveDebt.isEnabled = false
+
             val newDebt = DebtData(
                 name = userName,
                 startDate = startDate,
@@ -289,6 +298,8 @@ class AddDebt : Fragment() {
                     SaveDebt(debtType, newDebt).apply {
 
                         done().observe(viewLifecycleOwner, {success ->
+                            // todo check internet connection
+
                             when (success) {
                                 true -> {
                                     showSuccessDialog()
@@ -304,10 +315,24 @@ class AddDebt : Fragment() {
                 create().show()
             }
         } else if (addDebtAmount.text.toString().trim().toInt() < 1 ) {
-            toast("Zero input is not allowed !")
-            addDebtAmount.error = "must be more than zero"
+
+            btnSaveDebt.snackBuilder("invalid amount input", 2000).apply {
+                setTextColor(WHITE)
+                setBackgroundTint(RED)
+                show()
+            }
+
+            addDebtAmount.error = "must be greater than zero"
             addDebtScrollView.scrollTo(0, 0)
         }
+    }
+
+    private fun checkNet(): Boolean{
+        var isConnected = false
+
+
+
+        return isConnected
     }
 
     private fun onDismissAction() {

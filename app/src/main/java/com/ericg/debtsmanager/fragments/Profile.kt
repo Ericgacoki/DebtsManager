@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 
@@ -68,10 +68,10 @@ class Profile : Fragment() {
 
         // TODO get total debtors and myDebts from firestore
 
-        val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
 
-        val totalDebtors = viewModel.numOfDebtors
-        val totalMyDebts = viewModel.numOfMyDebts
+        val totalDebtors = activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).getFloat(TOTAL_DEBTORS, 0F)
+
+        val totalMyDebts = activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).getFloat(TOTAL_MY_DEBTS, 0F)
 
         val pieChart = dataAnalysisPieChart
         val pieData: PieData

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  6/14/20 2:13 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager.auth
@@ -15,10 +15,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.telecom.TelecomManager.DURATION_LONG
 import android.view.View
 import android.widget.EditText
-import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -32,11 +30,13 @@ import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.sendEmail
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import kotlinx.android.synthetic.main.activity_create_account.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 private const val CHANNEL_ID = "Account Management "
 private var NOTIFICATION_ID = 1
@@ -318,7 +318,27 @@ class CreateAccountActivity : AppCompatActivity() {
             arrayOf(aUserName, aEmail, aPhone, aPassword, aConfirmPassword)
 
         fun saveUserData() {
-            // todo -> async (with coroutines) save data to fireStore which has offline support
+            if (notEmpty) {
+
+                val userUID = mAuth!!.currentUser!!.uid
+                val userDetails = hashMapOf(
+                    "name" to userName,
+                    "email" to userEmail,
+                    "phone" to userPhone,
+                    "password" to userPassword
+                )
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    withContext(this.coroutineContext) {
+                        userDataBase
+                            ?.collection("users")
+                            ?.document(userUID)
+                            ?.collection("userCredentials")
+                            ?.document("credentials")
+                            ?.set(userDetails)
+                    }
+                }
+            }
         }
 
         val onTap = Intent(this, ParentActivity::class.java).apply {
@@ -335,20 +355,23 @@ class CreateAccountActivity : AppCompatActivity() {
                 .createUserWithEmailAndPassword(
                     userEmail,
                     userPassword
-                ) // todo() save this to fireStore
+                )
                 .addOnCompleteListener { creating ->
                     if (creating.isSuccessful) {
                         loadingStatus(false, btnEnabled = false)
-                        sendVerificationEmail()
+
+                        GlobalScope.launch(Dispatchers.IO) {
+                            sendVerificationEmail()
+                            saveUserData()
+                            setSharedPrefs()
+                        }
+
                         startActivity(
                             Intent(
                                 this@CreateAccountActivity,
                                 ParentActivity::class.java
                             )
                         )
-
-                        saveUserData()
-                        setSharedPrefs()
 
                         toast("Welcome to Debts manager")
                         notifyAccountManagement(
@@ -446,19 +469,19 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun sendVerificationEmail() {
         // update user
-        if (mUser != null) { //
-            // Todo -> use a coroutine here and remove handler
-            GlobalScope.launch(Dispatchers.IO) {
-                mUser!!
-                    .sendEmailVerification()
-                    .addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            toast("Link sent to ${mUser!!.email}. Please verify your email", LENGTH_LONG)
-                        } else {
-                            toast("Sending failed!")
-                        }
+        if (mUser != null) {
+            mUser!!
+                .sendEmailVerification()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        toast(
+                            "Link sent to ${mUser!!.email}. Please verify your email",
+                            LENGTH_LONG
+                        )
+                    } else {
+                        toast("Sending failed!")
                     }
-            }
+                }
         } else {
             toast("no user to send email to")
         }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp"
+    android:layout_gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <DatePicker
+        android:id="@+id/pickNewDueDate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/ThemeOrangeCalendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnNewDueDateOk"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:text="Ok"
+        android:layout_marginHorizontal="10dp"
+        android:background="@drawable/curved_bg"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/colorOrange"
+        android:layout_marginVertical="15dp"
+        app:layout_constraintStart_toStartOf="@id/pickNewDueDate"
+        app:layout_constraintEnd_toEndOf="@id/pickNewDueDate"
+        app:layout_constraintTop_toBottomOf="@id/pickNewDueDate"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

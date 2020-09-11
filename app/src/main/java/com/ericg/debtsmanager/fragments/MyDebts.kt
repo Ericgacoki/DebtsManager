@@ -1,11 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
  */
 
 package com.ericg.debtsmanager.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.INVISIBLE
@@ -13,16 +12,19 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ericg.debtsmanager.R
+import com.ericg.debtsmanager.TOTAL_MY_DEBTS
 import com.ericg.debtsmanager.adapters.MyDebtsAdapter
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import kotlinx.android.synthetic.main.fragment_my_debts.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Suppress("SpellCheckingInspection")
 class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
@@ -75,7 +77,12 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
     private fun activateBtmNav(activate: Boolean) {
         val navItems =
-            arrayOf(R.id.debtors, R.id.myDebts, R.id.profile /*R.id.loans, R.id.installments*/)
+            arrayOf(
+                R.id.debtors,
+                R.id.myDebts,
+                R.id.profile /*R.id.loans, R.id.installments*/,
+                R.id.fabAddMyDebt
+            )
 
         if (!activate) {
 
@@ -85,17 +92,25 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
                 foundItem.isEnabled = false
             }
         } else {
+            val myDebts = activity!!.findViewById<View>(R.id.myDebts)
+
             navItems.forEach { item ->
                 val foundItem = activity!!.findViewById<View>(item)
                 foundItem.isClickable = true
                 foundItem.isEnabled = true
             }
+
+            myDebts.apply {
+                isClickable = false
+                isEnabled = false
+            }
         }
     }
 
-    private fun loadMyDebts(): MutableLiveData<Boolean> {
+    private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    private fun loadMyDebts(cancel: Boolean? = false): MutableLiveData<Boolean> {
         activateBtmNav(false)
-        val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
         mRecyclerView.apply {
             adapter = myDebtsAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
@@ -103,28 +118,37 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         }
 
         val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
-        viewModel.getData("myDebts")?.addOnCompleteListener { it ->
-            if (it.isSuccessful) {
-                retrieved.value =  true
-                activateBtmNav(true)
+        val job = GlobalScope.launch(Dispatchers.Main) {
+            viewModel.getData("myDebts")?.addOnCompleteListener { it ->
+                if (it.isSuccessful) {
+                    retrieved.value = true
+                    activateBtmNav(true)
 
-                myDebtsList = it.result!!.toObjects(DebtData::class.java)
-                myDebtsAdapter.myDebtsList = myDebtsList
-                myDebtsAdapter.notifyDataSetChanged()
+                    myDebtsList = it.result!!.toObjects(DebtData::class.java)
+                    myDebtsAdapter.myDebtsList = myDebtsList
+                    myDebtsAdapter.notifyDataSetChanged()
 
-                viewModel.numOfMyDebts = myDebtsList.size.toFloat()
+                    val numMyDebts = myDebtsList.size
 
-                val numMyDebts = myDebtsList.size
-                noDebts.visibility = if (numMyDebts == 0) {
-                    VISIBLE
+                    activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).edit().putFloat(
+                        TOTAL_MY_DEBTS, numMyDebts.toFloat()
+                    ).apply()
+
+                    noDebts.visibility = if (numMyDebts == 0) {
+                        VISIBLE
+                    } else {
+                        INVISIBLE
+                    }
+
                 } else {
-                    INVISIBLE
+                    activateBtmNav(true)
+                    toast("refreshing...")
                 }
-
-            } else {
-                activateBtmNav(true)
-                toast("refreshing...")
             }
+        }
+
+        if (cancel!!) {
+            job.cancel()
         }
 
         return retrieved
