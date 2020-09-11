@@ -1,83 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+  ~ Copyright (c)  Updated by eric on  9/11/20 10:40 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#10FFFFFF"
     android:layout_height="match_parent"
+    android:background="#10FFFFFF"
     tools:context=".fragments.Debtors">
 
     <LinearLayout
+        android:id="@+id/dataLoadingLayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-        
-        <
+        android:elevation="20dp"
+        android:gravity="center"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.ldoublem.loadingviewlib.view.LVCircularRing
+            android:id="@+id/loadingRing1"
             android:layout_width="40dp"
             android:layout_height="40dp"
-
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsingDebtorsToolBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0"
-        android:elevation="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:background="@drawable/curved_bg"
         android:backgroundTint="#D500E3EA"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <SearchView
-            android:id="@+id/searchDebtor"
-            android:padding="5dp"
-            android:queryHint="search a debtor"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            />
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-    android:id="@+id/swipeToRefreshDebtors"
-    android:layout_width="match_parent"
-    android:clipToPadding="false"
-    android:layout_height="match_parent">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/debtorsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="40dp"
-        android:clipToPadding="false"
-        android:paddingBottom="180dp"
-        android:scrollbarStyle="outsideOverlay"
+        android:elevation="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias=".0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1"
-        tools:listitem="@layout/new_row_debtor_item" />
+        app:layout_constraintVertical_bias="0">
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <SearchView
+            android:id="@+id/searchDebtor"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="5dp"
+            android:queryHint="search a debtor" />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-   <com.google.android.material.floatingactionbutton.FloatingActionButton
-       android:id="@+id/fabAddDebtor"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       app:maxImageSize="30dp"
-       android:src="@drawable/ic_add"
-       android:theme="@style/ThemeFab"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.97"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.865">
+    <TextView
+        android:id="@+id/noDebtorsYet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:text="Tap \'+\' button"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
-   </com.google.android.material.floatingactionbutton.FloatingActionButton>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefreshDebtors"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/debtorsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingTop="40dp"
+            android:paddingBottom="180dp"
+            android:scrollbarStyle="outsideOverlay"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1"
+            tools:listitem="@layout/new_row_debtor_item" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddDebtor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:theme="@style/ThemeFab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.97"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.865"
+        app:maxImageSize="30dp">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+</androidx.constraintlayout.widget.ConstraintLayout>

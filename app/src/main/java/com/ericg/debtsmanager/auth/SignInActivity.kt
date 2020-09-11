@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/31/20 12:34 PM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.ericg.debtsmanager.*
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.dialog_report_issue.view.*
@@ -65,7 +66,6 @@ class SignInActivity : AppCompatActivity() {
                     }, elapseTime.toLong())
                 }
                 else -> {
-
                     signInUser()
                 }
             }
@@ -161,8 +161,9 @@ class SignInActivity : AppCompatActivity() {
         val signInPrefs: SharedPreferences = getSharedPreferences(AUTO_SIGN_IN, 0)
         signInPrefs.edit().putBoolean(AUTO_SIGN_IN, autoSignIn).apply()
 
+        getSharedPreferences(USER_NAME, 0).edit().putString(USER_NAME, mUser!!.displayName).apply()
         /**
-        in case the user had cleared app data, we need to set has account to true again
+        in case the user had cleared app data, we need to set has-account to true again
          */
         getSharedPreferences(HAS_ACCOUNT, 0).edit().putBoolean(HAS_ACCOUNT, true).apply()
     }

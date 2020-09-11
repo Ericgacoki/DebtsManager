@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 
@@ -64,10 +64,12 @@ class Profile : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        updateProfile()
+    }
+
     private fun updatePieChart() {
-
-        // TODO get total debtors and myDebts from firestore
-
 
         val totalDebtors = activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).getFloat(TOTAL_DEBTORS, 0F)
 
@@ -85,10 +87,10 @@ class Profile : Fragment() {
         pieDataSet = PieDataSet(pieEntries, " Debtors  &  My debts ")
         pieData = PieData(pieDataSet)
         pieChart.data = pieData
-        pieChart.animateXY(1500, 1500)
+        pieChart.animateXY(1200, 1600)
         pieDataSet.apply {
             colors = mutableListOf(
-                Color.rgb(193, 37, 82),
+                Color.rgb(192, 39, 80),
                 Color.rgb(255, 102, 0),
                 Color.rgb(245, 199, 0),
                 Color.rgb(106, 150, 31),
@@ -104,18 +106,13 @@ class Profile : Fragment() {
     private fun updateProfile() {
 
         if (mUser != null) {
-            val mUserEmail: String? = mUser?.email
-            if (mUserEmail != null) {
-                profileUserEmail?.text = mUserEmail.toString().trim()
-                userUID.text = "ID: ${mAuth?.currentUser?.uid}"
-            }
+            profileUserEmail?.text  = mUser?.email ?: ""
+            userUID.text = "ID : ${mUser!!.uid}"
         }
 
-        val USER_NAME = "userName"
         val userName = this.activity?.getSharedPreferences(USER_NAME, 0)
-            ?.getString(USER_NAME, "Not registered")
-        profileUserName.text = userName?.trim()
-
+            ?.getString(USER_NAME, "Anonymous")
+            profileUserName.text = userName?.trim()
     }
 
     @Suppress("LocalVariableName")

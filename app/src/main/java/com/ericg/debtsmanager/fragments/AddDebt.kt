@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -11,7 +11,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color.RED
 import android.graphics.Color.WHITE
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -22,7 +21,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.ericg.debtsmanager.R
@@ -270,66 +268,73 @@ class AddDebt : Fragment() {
 
     private fun saveDebt() {
         collectData()
-        if (notEmpty && addDebtAmount.text.toString().trim().toInt() > 0) {
-            alterFieldsFocus(true)
+        if (notEmpty) {
+            if (addDebtAmount.text.toString().trim().toInt() > 0) {
+                alterFieldsFocus(true)
 
-            btnSaveDebt.isClickable = false
-            btnSaveDebt.isEnabled = false
+                btnSaveDebt.isClickable = false
+                btnSaveDebt.isEnabled = false
 
-            val newDebt = DebtData(
-                name = userName,
-                startDate = startDate,
-                dueDate = dueDate,
-                debtStatus = debtStatus,
-                phone = debtPhone,
-                initialAmt = initialAmt,
-                amtPaid = amtPaid,
-                paymentsDone = paymentsDone,
-                remainingAmt = null,
-                progressPercentage = null
-            )
-            val confirmSaveDebt = AlertDialog.Builder(this.context as Context, 3)
-            confirmSaveDebt.apply {
-                setTitle("sure to save new $debtType ?")
+                val newDebt = DebtData(
+                    name = userName,
+                    startDate = startDate,
+                    dueDate = dueDate,
+                    debtStatus = debtStatus,
+                    phone = debtPhone,
+                    initialAmt = initialAmt,
+                    amtPaid = amtPaid,
+                    paymentsDone = paymentsDone,
+                    remainingAmt = null,
+                    progressPercentage = null
+                )
+                val confirmSaveDebt = AlertDialog.Builder(this.context as Context, 3)
+                confirmSaveDebt.apply {
+                    setTitle("sure to save new $debtType ?")
 
-                setPositiveButton("Ok") { _, _ ->
-                    /*         SaveDebt uses a coroutine so we don't have to do it again      */
+                    setPositiveButton("Ok") { _, _ ->
+                        /*         SaveDebt uses a coroutine so we don't have to do it again      */
 
-                    SaveDebt(debtType, newDebt).apply {
+                        SaveDebt(debtType, newDebt).apply {
 
-                        done().observe(viewLifecycleOwner, {success ->
-                            // todo check internet connection
+                            done().observe(viewLifecycleOwner, { success ->
+                                // todo check internet connection
 
-                            when (success) {
-                                true -> {
-                                    showSuccessDialog()
+                                when (success) {
+                                    true -> {
+                                        showSuccessDialog()
+                                    }
+                                    else -> {
+                                        toast("failed to save!")
+                                    }
                                 }
-                                else -> {
-                                    toast("failed to save!")
-                                }
-                            }
-                        })
+                            })
+                        }
                     }
+                    setNegativeButton("cancel") { _, _ -> /* dismiss */ }
+                    setOnDismissListener {
+                        btnSaveDebt.apply {
+                            isEnabled = true
+                            isClickable = true
+                        }
+                    }
+                    create().show()
                 }
-                setNegativeButton("cancel") { _, _ -> /* dismiss */ }
-                create().show()
-            }
-        } else if (addDebtAmount.text.toString().trim().toInt() < 1 ) {
+            } else {
+                btnSaveDebt.snackBuilder("invalid amount input", 2000).apply {
+                    setTextColor(WHITE)
+                    setBackgroundTint(RED)
+                    show()
+                }
 
-            btnSaveDebt.snackBuilder("invalid amount input", 2000).apply {
-                setTextColor(WHITE)
-                setBackgroundTint(RED)
-                show()
+                addDebtAmount.error = "must be greater than zero"
+                addDebtScrollView.scrollTo(0, 0)
             }
-
-            addDebtAmount.error = "must be greater than zero"
-            addDebtScrollView.scrollTo(0, 0)
         }
     }
 
-    private fun checkNet(): Boolean{
+    // todo check Network
+    private fun checkNet(): Boolean {
         var isConnected = false
-
 
 
         return isConnected

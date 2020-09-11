@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -10,6 +10,7 @@ import android.view.View
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -43,25 +44,21 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
         loadMyDebts()
 
+        mRecyclerView.apply {
+            adapter = myDebtsAdapter
+            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
+        }
+
         fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
 
         swipeToRefreshMyDebts.setOnRefreshListener {
-            loadMyDebts().observe(viewLifecycleOwner, {
+            loadMyDebts(load = false).observe(viewLifecycleOwner, {
                 if (it) {
                     toast("refreshed successfully !")
+                    activateBtmNav(true)
                     swipeToRefreshMyDebts.isRefreshing = false
-                } else {
-                    toast("refreshing...")
-                    swipeToRefreshMyDebts.isRefreshing = true
                 }
             })
-        }
-
-        val numMyDebts = myDebtsList.size
-        noDebts.visibility = if (numMyDebts == 0) {
-            VISIBLE
-        } else {
-            INVISIBLE
         }
     }
 
@@ -109,20 +106,21 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private fun loadMyDebts(cancel: Boolean? = false): MutableLiveData<Boolean> {
+    private fun loadMyDebts(
+        cancel: Boolean? = false,
+        load: Boolean? = true
+    ): MutableLiveData<Boolean> {
         activateBtmNav(false)
-        mRecyclerView.apply {
-            adapter = myDebtsAdapter
-            layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
-            // scrollToPosition(myDebtsList.size - 1)
-        }
+        if (load!!) loadingBar(load) else loadingBar(false)
+        noDebts.visibility = INVISIBLE
 
         val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
-        val job = GlobalScope.launch(Dispatchers.Main) {
+        val job = GlobalScope.launch(Dispatchers.IO) {
             viewModel.getData("myDebts")?.addOnCompleteListener { it ->
                 if (it.isSuccessful) {
                     retrieved.value = true
                     activateBtmNav(true)
+                    loadingBar(false)
 
                     myDebtsList = it.result!!.toObjects(DebtData::class.java)
                     myDebtsAdapter.myDebtsList = myDebtsList
@@ -130,19 +128,14 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
 
                     val numMyDebts = myDebtsList.size
 
+                    noDebts.visibility = if (numMyDebts == 0) VISIBLE else INVISIBLE
+
                     activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).edit().putFloat(
                         TOTAL_MY_DEBTS, numMyDebts.toFloat()
                     ).apply()
-
-                    noDebts.visibility = if (numMyDebts == 0) {
-                        VISIBLE
-                    } else {
-                        INVISIBLE
-                    }
-
                 } else {
                     activateBtmNav(true)
-                    toast("refreshing...")
+                    loadingBar(false)
                 }
             }
         }
@@ -152,6 +145,18 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         }
 
         return retrieved
+    }
+
+    private fun loadingBar(show: Boolean) {
+        if (show) {
+            dataLoadingLayout2.visibility = VISIBLE
+            loadingRing2.apply {
+                setViewColor(ActivityCompat.getColor(this.context, R.color.colorOrange))
+                startAnim()
+            }
+        } else {
+            dataLoadingLayout2.visibility = INVISIBLE
+        }
     }
 
     override fun onMyDebtClicked(position: Int, itemView: View, viewId: Int) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -10,7 +10,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -277,27 +276,15 @@ class CreateAccountActivity : AppCompatActivity() {
     private fun setSharedPrefs() {
         val PRIVATE_MODE = 0
 
-        val sharedPrefAccount: SharedPreferences = getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE)
-        val accountEditor = sharedPrefAccount.edit()
+        getSharedPreferences(HAS_ACCOUNT, PRIVATE_MODE).edit()
+            .putBoolean(HAS_ACCOUNT, true).apply()
+        //getSharedPreferences(USER_NAME, PRIVATE_MODE).edit().putString(USER_NAME, userName).apply()
 
-        val sharedPrefName: SharedPreferences = getSharedPreferences(USER_NAME, PRIVATE_MODE)
-        val nameEditor = sharedPrefName.edit()
+        getSharedPreferences(USER_NAME, PRIVATE_MODE).edit()
+            .putString(USER_NAME, mUser!!.displayName).apply()
 
-        val sharedPrefsPhone = getSharedPreferences(USER_PHONE, PRIVATE_MODE)
-            .edit()
-            .putString(USER_PHONE, userPhone)
-
-        accountEditor.apply {
-            putBoolean(HAS_ACCOUNT, true)
-        }
-        accountEditor.apply()
-
-        nameEditor.apply {
-            putString(USER_NAME, userName)
-        }
-        nameEditor.apply()
-
-        sharedPrefsPhone.apply()
+        getSharedPreferences(USER_PHONE, PRIVATE_MODE).edit()
+            .putString(USER_PHONE, userPhone).apply()
     }
 
     private fun verifyInputs() {

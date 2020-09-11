@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager
@@ -41,6 +41,7 @@ class ParentActivity : AppCompatActivity() {
     private fun navigateTo() {
         bottomNav.setOnNavigationItemSelectedListener {
             disableCurrent(it.itemId)
+
             when (it.itemId) {
                 R.id.profile -> {
                     manageFragment(Profile())

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  8/14/20 12:12 AM
+  ~ Copyright (c)  Updated by eric on  9/11/20 10:40 PM
   -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -26,7 +26,7 @@
             android:layout_marginVertical="15dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/girl"
+            android:src="@drawable/profileholder"
             app:layout_constraintEnd_toStartOf="@+id/debtorName"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"

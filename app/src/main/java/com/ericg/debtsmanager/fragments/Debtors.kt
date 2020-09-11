@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -10,7 +10,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
@@ -57,23 +60,35 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
 
-    private fun loadData(cancel: Boolean? = false): MutableLiveData<Boolean> {
-        activateBtmNav(false)
-        loadingBar(show = true)
+    private fun loadData(
+        cancel: Boolean? = false,
+        load: Boolean? = true
+    ): MutableLiveData<Boolean> {
 
-        val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
-        val job = GlobalScope.launch(Dispatchers.Main) {
+        activateBtmNav(false)
+        if (load!!) loadingBar(show = true) else loadingBar(false)
+        noDebtorsYet.visibility = INVISIBLE
+
+        val viewModel = ViewModelProvider(
+            this,
+            defaultViewModelProviderFactory
+        ).get(GetDataViewModel::class.java)
+        val job = GlobalScope.launch(Dispatchers.IO) {
 
             viewModel.getData("Debtor")?.addOnCompleteListener { get ->
                 if (get.isSuccessful) {
                     retrieved.value = true
+
                     activateBtmNav(true)
                     loadingBar(show = false)
+
                     debtorsList = get.result!!.toObjects(DebtData::class.java)
                     debtorsAdapter.debtorsList = debtorsList
                     debtorsAdapter.notifyDataSetChanged()
 
                     val numOfDebtors = debtorsList.size.toFloat()
+                    noDebtorsYet.visibility = if (numOfDebtors.toInt() != 0) INVISIBLE else VISIBLE
+
                     activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
                         .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
                 } else {
@@ -89,11 +104,16 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         return retrieved
     }
 
-    private fun loadingBar(show: Boolean){
-        if (show){
-            dataLoadingView.visibility = View.VISIBLE
-        } else{
-            dataLoadingView.visibility = View.INVISIBLE
+    private fun loadingBar(show: Boolean) {
+        if (show) {
+            dataLoadingLayout1.visibility = View.VISIBLE
+            loadingRing1.apply {
+                setViewColor(ActivityCompat.getColor(this.context, R.color.colorOrange))
+                startAnim()
+            }
+        } else {
+
+            dataLoadingLayout1.visibility = View.INVISIBLE
         }
     }
 
@@ -103,7 +123,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         retrieved.value = false
     }
 
-    private fun activateBtmNav(activate: Boolean) {
+    private fun activateBtmNav(active: Boolean) {
 
         val navItems =
             arrayOf(
@@ -111,7 +131,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 /*R.id.loans, R.id.installments*/,
                 R.id.fabAddDebtor
             )
-        if (!activate) {
+        if (!active) {
 
             navItems.forEach { item ->
                 val foundItem = activity!!.findViewById<View>(item)
@@ -137,7 +157,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
     @Suppress("DEPRECATION")
     private fun onSwipeToRefresh() {
         swipeToRefreshDebtors.setOnRefreshListener {
-            loadData().observe(viewLifecycleOwner, { retrieved ->
+            loadData(load = false).observe(viewLifecycleOwner, { retrieved ->
                 if (retrieved) {
                     toast("refreshed successfully")
                     swipeToRefreshDebtors.isRefreshing = false
