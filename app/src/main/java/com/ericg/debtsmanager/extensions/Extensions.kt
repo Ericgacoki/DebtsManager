@@ -1,11 +1,10 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.extensions
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
@@ -33,7 +32,6 @@ fun View.snackBuilder(msg: String, duration: Int = 3000): Snackbar {
 }
 
 fun Activity.selectImage(requestCode: Int) {
-    // TODO crop the image before exiting the intent
 
     val imageIntent = Intent().apply {
         type = "image/*"

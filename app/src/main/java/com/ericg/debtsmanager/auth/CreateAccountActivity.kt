@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -11,7 +11,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -171,9 +170,6 @@ class CreateAccountActivity : AppCompatActivity() {
         }
 
         aBtnIssue.setOnClickListener {
-
-            // todo() research onEditorActionListener -->
-            //  issueDialogLayout.tvIssueDescriptionLength.text = rIssue.text.toString().length.toString()
 
             if (ContextCompat.checkSelfPermission(
                     this,
@@ -425,32 +421,6 @@ class CreateAccountActivity : AppCompatActivity() {
         val buttons = arrayOf(aBtnLogIn, aBtnContacts, aBtnSignIn, aBtnIssue)
         for (button in buttons) {
             button.isEnabled = enabled
-        }
-    }
-
-    private fun browse(url: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        try {
-            startActivity(Intent.createChooser(intent, "Select browser"))
-
-        } catch (e: Exception) {
-            toast(e.message.toString())
-        }
-    }
-
-    private fun emailUs(subject: String, toAddress: Array<String>, body: String = "") {
-        val sendEmailIntent = Intent(Intent.ACTION_SEND, Uri.parse("mailto"))
-            .apply {
-                type = "text/plain"
-                putExtra(Intent.EXTRA_EMAIL, toAddress)
-                putExtra(Intent.EXTRA_SUBJECT, subject)
-                putExtra(Intent.EXTRA_TEXT, body)
-            }
-
-        try {
-            startActivity(Intent.createChooser(sendEmailIntent, "Select Gmail App"))
-        } catch (e: Exception) {
-            toast(e.message.toString())
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 
@@ -33,7 +33,10 @@ import com.ericg.debtsmanager.auth.CreateAccountActivity
 import com.ericg.debtsmanager.auth.SignInActivity
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.extensions.userSharedPrefs
+import com.ericg.debtsmanager.network.Internet.isConnected
+import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
@@ -42,9 +45,11 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.dialog_rate_app.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.coroutines.Job
 import java.util.*
 
-private var zoomed = false as Boolean?
+private var zoomed = false
+private var updateJob: Job? = null
 
 class Profile : Fragment() {
     override fun onCreateView(
@@ -66,6 +71,12 @@ class Profile : Fragment() {
     override fun onStart() {
         super.onStart()
         updateProfile()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateProfile()
+        updatePieChart()
     }
 
     private fun updatePieChart() {
@@ -109,11 +120,15 @@ class Profile : Fragment() {
         if (mUser != null) {
             profileUserEmail?.text = mUser?.email ?: ""
             userUID.text = "ID : ${mUser!!.uid}"
-        }
 
-        /*val userName = this.activity?.getSharedPreferences(USER_NAME, 0)
-            ?.getString(USER_NAME, "Anonymous")
-            profileUserName.text = userName?.trim()*/
+            val nameSnapShot = userDataBase
+                ?.collection("users/${mAuth!!.currentUser!!.uid}/userCredentials")
+                ?.document("credentials")?.get()
+
+            nameSnapShot?.addOnSuccessListener {
+                profileUserName.text = it.get("name") as CharSequence?
+            }
+        }
     }
 
     @Suppress("LocalVariableName")
@@ -159,10 +174,9 @@ class Profile : Fragment() {
     }
 
     private fun unZoom() {
-        if (zoomed!!) {
+        if (zoomed) {
             zoomedProfileImageLayout.apply {
                 visibility = INVISIBLE
-                // TODO animate fade away
             }
         }
     }
@@ -198,8 +212,12 @@ class Profile : Fragment() {
             zoomed = true
             zoomedProfileImageLayout.apply {
                 visibility = VISIBLE
-
-                // TODO animate from top
+                zoomedProfileImage.startAnimation(
+                    AnimationUtils.loadAnimation(
+                        this.context,
+                        R.anim.quick_from_top
+                    )
+                )
             }
         }
 
@@ -410,26 +428,29 @@ class Profile : Fragment() {
             setTitle("Delete account ?")
             setMessage("This action is potentially dangerous. Loss of your data is irreversible!")
             setPositiveButton("proceed") { _, _ ->
-// todo check if user is connected to internet
-                if (FirebaseAuth.getInstance().currentUser != null) {
-                    FirebaseAuth.getInstance().currentUser!!.delete()
-                        .addOnCompleteListener { delete ->
-                            if (delete.isSuccessful) {
-                                clearSharedPrefs("all")
-                                startActivity(
-                                    Intent(
-                                        this.context,
-                                        CreateAccountActivity::class.java
+                if (isConnected()!!) {
+                    if (FirebaseAuth.getInstance().currentUser != null) {
+                        FirebaseAuth.getInstance().currentUser!!.delete()
+                            .addOnCompleteListener { delete ->
+                                if (delete.isSuccessful) {
+                                    clearSharedPrefs("all")
+                                    startActivity(
+                                        Intent(
+                                            this.context,
+                                            CreateAccountActivity::class.java
+                                        )
                                     )
-                                )
-                                toast("deleted successfully")
-                                activity?.finish()
-                            } else if (delete.isCanceled || !delete.isSuccessful) {
-                                toast(" failed to delete ")
+                                    toast("deleted successfully")
+                                    activity?.finish()
+                                } else if (delete.isCanceled || !delete.isSuccessful) {
+                                    toast(" failed to delete ")
+                                }
                             }
-                        }
+                    } else {
+                        toast("Account not registered!")
+                    }
                 } else {
-                    toast("Account not registered!")
+                    toast("no internet!")
                 }
             }
 

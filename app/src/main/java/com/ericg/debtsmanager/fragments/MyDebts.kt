@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -26,9 +26,6 @@ import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.Internet.isConnected
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import kotlinx.android.synthetic.main.fragment_my_debts.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 @Suppress("SpellCheckingInspection")
 class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
@@ -51,9 +48,9 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
             adapter = myDebtsAdapter
             layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.VERTICAL, false)
         }
-
+// todo send debt type via safe args
         fabAddMyDebt.setOnClickListener { openAddDebtFragment() }
-        dataLoadingLayout2.setOnClickListener { /* do nothing*/ }
+        dataLoadingLayout2.setOnClickListener { /* do nothing but prevent clicks to views below it*/ }
 
         swipeToRefreshMyDebts.setOnRefreshListener {
             loadMyDebts(load = false).observe(viewLifecycleOwner, {
@@ -106,7 +103,7 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private fun loadMyDebts(
-        cancel: Boolean? = false, load: Boolean? = true
+        load: Boolean? = true
     ): MutableLiveData<Boolean> {
 
         if (!isConnected()!!) {
@@ -127,35 +124,28 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
         noDebts.visibility = INVISIBLE
 
         val viewModel = ViewModelProvider(this).get(GetDataViewModel::class.java)
-        val job = GlobalScope.launch(Dispatchers.IO) {
-            viewModel.getData("myDebts")?.addOnCompleteListener { it ->
-                if (it.isSuccessful) {
-                    retrieved.value = true
-                    activateBtmNav(true)
-                    loadingBar(false)
+        viewModel.getData("myDebts")?.addOnCompleteListener { it ->
+            if (it.isSuccessful) {
+                retrieved.value = true
+                activateBtmNav(true)
+                loadingBar(false)
 
-                    myDebtsList = it.result!!.toObjects(DebtData::class.java)
-                    myDebtsAdapter.myDebtsList = myDebtsList
-                    myDebtsAdapter.notifyDataSetChanged()
+                myDebtsList = it.result!!.toObjects(DebtData::class.java)
+                myDebtsAdapter.myDebtsList = myDebtsList
+                myDebtsAdapter.notifyDataSetChanged()
 
-                    val numMyDebts = myDebtsList.size
+                val numMyDebts = myDebtsList.size
 
-                    noDebts.visibility = if (numMyDebts == 0) VISIBLE else INVISIBLE
+                noDebts.visibility = if (numMyDebts == 0) VISIBLE else INVISIBLE
 
-                    activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).edit().putFloat(
-                        TOTAL_MY_DEBTS, numMyDebts.toFloat()
-                    ).apply()
-                } else {
-                    activateBtmNav(true)
-                    loadingBar(false)
-                }
+                activity!!.getSharedPreferences(TOTAL_MY_DEBTS, 0).edit().putFloat(
+                    TOTAL_MY_DEBTS, numMyDebts.toFloat()
+                ).apply()
+            } else {
+                activateBtmNav(true)
+                loadingBar(false)
             }
         }
-
-        if (cancel!!) {
-            job.cancel()
-        }
-
         return retrieved
     }
 

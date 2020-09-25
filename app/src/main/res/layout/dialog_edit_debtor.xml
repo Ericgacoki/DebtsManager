@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c)  Updated by eric on  9/6/20 10:06 AM
+  ~ Copyright (c)  Updated by eric on  9/25/20 12:48 PM
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editDebtorRootLay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -13,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="Edit necessary fields"
         android:textSize="16sp" />
@@ -60,7 +61,9 @@
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/semi_curved_bg"
-        android:hint="Add New debt"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="5dp"
+        android:hint="New debt"
         android:importantForAutofill="no"
         android:inputType="number"
         android:maxLength="12"
@@ -72,12 +75,12 @@
         android:id="@+id/editDebtDueDate"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/semi_curved_bg"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:hint="New due date"
         android:importantForAutofill="no"
         android:inputType="date"
@@ -89,11 +92,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/cancelEditing"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="5dp"
@@ -104,8 +108,8 @@
             android:textColor="@color/colorWhite" />
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/saveChanges"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_margin="5dp"

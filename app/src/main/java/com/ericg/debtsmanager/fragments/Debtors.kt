@@ -1,11 +1,12 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.fragments
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -32,11 +33,9 @@ import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
+import kotlinx.android.synthetic.main.dialog_edit_debtor.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.view.*
 import kotlinx.android.synthetic.main.fragment_debtors.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
@@ -65,12 +64,11 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
     private val retrieved: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private fun loadData(
-        cancel: Boolean? = false,
         load: Boolean? = true
     ): MutableLiveData<Boolean> {
 
         if (!isConnected()!!) {
-            fabAddDebtor.snackBuilder("Its faster when online !", 2000).apply {
+            fabAddDebtor.snackBuilder("Its better when online !", 2000).apply {
                 setTextColor(Color.WHITE)
                 setBackgroundTint(Color.RED)
                 setActionTextColor(Color.YELLOW)
@@ -90,32 +88,27 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
             this,
             defaultViewModelProviderFactory
         ).get(GetDataViewModel::class.java)
-        val job = GlobalScope.launch(Dispatchers.IO) {
 
-            viewModel.getData("Debtor")?.addOnCompleteListener { get ->
-                if (get.isSuccessful) {
-                    retrieved.value = true
+        viewModel.getData("Debtor")?.addOnCompleteListener { get ->
+            if (get.isSuccessful) {
+                retrieved.value = true
 
-                    activateBtmNav(true)
-                    loadingBar(show = false)
+                activateBtmNav(true)
+                loadingBar(show = false)
 
-                    debtorsList = get.result!!.toObjects(DebtData::class.java)
-                    debtorsAdapter.debtorsList = debtorsList
-                    debtorsAdapter.notifyDataSetChanged()
+                debtorsList = get.result!!.toObjects(DebtData::class.java)
+                debtorsAdapter.debtorsList = debtorsList
+                debtorsAdapter.notifyDataSetChanged()
 
-                    val numOfDebtors = debtorsList.size.toFloat()
-                    noDebtorsYet.visibility = if (numOfDebtors.toInt() != 0) INVISIBLE else VISIBLE
+                val numOfDebtors = debtorsList.size.toFloat()
+                noDebtorsYet.visibility = if (numOfDebtors.toInt() != 0) INVISIBLE else VISIBLE
 
-                    activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
-                        .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
-                } else {
-                    activateBtmNav(true)
-                    loadingBar(show = false)
-                }
+                activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
+                    .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
+            } else {
+                activateBtmNav(true)
+                loadingBar(show = false)
             }
-        }
-        if (cancel!!) {
-            job.cancel()
         }
 
         return retrieved
@@ -185,7 +178,6 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
     private lateinit var newDate: String
     private fun showCalendar() {
-
         val calendarDialog = AlertDialog.Builder(this.context)
         val view = layoutInflater.inflate(R.layout.dialog_calendar, null)
         /*view.apply {
@@ -228,7 +220,8 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     setMessage(message)
                     setPositiveButton("proceed") { _, _ ->
                         // removeDebtorAt(position)
-                        toast("Debtor number ${position + 1} -> $name removed")
+                        // todo remove this debt
+                        toast("Pending remove for ${debtorsList[position].name}")
 
                     }
                     setNegativeButton("cancel") { _, _ ->
@@ -246,20 +239,24 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 val debtDueDate = debtorsList[position].dueDate
 
                 val editDialogBuilder = BottomSheetDialog(this.context!!)
-                val customEditDialogView = layoutInflater.inflate(R.layout.dialog_edit_debtor, null)
+                val customEditDialogView =
+                    layoutInflater.inflate(R.layout.dialog_edit_debtor, editDebtorRootLay)
+                        .apply {
+                            editDebtorName.setText(name)
+                            editDebtorPhone.setText(phone)
+                            editDebtDueDate.setOnClickListener {
+                                showCalendar()
+                            }
 
-                customEditDialogView.apply {
-                    editDebtorName.setText(name)
-                    editDebtorPhone.setText(phone)
-                    editDebtDueDate.setOnClickListener {
+                            saveChanges.setOnClickListener {
+                                // todo edit current debt
+                                toast("coming soon")
+                            }
 
-                        showCalendar()
-                    }
-
-                    cancelEditing.setOnClickListener {
-                        editDialogBuilder.dismiss()
-                    }
-                }
+                            cancelEditing.setOnClickListener {
+                                editDialogBuilder.dismiss()
+                            }
+                        }
                 editDialogBuilder.apply {
                     setContentView(customEditDialogView)
                     setCancelable(false)
@@ -299,7 +296,17 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     Uri.parse("tel:${debtorsList[position].phone}")
                 )
                 try {
-                    startActivity(callIntent)
+                    this.context?.let { context ->
+                        if (ActivityCompat.checkSelfPermission(
+                                context, android.Manifest.permission.CALL_PHONE
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+                            startActivity(callIntent)
+                        } else requestPermissions(
+                            arrayOf(android.Manifest.permission.CALL_PHONE),
+                            0
+                        )
+                    }
                 } catch (e: Exception) {
                     toast(e.toString())
                 }
@@ -351,9 +358,9 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                                     null,
                                     null
                                 )
-                                /* save once to avoid overpayment and negative balance */
+                                /* save once to avoid overpayment or negative balance */
                                 if (!saved) {
-                                    // todo save the changes made to this persons data and reload
+                                    // todo update  this person's data and reload
                                     saved = true
 
                                 } else toast("you can only save once at a time")

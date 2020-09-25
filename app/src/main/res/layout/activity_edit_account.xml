@@ -1,17 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ Copyright (c)  Updated by eric on  9/2/20 8:38 PM
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c)  Updated by eric on  9/25/20 12:48 PM
   -->
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    app:chainUseRtl="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="UseSwitchCompatOrMaterialXml, HardcodedText"
-    tools:context=".EditUserAccount"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#10FFFFFF"
-    android:layout_height="match_parent">
+    app:chainUseRtl="false"
+    tools:context=".EditUserAccount"
+    tools:ignore="UseSwitchCompatOrMaterialXml, HardcodedText">
+
+    <LinearLayout
+        android:id="@+id/layLoadSavingChanges"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="20dp"
+        android:gravity="center"
+        android:visibility="invisible">
+
+        <com.ldoublem.loadingviewlib.view.LVWifi
+            android:id="@+id/loadSavingChanges"
+            android:layout_width="50dp"
+            android:layout_height="50dp" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/btnHelpToEditAccount"
@@ -22,8 +35,8 @@
         android:src="@drawable/ic_info"
         app:layout_constraintBottom_toBottomOf="@+id/tvP1"
         app:layout_constraintEnd_toStartOf="@+id/tvP1"
-        app:layout_constraintStart_toStartOf="@+id/btnChangePassword"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="@+id/btnChangePassword"
         app:layout_constraintTop_toTopOf="@+id/tvP1"
         app:layout_constraintVertical_bias="0.5" />
 
@@ -32,8 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="Edit m"
         android:fontFamily="cursive"
+        android:text="Edit m"
         android:textColor="@color/colorRed"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -47,8 +60,8 @@
         android:id="@+id/tvP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="y account"
         android:fontFamily="cursive"
+        android:text="y account"
         android:textColor="#22E400"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -92,11 +105,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="30dp"
+        android:autofillHints="textPersonName"
         android:background="@drawable/curved_bg"
         android:drawableStart="@drawable/ic_person"
         android:hint="New User name"
         android:inputType="textPersonName"
-        android:autofillHints="textPersonName"
         android:maxLength="30"
         android:maxLines="1"
         android:padding="13dp"
@@ -129,12 +142,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
+        android:autofillHints="phone, number"
         android:background="@drawable/curved_bg"
         android:drawableStart="@drawable/ic_phone_msg"
         android:gravity="center"
         android:hint="New phone number"
         android:inputType="phone"
-        android:autofillHints="phone, number"
         android:maxLength="13"
         android:maxLines="1"
         android:padding="13dp"
@@ -150,12 +163,12 @@
         android:id="@+id/etNewEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autofillHints="textEmailAddress"
         android:background="@drawable/curved_bg"
         android:drawableStart="@drawable/ic_email_small"
         android:gravity="center"
         android:hint="New email"
         android:inputType="textEmailAddress"
-        android:autofillHints="textEmailAddress"
         android:maxLength="30"
         android:maxLines="1"
         android:padding="13dp"
@@ -223,12 +236,12 @@
     <View
         android:layout_width="0.2dp"
         android:layout_height="0dp"
+        android:background="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/btnSaveChanges"
         app:layout_constraintHorizontal_bias="0.5"
-        android:background="@color/colorBlack"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/btnChangePassword" />
+        app:layout_constraintStart_toEndOf="@+id/btnChangePassword"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline7"

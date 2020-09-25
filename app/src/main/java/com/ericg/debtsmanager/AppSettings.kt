@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  8/7/20 1:07 PM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager
@@ -34,8 +34,8 @@ class AppSettings : AppCompatActivity() {
         switchExitMenuExternally.apply {
             isChecked = exitMenuExternally.getBoolean(EXIT_BY_EXTERNAL_CLICK, false)
 
-            setOnCheckedChangeListener { _: CompoundButton, _: Boolean ->
-                exitEditor.putBoolean(EXIT_BY_EXTERNAL_CLICK, switchExitMenuExternally.isChecked)
+            setOnCheckedChangeListener { _: CompoundButton, checked: Boolean ->
+                exitEditor.putBoolean(EXIT_BY_EXTERNAL_CLICK, checked)
                     .apply()
             }
         }
@@ -53,9 +53,18 @@ class AppSettings : AppCompatActivity() {
             }
         }
 
-        // todo() implement the remaining settings
         //mute ads
 
+        val muteAds = getSharedPreferences(MUTE_ADS, 0)
+        val muteAdsEditor = muteAds.edit()
+
+        switchMuteAds.apply {
+            isChecked = muteAds.getBoolean(MUTE_ADS, false)
+
+            setOnCheckedChangeListener { _: CompoundButton, checked: Boolean ->
+                muteAdsEditor.putBoolean(MUTE_ADS, checked).apply()
+            }
+        }
 
         // dark mode
         val darkMode = getSharedPreferences(DARK_MODE_ENABLED, 0)
@@ -64,12 +73,12 @@ class AppSettings : AppCompatActivity() {
         switchEnableDarkMode.apply {
             isChecked = darkMode.getBoolean(DARK_MODE_ENABLED, false)
 
-            setOnCheckedChangeListener {_,darkModeEnabled: Boolean ->
+            setOnCheckedChangeListener { _, darkModeEnabled: Boolean ->
                 modeEditor.putBoolean(DARK_MODE_ENABLED, darkModeEnabled).apply()
-                if (darkModeEnabled){
+                if (darkModeEnabled) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                     delegate.applyDayNight()
-                } else{
+                } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     delegate.applyDayNight()
                 }

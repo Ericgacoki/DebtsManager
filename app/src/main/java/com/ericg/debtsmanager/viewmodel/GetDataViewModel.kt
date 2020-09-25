@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:09 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.viewmodel
@@ -10,12 +10,8 @@ import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.Job
 
 open class GetDataViewModel : ViewModel() {
-
-    var numOfDebtors = 1F
-    var numOfMyDebts = 1F
 
     fun getData(type: String): Task<QuerySnapshot>? {
 

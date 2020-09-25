@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/11/20 10:40 PM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager.auth
@@ -51,9 +51,9 @@ class SignInActivity : AppCompatActivity() {
     private fun handleClicks() {
         sBtnSignIn.setOnClickListener {
 
-            /*// todo remove these lines!
-            startActivity(Intent(this, ParentActivity::class.java))
-            finish()*/
+            /**
+             * startActivity(Intent(this, ParentActivity::class.java))
+             * finish() */
 
             trials += 1
             elapseTime = trials * 6000
@@ -87,7 +87,6 @@ class SignInActivity : AppCompatActivity() {
             val issueDialogLayout: View =
                 layoutInflater.inflate(R.layout.dialog_report_issue, null)
 
-            //todo updateLengthCounter()
             issueDialogLayout.rSendIssue.setOnClickListener {
 
                 val issueDescription = issueDialogLayout.rIssue.text.toString()

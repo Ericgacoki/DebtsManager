@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
  */
 
 package com.ericg.debtsmanager
@@ -11,17 +11,24 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.ericg.debtsmanager.auth.NewResetPassword
 import com.ericg.debtsmanager.contacts.contacts
 import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
+import com.ericg.debtsmanager.utils.FirebaseUtils
 import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_edit_account.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 
 @Suppress("PrivatePropertyName")
@@ -29,14 +36,14 @@ class EditUserAccount : AppCompatActivity() {
 
     private lateinit var selectedImageBitmap: Bitmap
 
-    private lateinit var mUserName: String
-    private lateinit var mUserEmail: String
-    private lateinit var mUserPhone: String
-    private lateinit var displayName: String
+    private var mUserName: String = ""
+    private var mUserEmail: String = ""
+    private var mUserPhone: String = ""
 
-    private  var editMode = false
+    private var editMode = false
 
-    private fun editMode() {
+    private fun notEditMode() {
+        fetchData()
         val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
 
         editable.forEach { it.isEnabled = false }
@@ -53,32 +60,51 @@ class EditUserAccount : AppCompatActivity() {
         }
     }
 
-    private fun fetchData() {
+    private fun loading(show: Boolean) {
+        if (show) {
+            layLoadSavingChanges.visibility = VISIBLE
+            loadSavingChanges.apply {
+                setViewColor(ContextCompat.getColor(this@EditUserAccount, R.color.colorOrange))
+                startAnim()
+            }
+        } else layLoadSavingChanges.visibility = INVISIBLE
+    }
 
-        mUserName = getSharedPreferences(USER_NAME, 0).getString(USER_NAME, "")    as String
-        mUserPhone = getSharedPreferences(USER_PHONE, 0).getString(USER_PHONE, "") as String
-        displayName = if (mUser != null) {
-            // fetch email too
+    private fun fetchData() {
+        loading(true)
+        val fetch: Job = GlobalScope.launch(Dispatchers.IO) {
+
             mUserEmail = mUser?.email.toString()
-            mUser?.displayName.toString()
-        } else {
-            mUserName.toString()
+
+            val credentialsSnapshot = FirebaseUtils.userDataBase
+                ?.collection("users")
+                ?.document(FirebaseUtils.mAuth!!.currentUser!!.uid)
+                ?.collection("userCredentials")
+                ?.document("credentials")?.get()
+
+            credentialsSnapshot?.addOnSuccessListener { data ->
+                loading(false)
+
+                mUserName = data?.get("name") as String
+                mUserPhone = data.get("phone") as String
+                //  mUserEmail = data.get("email") as String
+            }
+            credentialsSnapshot?.addOnFailureListener {
+                loading(false)
+            }
         }
-        // todo fetch image from cloud/cache
     }
 
     private fun updateFields(updateImage: Boolean) {
         if (updateImage) {
-            // TODO delay 1 sec fetch image from cloud/cache, update dp if user exists otherwise leave the default
+            // TODO fetch image from cloud/cache, update dp if user exists otherwise leave the default
         }
 
         /**
          *  use .setText("...") since .text = "..." doesn't work in EditTexts
          */
 
-        if (displayName.isNotEmpty()) {
-            etNewUserName.setText(displayName)
-        } else {
+        if (mUserName.isNotEmpty()) {
             etNewUserName.setText(mUserName)
         }
 
@@ -92,6 +118,8 @@ class EditUserAccount : AppCompatActivity() {
     }
 
     private fun handleClicks() {
+
+        layLoadSavingChanges.setOnClickListener { /* 'lock' views below */ }
 
         change_dp.setOnClickListener {
             val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
@@ -124,15 +152,38 @@ class EditUserAccount : AppCompatActivity() {
                 .putString(FROM_ACTIVITY, "editUserAccount").apply()
 
             val intentChangePassword = Intent(applicationContext, NewResetPassword::class.java)
-            if (intentChangePassword.resolveActivity(packageManager) != null) {
+            intentChangePassword.resolveActivity(packageManager)?.let {
                 startActivity(intentChangePassword)
             }
         }
         btnSaveChanges.setOnClickListener {
             if (editMode) {
-                //TODO  save changes
+                val ets = arrayOf(etNewUserName, etNewPhone, etNewEmail)
+                val nonIsEmpty = etNewUserName.text.toString().trim().isNotEmpty() &&
+                        etNewPhone.text.toString().trim().isNotEmpty() &&
+                        etNewEmail.text.toString().trim().isNotEmpty()
+
+                if (nonIsEmpty /*&& edited*/) {
+
+                    FirebaseUtils.userDataBase
+                        ?.document("users/${FirebaseUtils.mAuth!!.currentUser!!.uid}/userCredentials/credentials")
+                        ?.apply {
+                            // set(hashMapOf("name" to mUserName, "phone" to mUserPhone , "email" to mUserEmail))
+                            update("name", mUserName)
+                            update("phone", mUserPhone)
+                            update("email", mUserEmail)
+                        }
+
+                } else {
+                    ets.forEach {
+                        if (it.text.toString().trim().isEmpty()) {
+                            it.error = "${it.hint} can't be empty"
+                        }
+                    }
+                }
+
             } else {
-                btnSaveChanges.snackBuilder("First enable edit mode", 5000).apply {
+                btnSaveChanges.snackBuilder("First enable edit mode", 3000).apply {
                     val editable: Array<EditText> = arrayOf(etNewPhone, etNewUserName, etNewEmail)
 
                     setBackgroundTint(getColor(R.color.colorLightOrange))
@@ -168,10 +219,10 @@ class EditUserAccount : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_account)
 
-        editMode()
-        runBlocking {
-            fetchData()
-        }
+
+        notEditMode()
+        updateFields(false)
+
         handleClicks()
     }
 
