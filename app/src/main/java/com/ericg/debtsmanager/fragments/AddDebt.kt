@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -28,6 +28,8 @@ import com.ericg.debtsmanager.extensions.selectImage
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.Internet.isConnected
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import com.ericg.debtsmanager.utils.SaveDebt
 import kotlinx.android.synthetic.main.fragment_add_debt.*
 import kotlinx.android.synthetic.main.new_row_debtor_item.view.*
@@ -272,10 +274,19 @@ class AddDebt : Fragment() {
             if (addDebtAmount.text.toString().trim().toInt() > 0) {
                 alterFieldsFocus(true)
 
+                val docID = if (debtType == "Debtor") {
+                    userDataBase?.collection("users")?.document(mUser?.uid!!)?.collection("debtors")
+                        ?.document()?.id
+                } else {
+                    userDataBase?.collection("users")?.document(mUser?.uid!!)?.collection("myDebts")
+                        ?.document()?.id
+                }
+
                 btnSaveDebt.isClickable = false
                 btnSaveDebt.isEnabled = false
 
                 val newDebt = DebtData(
+                    docID = docID!!,
                     name = userName,
                     startDate = startDate,
                     dueDate = dueDate,
@@ -293,22 +304,9 @@ class AddDebt : Fragment() {
                     setTitle("sure to save new $debtType ?")
 
                     setPositiveButton("Ok") { _, _ ->
-                        /*         SaveDebt uses a coroutine so we don't have to do it again      */
-
                         if (isConnected()!!) {
-                            SaveDebt(debtType, newDebt).apply {
-                                done().observe(viewLifecycleOwner, { success ->
-                                    // todo check internet connection
-                                    when (success) {
-                                        true -> {
-                                            showSuccessDialog()
-                                        }
-                                        else -> {
-                                            toast("failed to save!")
-                                        }
-                                    }
-                                })
-                            }
+                            SaveDebt(docID, debtType, newDebt)
+                            showSuccessDialog()
                         } else {
                             btnSaveDebt.snackBuilder("please go online !", 2000).apply {
                                 setTextColor(WHITE)
@@ -343,14 +341,6 @@ class AddDebt : Fragment() {
                 addDebtScrollView.scrollTo(0, 0)
             }
         }
-    }
-
-    // todo check Network
-    private fun checkNet(): Boolean {
-        var isConnected = false
-
-
-        return isConnected
     }
 
     private fun onDismissAction() {

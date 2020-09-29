@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 package com.ericg.debtsmanager
@@ -29,6 +29,9 @@ class SplashScreen : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // userDataBase?.clearPersistence()
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -43,18 +46,19 @@ class SplashScreen : AppCompatActivity() {
             kotlin.run { splashOut() }
         }, 3000)
 
+        fun drawable(drawable: Int) = ContextCompat.getDrawable(this, drawable)
+
         val pIndices = 0..5
         val imagesIndices = 0..6
-
         val pImages =
             arrayOf(
-                ContextCompat.getDrawable(this, R.drawable.money_couple),
-                ContextCompat.getDrawable(this, R.drawable.money_hand),
-                ContextCompat.getDrawable(this, R.drawable.money_in_hand),
-                ContextCompat.getDrawable(this, R.drawable.money_loan),
-                ContextCompat.getDrawable(this, R.drawable.money_plant),
-                ContextCompat.getDrawable(this, R.drawable.money_savings),
-                ContextCompat.getDrawable(this, R.drawable.money_wheelbarrow)
+                drawable(R.drawable.money_couple),
+                drawable(R.drawable.money_hand),
+                drawable(R.drawable.money_in_hand),
+                drawable(R.drawable.money_loan),
+                drawable(R.drawable.money_plant),
+                drawable(R.drawable.money_savings),
+                drawable(R.drawable.money_wheelbarrow)
             )
 
         val pSlogans = arrayOf(
@@ -69,14 +73,15 @@ class SplashScreen : AppCompatActivity() {
         showRandomImage(imagesIndices, pImages)
         showRandomSlogan(pIndices, pSlogans)
     }
+
     @Suppress("LocalVariableName")
-    private fun checkTheme(){
-        val darkTheme = getSharedPreferences(DARK_MODE_ENABLED, 0).getBoolean(DARK_MODE_ENABLED, false)
-        if (darkTheme){
+    private fun checkTheme() {
+        val darkTheme =
+            getSharedPreferences(DARK_MODE_ENABLED, 0).getBoolean(DARK_MODE_ENABLED, false)
+        if (darkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             delegate.applyDayNight()
-        }
-        else {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             delegate.applyDayNight()
         }

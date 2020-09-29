@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -73,7 +73,7 @@ class MyDebts : Fragment(), MyDebtsAdapter.MyDebtItemClickListener {
             arrayOf(
                 R.id.debtors,
                 R.id.myDebts,
-                R.id.profile /*R.id.loans, R.id.installments*/,
+                R.id.profile,
                 R.id.fabAddMyDebt
             )
 

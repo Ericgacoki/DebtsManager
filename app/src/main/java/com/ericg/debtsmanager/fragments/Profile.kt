@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 
@@ -45,11 +45,9 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.dialog_delete_or_log_out.view.*
 import kotlinx.android.synthetic.main.dialog_rate_app.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.coroutines.Job
 import java.util.*
 
 private var zoomed = false
-private var updateJob: Job? = null
 
 class Profile : Fragment() {
     override fun onCreateView(

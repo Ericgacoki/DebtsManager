@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/13/20 12:31 AM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 package com.ericg.debtsmanager.utils
@@ -14,7 +14,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class SaveDebt(private val type: String, private val debtData: DebtData) {
+class SaveDebt(
+    private val docID: String,
+    private val type: String,
+    private val debtData: DebtData
+) {
     private var done = MutableLiveData<Boolean>()
     private val savingJob: Job
 
@@ -27,18 +31,21 @@ class SaveDebt(private val type: String, private val debtData: DebtData) {
             usersCollection!!.document(userUID).set(hashMapOf("this doc" to "exists"))
 
             if (type == "Debtor") {
-                usersCollection.document(userUID).collection("debtors").add(debtData)
-                    .addOnSuccessListener { done.value = true }
-                    .addOnFailureListener { done.value = false }
+                usersCollection.document(userUID).collection("debtors").document(docID)
+                    .set(debtData)
+                    .addOnCompleteListener {
+                        done.value = it.isSuccessful
+                    }
 
             } else {
-                usersCollection.document(userUID).collection("myDebts").add(debtData)
-                    .addOnSuccessListener { done.value = true }
-                    .addOnFailureListener { done.value = false }
+                usersCollection.document(userUID).collection("myDebts").document(docID)
+                    .set(debtData)
+                    .addOnCompleteListener {
+                        done.value = it.isSuccessful
+                    }
             }
         }
     }
 
     fun done(): LiveData<Boolean> = done
-
 }

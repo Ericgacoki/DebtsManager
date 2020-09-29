@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
  */
 
 package com.ericg.debtsmanager.data
@@ -10,6 +10,7 @@ package com.ericg.debtsmanager.data
  */
 
 data class DebtData(
+    val docID: String,
     val name: String,
     val startDate: String,
     val dueDate: String,
@@ -30,6 +31,6 @@ data class DebtData(
     /**@__IMPORTANT__ A no-argument constructor is required by firestore documents   */
 
     private constructor() : this(
-        "", "", "", 1, "", 1, 0, 0, null, null
+        "", "", "", "", 1, "", 1, 0, 0, null, null
     )
 }

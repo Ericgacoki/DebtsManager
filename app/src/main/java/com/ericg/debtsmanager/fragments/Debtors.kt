@@ -29,6 +29,8 @@ import com.ericg.debtsmanager.extensions.openAddDebtFragment
 import com.ericg.debtsmanager.extensions.snackBuilder
 import com.ericg.debtsmanager.extensions.toast
 import com.ericg.debtsmanager.network.Internet.isConnected
+import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
+import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
@@ -84,32 +86,31 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         if (load!!) loadingBar(show = true) else loadingBar(false)
         noDebtorsYet.visibility = INVISIBLE
 
-        val viewModel = ViewModelProvider(
+        ViewModelProvider(
             this,
             defaultViewModelProviderFactory
         ).get(GetDataViewModel::class.java)
+            .getData("debtor")?.addOnCompleteListener { get ->
+                if (get.isSuccessful) {
+                    retrieved.value = true
 
-        viewModel.getData("Debtor")?.addOnCompleteListener { get ->
-            if (get.isSuccessful) {
-                retrieved.value = true
+                    activateBtmNav(true)
+                    loadingBar(show = false)
 
-                activateBtmNav(true)
-                loadingBar(show = false)
+                    debtorsList = get.result!!.toObjects(DebtData::class.java)
+                    debtorsAdapter.debtorsList = debtorsList
+                    debtorsAdapter.notifyDataSetChanged()
 
-                debtorsList = get.result!!.toObjects(DebtData::class.java)
-                debtorsAdapter.debtorsList = debtorsList
-                debtorsAdapter.notifyDataSetChanged()
+                    val numOfDebtors = debtorsList.size.toFloat()
+                    noDebtorsYet.visibility = if (numOfDebtors.toInt() != 0) INVISIBLE else VISIBLE
 
-                val numOfDebtors = debtorsList.size.toFloat()
-                noDebtorsYet.visibility = if (numOfDebtors.toInt() != 0) INVISIBLE else VISIBLE
-
-                activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
-                    .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
-            } else {
-                activateBtmNav(true)
-                loadingBar(show = false)
+                    activity!!.getSharedPreferences(TOTAL_DEBTORS, 0).edit()
+                        .putFloat(TOTAL_DEBTORS, numOfDebtors).apply()
+                } else {
+                    activateBtmNav(true)
+                    loadingBar(show = false)
+                }
             }
-        }
 
         return retrieved
     }
@@ -219,8 +220,10 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     )
                     setMessage(message)
                     setPositiveButton("proceed") { _, _ ->
-                        // removeDebtorAt(position)
-                        // todo remove this debt
+                        userDataBase?.collection("users/${mUser?.uid}/debtors")
+                            ?.document(debtorsList[position].docID)?.delete()
+                        loadData()
+
                         toast("Pending remove for ${debtorsList[position].name}")
 
                     }
@@ -342,22 +345,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
                                 //TODO  update to firestore and refresh                               .
 
-                                val debtorCopy = debtorsList[position]
-                                val newAmtPaid = (debtorCopy.amtPaid + newPayedAmt)
-                                val newPaymentsDone = debtorCopy.paymentsDone + 1
 
-                                val newDebtorCopy = DebtData(
-                                    debtorCopy.name,
-                                    debtorCopy.startDate,
-                                    debtorCopy.dueDate,
-                                    1,
-                                    debtorCopy.phone,
-                                    debtorCopy.initialAmt,
-                                    newAmtPaid,
-                                    newPaymentsDone,
-                                    null,
-                                    null
-                                )
                                 /* save once to avoid overpayment or negative balance */
                                 if (!saved) {
                                     // todo update  this person's data and reload
