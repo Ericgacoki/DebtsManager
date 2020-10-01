@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 package com.ericg.debtsmanager.data
@@ -22,11 +22,6 @@ data class DebtData(
     var remainingAmt: Int?,
     var progressPercentage: Int?
 ) {
-
-    init {
-        remainingAmt = (initialAmt - amtPaid)
-        progressPercentage = (amtPaid * 100 / initialAmt)
-    }
 
     /**@__IMPORTANT__ A no-argument constructor is required by firestore documents   */
 

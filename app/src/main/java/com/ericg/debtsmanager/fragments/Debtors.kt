@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 package com.ericg.debtsmanager.fragments
@@ -33,6 +33,7 @@ import com.ericg.debtsmanager.utils.FirebaseUtils.mUser
 import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
 import com.ericg.debtsmanager.viewmodel.GetDataViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FieldValue
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.*
 import kotlinx.android.synthetic.main.dialog_add_debt_payment.view.*
 import kotlinx.android.synthetic.main.dialog_edit_debtor.*
@@ -202,12 +203,14 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
         when (itemViewId) {
             R.id.deleteDebtor -> {
                 val name = debtorsList[position].name
-                val message: String = if (debtorsList[position].remainingAmt == 0) {
-                    "It's safe to delete $name"
-                } else {
-                    "$name hasn't cleared the debt yet!"
-                }
-                val themeResId: Int = if (debtorsList[position].remainingAmt == 0) 3 else 1
+                val message: String =
+                    if (debtorsList[position].initialAmt - debtorsList[position].amtPaid == 0) {
+                        "It's safe to delete $name"
+                    } else {
+                        "$name hasn't cleared the debt yet!"
+                    }
+                val themeResId: Int =
+                    if (debtorsList[position].initialAmt - debtorsList[position].amtPaid == 0) 3 else 1
 
                 val deleteDebtorDialogBuilder = AlertDialog.Builder(this.context, themeResId)
                 deleteDebtorDialogBuilder.apply {
@@ -222,9 +225,9 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                     setPositiveButton("proceed") { _, _ ->
                         userDataBase?.collection("users/${mUser?.uid}/debtors")
                             ?.document(debtorsList[position].docID)?.delete()
-                        loadData()
+                        loadData(true)
 
-                        toast("Pending remove for ${debtorsList[position].name}")
+                        toast("you have deleted ${debtorsList[position].name}")
 
                     }
                     setNegativeButton("cancel") { _, _ ->
@@ -245,15 +248,124 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 val customEditDialogView =
                     layoutInflater.inflate(R.layout.dialog_edit_debtor, editDebtorRootLay)
                         .apply {
-                            editDebtorName.setText(name)
+                            this.editDebtorName.setText(name)
                             editDebtorPhone.setText(phone)
+                            editAddDebt.setText("")
                             editDebtDueDate.setOnClickListener {
                                 showCalendar()
                             }
+                            var canUpdate = true
 
                             saveChanges.setOnClickListener {
-                                // todo edit current debt
-                                toast("coming soon")
+                                val documentReference = userDataBase
+                                    ?.collection("users/${mUser?.uid}/debtors")
+                                    ?.document(debtorsList[position].docID)
+
+                                val eName: String
+                                val ePhone: String
+                                val eDebt: Int
+                                val eDate: String
+
+                                val nameAndPhoneNotEmpty =
+                                    editDebtorName.text.toString().trim().isNotEmpty() &&
+                                            editDebtorPhone.text.toString().trim().isNotEmpty()
+
+                                val addDebt = editAddDebt.text.toString().trim().isNotEmpty()
+                                val newDate = editDebtDueDate.text.toString().trim().isNotEmpty()
+
+                                if (canUpdate) {
+
+                                    if (nameAndPhoneNotEmpty && addDebt && newDate) {
+                                        /* update all */
+
+                                        eName = editDebtorName.text.toString()
+                                        ePhone = editDebtorPhone.text.toString()
+                                        eDebt = editAddDebt.text.toString().toInt()
+                                        eDate = editDebtDueDate.text.toString()
+
+                                        documentReference?.update(
+                                            hashMapOf<String, Any>(
+                                                "name" to eName,
+                                                "phone" to ePhone,
+                                                "dueDate" to eDate,
+                                                "initialAmt" to (currentDebt!! + eDebt)
+                                            )
+                                        )?.addOnSuccessListener {
+                                            canUpdate = false
+                                            editDialogBuilder.dismiss()
+                                        }
+
+                                    } else if (nameAndPhoneNotEmpty && addDebt) {
+
+                                        /* update name, phone, increment debt */
+
+                                        eName = editDebtorName.text.toString()
+                                        ePhone = editDebtorPhone.text.toString()
+                                        eDebt = editAddDebt.text.toString().toInt()
+
+                                        documentReference?.update(
+                                            hashMapOf<String, Any>(
+                                                "name" to eName,
+                                                "phone" to ePhone,
+                                                "initialAmt" to FieldValue.increment(eDebt.toLong())
+                                            )
+                                        )?.addOnSuccessListener {
+                                            canUpdate = false
+                                            editDialogBuilder.dismiss()
+                                        }
+
+                                    } else if (nameAndPhoneNotEmpty && newDate) {
+
+                                        /* update name, phone, newDate */
+
+                                        eName = editDebtorName.text.toString()
+                                        ePhone = editDebtorPhone.text.toString()
+                                        eDate = editDebtDueDate.text.toString()
+
+                                        documentReference?.update(
+                                            hashMapOf<String, Any>(
+                                                "name" to eName,
+                                                "phone" to ePhone,
+                                                "dueDate" to eDate,
+                                            )
+                                        )?.addOnSuccessListener {
+                                            canUpdate = false
+                                            editDialogBuilder.dismiss()
+                                        }
+
+                                    } else if (nameAndPhoneNotEmpty) {
+
+                                        canUpdate = false
+
+                                        /* only update name and phone */
+
+                                        eName = editDebtorName.text.toString()
+                                        ePhone = editDebtorPhone.text.toString()
+
+                                        documentReference?.update(
+                                            hashMapOf<String, Any>(
+                                                "name" to eName,
+                                                "phone" to ePhone,
+                                            )
+                                        )?.addOnSuccessListener {
+                                            canUpdate = false
+                                            editDialogBuilder.dismiss()
+                                        }
+
+                                    } else {
+                                        arrayOf(
+                                            this.editDebtorName,
+                                            this.editDebtorPhone
+                                        ).forEach { input ->
+                                            if (input.text.toString().trim().isEmpty()) {
+                                                input.error = "${input.hint} can't be empty"
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    toast("you can only save once at a time")
+                                    editDialogBuilder.dismiss()
+                                }
                             }
 
                             cancelEditing.setOnClickListener {
@@ -261,12 +373,14 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                             }
                         }
                 editDialogBuilder.apply {
+                    setOnDismissListener { loadData(true) }
                     setContentView(customEditDialogView)
                     setCancelable(false)
                     create()
                     show()
                 }
             }
+
             R.id.debtStatus -> {
                 val message = if (debtorsList[position].debtStatus == 1) "on time" else "too late"
                 toast(message)
@@ -322,33 +436,40 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
             }
 
             R.id.addDebtPayment -> {
-                val remainingAmt = debtorsList[position].remainingAmt
+                val remainingAmt = debtorsList[position].initialAmt - debtorsList[position].amtPaid
                 val name = debtorsList[position].name
                 var saved = false
 
-                if (remainingAmt!! >= 1) {
+                if (remainingAmt > 0) {
                     toast("add payment for $name")
                     val paymentBuilder = AlertDialog.Builder(this.context)
                     val paymentView = layoutInflater.inflate(R.layout.dialog_add_debt_payment, null)
 
                     paymentView.apply {
-                        debtPaymentTitle.text = "Add payment for $name"
+                        this.debtPaymentTitle.text = "Add payment for $name"
 
-                        saveDebtPayment.setOnClickListener {
+                        this.saveDebtPayment.setOnClickListener {
 
-                            if (newPaymentAmt.text.toString().isNotEmpty() &&
+                            if (newPaymentAmt.text.toString().trim().isNotEmpty() &&
                                 newPaymentAmt.text.toString().toInt() <= remainingAmt &&
                                 newPaymentAmt.text.toString().toInt() > 0
                             ) {
 
                                 val newPayedAmt = newPaymentAmt.text.toString().toInt()
-
-                                //TODO  update to firestore and refresh                               .
-
+                                val documentReference = userDataBase
+                                    ?.collection("users/${mUser?.uid}/debtors")
+                                    ?.document(debtorsList[position].docID)
 
                                 /* save once to avoid overpayment or negative balance */
                                 if (!saved) {
-                                    // todo update  this person's data and reload
+                                    documentReference?.update(
+                                        hashMapOf<String, Any>(
+                                            "amtPaid" to FieldValue.increment(newPayedAmt.toLong()),
+                                            "paymentsDone" to FieldValue.increment(1L)
+                                        )
+                                    )?.addOnSuccessListener {
+                                        paymentBuilder.create().dismiss()
+                                    }
                                     saved = true
 
                                 } else toast("you can only save once at a time")
@@ -367,6 +488,7 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
 
                     paymentBuilder.apply {
                         setNegativeButton("") { _, _ -> eraseDebtPayment.setOnClickListener { } }
+                        setOnDismissListener { loadData(true) }
                         setView(paymentView)
                         create()
                         show()
@@ -376,11 +498,6 @@ class Debtors : Fragment(), DebtorsAdapter.OnDebtorClickListener {
                 }
             }
         }
-    }
-
-    private fun removeDebtorAt(position: Int) {
-        // TODO remove from firestore and refresh the data
-
     }
 
     private fun updateUI() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 
@@ -124,7 +124,7 @@ class Profile : Fragment() {
                 ?.document("credentials")?.get()
 
             nameSnapShot?.addOnSuccessListener {
-                profileUserName.text = it.get("name") as CharSequence?
+                profileUserName.text = it.getString("name").toString()
             }
         }
     }

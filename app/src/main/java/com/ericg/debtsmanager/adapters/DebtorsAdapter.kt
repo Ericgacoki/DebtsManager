@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/9/20 4:44 PM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 package com.ericg.debtsmanager.adapters
@@ -40,14 +40,7 @@ class DebtorsAdapter(
     override fun onBindViewHolder(holder: CustomDebtorViewHolder, position: Int) {
 
         holder.bind(
-            name = debtorsList[position].name,
-            startDate = debtorsList[position].startDate,
-            dueDate = debtorsList[position].dueDate,
-            phone = debtorsList[position].phone,
-            initialAmt = debtorsList[position].initialAmt,
-            paymentsDone = debtorsList[position].paymentsDone.toString(),
-            remainingAmt = debtorsList[position].remainingAmt!!.toInt(),
-            progressPercentage = debtorsList[position].progressPercentage!!.toInt()
+            debtorsList[position]
         )
 
         @NonNull
@@ -110,27 +103,20 @@ class DebtorsAdapter(
         private val addReminder:TextView = itemView.AddDebtPaymentReminder
 
         fun bind(
-            name: String,
-            startDate: String,
-            dueDate: String,
-            phone: String,
-            initialAmt: Int,
-            paymentsDone: String,
-            remainingAmt: Int,
-            progressPercentage: Int
+            debtData: DebtData
         ) {
 
             // todo load profile picture with glide
 
-            debtorName.text = name
-            debtorPhone.text = phone
-            debtDate.text = startDate
-            debtDueDate.text = dueDate
-            debtAmount.text = remainingAmt.toString()
-            debtInitialAmt.text = initialAmt.toString()
-            numOfPayments.text = paymentsDone
-            debtPaymentProgressBar.progress = progressPercentage
-            debtPaymentPercentage.text = "$progressPercentage %"
+            debtorName.text = debtData.name
+            debtorPhone.text = debtData.phone
+            debtDate.text = debtData.startDate
+            debtDueDate.text = debtData.dueDate
+            debtAmount.text = (debtData.initialAmt - debtData.amtPaid).toString()
+            debtInitialAmt.text = debtData.initialAmt.toString()
+            numOfPayments.text = debtData.paymentsDone.toString()
+            debtPaymentProgressBar.progress = debtData.amtPaid * 100 / debtData.initialAmt
+            debtPaymentPercentage.text = "${debtData.amtPaid * 100 / debtData.initialAmt} %"
         }
 
         init {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/30/20 1:56 AM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 package com.ericg.debtsmanager.utils
@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.ericg.debtsmanager.data.DebtData
 import com.ericg.debtsmanager.utils.FirebaseUtils.mAuth
 import com.ericg.debtsmanager.utils.FirebaseUtils.userDataBase
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -32,14 +33,14 @@ class SaveDebt(
 
             if (type == "Debtor") {
                 usersCollection.document(userUID).collection("debtors").document(docID)
-                    .set(debtData)
+                    .set(debtData, SetOptions.merge())
                     .addOnCompleteListener {
                         done.value = it.isSuccessful
                     }
 
             } else {
                 usersCollection.document(userUID).collection("myDebts").document(docID)
-                    .set(debtData)
+                    .set(debtData, SetOptions.merge())
                     .addOnCompleteListener {
                         done.value = it.isSuccessful
                     }

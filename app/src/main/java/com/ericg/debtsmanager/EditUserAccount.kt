@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  9/25/20 12:48 PM
+ * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
  */
 
 package com.ericg.debtsmanager
@@ -169,9 +169,16 @@ class EditUserAccount : AppCompatActivity() {
                         ?.document("users/${FirebaseUtils.mAuth!!.currentUser!!.uid}/userCredentials/credentials")
                         ?.apply {
                             // set(hashMapOf("name" to mUserName, "phone" to mUserPhone , "email" to mUserEmail))
-                            update("name", mUserName)
-                            update("phone", mUserPhone)
-                            update("email", mUserEmail)
+
+                            update(
+                                hashMapOf<String, Any>(
+                                    "name" to mUserName,
+                                    "phone" to mUserPhone,
+                                    "email" to mUserEmail
+                                )
+                            ).addOnSuccessListener {
+                                toast("updated successfully")
+                            }
                         }
 
                 } else {
