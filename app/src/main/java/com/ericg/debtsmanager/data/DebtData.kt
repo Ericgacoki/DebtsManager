@@ -1,5 +1,5 @@
 /*
- * Copyright (c)  Updated by eric on  10/1/20 11:52 PM
+ * Copyright (c)  Updated by eric on  10/1/20 11:55 PM
  */
 
 package com.ericg.debtsmanager.data
@@ -23,7 +23,7 @@ data class DebtData(
     var progressPercentage: Int?
 ) {
 
-    /**@__IMPORTANT__ A no-argument constructor is required by firestore documents   */
+    /**@__IMPORTANT__ A constructor is required by firestore documents   */
 
     private constructor() : this(
         "", "", "", "", 1, "", 1, 0, 0, null, null
