@@ -24,4 +24,4 @@
 ![dm14](https://user-images.githubusercontent.com/54077752/82501574-2452d380-9afe-11ea-9e70-511f9e16a2a2.png)
 
 
-## [Work in progress]  more coming soon
+## [Work in progress]
